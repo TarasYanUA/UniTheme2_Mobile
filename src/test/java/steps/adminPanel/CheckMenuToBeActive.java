@@ -7,10 +7,11 @@ import static com.codeborne.selenide.Selenide.$x;
 public interface CheckMenuToBeActive {
     default void checkMenuToBeActive(String mainMenu) {
         SelenideElement activeMenu = $x("//a[contains(@class, 'main-menu-1__toggle--active')]" + mainMenu);
-        System.out.println("Show me my MENU: " + activeMenu);
+        SelenideElement myMenu = $x(mainMenu);
+        System.out.println(activeMenu);
         try {
             if (!activeMenu.exists())
-                activeMenu.click();
+                myMenu.click();
         } catch (ElementNotFound e) {
         }
     }

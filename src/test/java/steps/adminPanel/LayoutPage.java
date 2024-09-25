@@ -1,15 +1,12 @@
 package steps.adminPanel;
 
-
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-
 import java.util.List;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class LayoutPage {
@@ -18,7 +15,6 @@ public class LayoutPage {
     String blockID;
 
     SelenideElement button_SettingsOfTemplate = $("a[id^='sw_case_settings_']");
-    SelenideElement checkbox_DisplayAsDropDownList = $("input[id$='_properties_abt__ut2_as_select']");
     SelenideElement button_SaveBlockProperties = $("input[name='dispatch[block_manager.update_block]']");
     SelenideElement popupWindow = $(".ui-dialog-title");
     SelenideElement button_SaveLayoutSettings = $("input[name='dispatch[block_manager.grid.update]']");
@@ -34,13 +30,6 @@ public class LayoutPage {
     SelenideElement field_Limit = $("input[id$='_content_items_properties_items_limit']");
     SelenideElement tabOfBlock_BlockSettings = $("li[id^='block_settings_']");
     SelenideElement checkbox_HideAddToCartButton = $("input[id$='_products_properties_hide_add_to_cart_button']");
-
-
-    public void navigateToBlockSettings_z(String blockName) {
-        $("div[data-ca-block-name='" + blockName + "']").$(".bm-action-properties")
-                .scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}").click();
-        popupWindow.shouldBe(Condition.exist);
-    }
 
     @Given("Выключаем LazyLoad в секции с блоком {string}")
     public void disableLazyLoadFromSection(String blockName) {
@@ -65,8 +54,6 @@ public class LayoutPage {
     @And("Переходим в настройки блока {string}")
     public void navigateToBlockSettings(String blockName) {
         SelenideElement blockProperties = $("div[data-ca-block-name='" + blockName + "']").$(".bm-action-properties");
-                //.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}").click();
-
         executeJavaScript("arguments[0].scrollIntoView(true);", blockProperties);
         executeJavaScript("arguments[0].click();", blockProperties);
         popupWindow.shouldBe(Condition.exist);
@@ -144,33 +131,5 @@ public class LayoutPage {
     @Then("Сохраняем настройки блока")
     public void saveBlockSettings() {
         button_SaveBlockProperties.click();
-    }
-
-
-
-
-
-
-
-
-
-
-    @And("Настраиваем блок {string} в виде выпадающего списка")
-    public void setBlockAsDropDownList(String blockName) {
-        navigateToBlockSettings_z(blockName);
-        executeJavaScript("arguments[0].click();", button_SettingsOfTemplate);
-        if(!checkbox_DisplayAsDropDownList.isSelected())
-            checkbox_DisplayAsDropDownList.click();
-        executeJavaScript("arguments[0].click();", button_SaveBlockProperties);
-    }
-
-    @And("Настраиваем блок {string} в виде обычного списка")
-    public void setBlockAsSimpleList(String blockName) {
-        navigateToBlockSettings_z(blockName);
-        executeJavaScript("arguments[0].click();", button_SettingsOfTemplate);
-        if(checkbox_DisplayAsDropDownList.isSelected())
-            checkbox_DisplayAsDropDownList.click();
-        executeJavaScript("arguments[0].click();", button_SaveBlockProperties);
-
     }
 }

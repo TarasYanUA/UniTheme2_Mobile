@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.By;
 
 import java.util.List;
 import static com.codeborne.selenide.Selenide.*;
@@ -13,10 +14,12 @@ public class BasicPage implements CheckMenuToBeActive {
     public BasicPage(){super();}
 
     SelenideElement button_Save_OnTop = $(".btn.btn-primary.cm-submit");
+    SelenideElement button_Save_OnTop_Other = $(".nav__actions-btn-save");
     SelenideElement mobile_MainMenu = $(".mobile-menu-toggler");
     SelenideElement sideBar = $(".sidebar-toggle");
 
     SelenideElement menuOf_WebsiteThemes = $(".actions-menu__dropdown-toggle");
+    SelenideElement menuOf_Settings = $(By.id("administration"));
     SelenideElement featureSetting_showInProductList = $("input[id='elm_feature_display_on_catalog_18']");
 
 
@@ -68,13 +71,11 @@ public class BasicPage implements CheckMenuToBeActive {
         button_Save_OnTop.click();
     }
 
-    @Given("Переходим на страницу {string}, раздел {string}")
-    public void navigateTo_CsCartSettings (String mainMenu, String section) {
-        SelenideElement menuElement = $x("//span[contains(@class, 'main-menu-1__link-content')][text()='" + mainMenu + "']");
-
+    @Given("Переходим на страницу 'Настройки', раздел {string}")
+    public void navigateTo_CsCartSettings (String section) {
         mobile_MainMenu.click();
-        menuElement.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-        executeJavaScript("arguments[0].click();", menuElement);
+        executeJavaScript("arguments[0].scrollIntoView(true);", menuOf_Settings);
+        executeJavaScript("arguments[0].click();", menuOf_Settings);
         $x("//div[text()='" + section + "']").click();
     }
 
@@ -82,5 +83,10 @@ public class BasicPage implements CheckMenuToBeActive {
     public void navigateTo_TabOfCsCartSettings (String tabName) {
         sideBar.click();
         $x("//div[@class='sidebar-row']//a[text()='" + tabName + "']").click();
+    }
+
+    @Then("Сохраняем настройки налога")
+    public void saveTaxSettings() {
+        button_Save_OnTop_Other.click();
     }
 }

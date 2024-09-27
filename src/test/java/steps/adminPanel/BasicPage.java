@@ -7,7 +7,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class BasicPage implements CheckMenuToBeActive {
@@ -15,26 +14,20 @@ public class BasicPage implements CheckMenuToBeActive {
 
     SelenideElement button_Save_OnTop = $(".btn.btn-primary.cm-submit");
     SelenideElement mobile_MainMenu = $(".mobile-menu-toggler");
+    SelenideElement sideBar = $(".sidebar-toggle");
 
-    SelenideElement section_Themes = $("a[href*='dispatch=themes.manage'].main-menu-1__link");
     SelenideElement menuOf_WebsiteThemes = $(".actions-menu__dropdown-toggle");
-    SelenideElement section_Layouts = $(".actions-menu__dropdown-item-wrapper a[href$='block_manager.manage']");
     SelenideElement featureSetting_showInProductList = $("input[id='elm_feature_display_on_catalog_18']");
 
-    SelenideElement button_Save_PopUpWindow = $(".ui-dialog-content input[value='Сохранить']");
-    SelenideElement menu_Settings = $("#administration");
 
-    @Given("Переходим на страницу \"Веб-сайт -- Темы -- Макеты\", вкладка {string}")
-    public void navigateTo_LayoutPage(String tabName) {
-        mobile_MainMenu.click();
-        section_Themes.click();
+    @Given("Переходим на страницу {string}, что на странице 'Темы'")
+    public void navigateTo_PageFromPage_Themes(String pageName) {
         menuOf_WebsiteThemes.click();
-        section_Layouts.click();
-        $x("//a[text()='" + tabName + "']").click();
+        $x("//ul[@id='tools_list_actions_menu']//span[text()='" + pageName + "']").click();
     }
 
     @Given("Переходим на страницу {string} -- {string}")
-    public void navigateToSection_Features(String mainMenu, String section) {
+    public void navigateTo_SectionOfMainMenu(String mainMenu, String section) {
         String menuElement = "//span[contains(@class, 'main-menu-1__link-content')][text()='" + mainMenu + "']";
         SelenideElement sectionElement = $x("//span[contains(@class, 'main-menu-2__link-content')][text()='" + section + "']");
 
@@ -73,5 +66,21 @@ public class BasicPage implements CheckMenuToBeActive {
     @Then("Сохраняем выбранные настройки")
     public void saveSettings_SaveButtonOnTop() {
         button_Save_OnTop.click();
+    }
+
+    @Given("Переходим на страницу {string}, раздел {string}")
+    public void navigateTo_CsCartSettings (String mainMenu, String section) {
+        SelenideElement menuElement = $x("//span[contains(@class, 'main-menu-1__link-content')][text()='" + mainMenu + "']");
+
+        mobile_MainMenu.click();
+        menuElement.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+        executeJavaScript("arguments[0].click();", menuElement);
+        $x("//div[text()='" + section + "']").click();
+    }
+
+    @Given("Переходим во вкладку настроек CS-Cart {string}")
+    public void navigateTo_TabOfCsCartSettings (String tabName) {
+        sideBar.click();
+        $x("//div[@class='sidebar-row']//a[text()='" + tabName + "']").click();
     }
 }

@@ -31,12 +31,17 @@ public class LayoutPage {
     SelenideElement tabOfBlock_BlockSettings = $("li[id^='block_settings_']");
     SelenideElement checkbox_HideAddToCartButton = $("input[id$='_products_properties_hide_add_to_cart_button']");
 
+
+    @Given("Переходим во вкладку {string}, что на странице 'Макеты'")
+    public void navigateTo_LayoutTab(String tabName) {
+        $x("//ul[@class='nav nav-tabs']//a[text()='" + tabName + "']").click();
+    }
+
     @Given("Выключаем LazyLoad в секции с блоком {string}")
     public void disableLazyLoadFromSection(String blockName) {
         SelenideElement layoutProperties = $("div[data-ca-block-name='" + blockName + "'] ~ div[class*='grid-control-menu'] div[class*='bm-action-properties']");
         executeJavaScript("arguments[0].scrollIntoView(true);", layoutProperties);
         executeJavaScript("arguments[0].click();", layoutProperties);
-
 
         $(".ui-dialog-title").shouldBe(Condition.exist);
         if(setting_UseDelayedLoadingOfSection.isSelected())

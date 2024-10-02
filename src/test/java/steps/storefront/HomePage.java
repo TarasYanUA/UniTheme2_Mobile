@@ -1,19 +1,19 @@
 package steps.storefront;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.WheelInput;
-
-import java.util.List;
+import steps.adminPanel.LayoutPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class HomePage {
     public HomePage(){super();}
+
+    String blockID = LayoutPage.blockID;
+
 
     SelenideElement button_ShowAdminPanel = $(".bp-bottom-button--logo");
     SelenideElement goTo_Storefront = $(".bp-nav__item-text");
@@ -31,6 +31,12 @@ public class HomePage {
     public void navigateToStorefront_HomePage() {
         button_ShowAdminPanel.click();
         goTo_Storefront.click();
+        if(button_CloseAdminBottomPanel.isDisplayed()) {
+            button_CloseAdminBottomPanel.click();
+        }
+        cookie.click();
+        if(notification_close.exists())
+            notification_close.click();
     }
 
     @Given("Разавторизоваться на витрине")
@@ -41,12 +47,6 @@ public class HomePage {
 
     @And("Переключаемся на {string} язык интерфейса витрины")
     public void selectLanguage(String lang_RuEnAr) {
-        if(button_CloseAdminBottomPanel.isDisplayed()) {
-            button_CloseAdminBottomPanel.click();
-        }
-        cookie.click();
-        if(notification_close.exists())
-            notification_close.click();
         $("a[id*='_wrap_language_']").hover().click();
         $(".ty-select-block__list-item a[data-ca-name='" + lang_RuEnAr + "']").click();
     }
@@ -54,17 +54,6 @@ public class HomePage {
     @And("Скроллимся к блоку товаров")
     public void scrollTo_Block() {
         blockWithProducts.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-    }
-
-
-
-
-    @And("Переходим на страницу категории {string} {string}")
-    public void navigateTo_CategoryPage__mobile(String mainCategory, String subCategory) {
-        flyMenu_button.click();
-        $(".ut2-lfl.ty-menu-item__" + mainCategory + " strong").click();
-        $x("//strong[text()='" + subCategory + "']").click();
-        flyMenu_button_ViewDetails_SecondLevel.click();
     }
 
     @And("Раскрываем вкладку {string} у блока")
@@ -76,21 +65,29 @@ public class HomePage {
     public void clickButton_ShowMore__makeScreenshot(String screenshot) {
         int num = 1;
         while (true) {
-            List<SelenideElement> buttons = $("span[id*='ut2_load_more_block_" + blockID + "']");
-            if (!buttons.isEmpty() && buttons.getFirst().isDisplayed()) {
-                WebElement button_ShowMore = buttons.getFirst(); // Берем первый элемент из списка
-
-                Actions scroll = new Actions(DriverProvider.getDriver());
-                scroll.moveToElement(tab_OnSale);
-                scroll.scrollFromOrigin(WheelInput.ScrollOrigin.fromElement(button_ShowMore), 0, 500);
-                scroll.perform();
-                button_ShowMore.click();
-
+            ElementsCollection buttons = $$("span[id*='ut2_load_more_block_" + blockID + "']");
+            if (!buttons.isEmpty() && buttons.first().isDisplayed()) {
+                SelenideElement button_ShowMore = buttons.first(); // Берем первый элемент из списка
+                executeJavaScript("window.scrollBy(0, 450);");
+                sleep(1000);
                 screenshot(screenshot + num);
+                button_ShowMore.scrollIntoView(true).click();
+                sleep(1500);
                 num++;
             } else {
                 break;
             }
         }
+    }
+
+
+
+
+    @And("Переходим на страницу категории {string} {string}")
+    public void navigateTo_CategoryPage__mobile(String mainCategory, String subCategory) {
+        flyMenu_button.click();
+        $(".ut2-lfl.ty-menu-item__" + mainCategory + " strong").click();
+        $x("//strong[text()='" + subCategory + "']").click();
+        flyMenu_button_ViewDetails_SecondLevel.click();
     }
 }

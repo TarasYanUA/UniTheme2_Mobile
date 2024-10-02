@@ -12,7 +12,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class LayoutPage {
     public LayoutPage(){super();}
 
-    String blockID;
+    public static String blockID;
+
 
     SelenideElement button_SettingsOfTemplate = $("a[id^='sw_case_settings_']");
     SelenideElement button_SaveBlockProperties = $("input[name='dispatch[block_manager.update_block]']");

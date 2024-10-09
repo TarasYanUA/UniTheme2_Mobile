@@ -6,11 +6,15 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+
 import java.util.List;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class LayoutPage {
-    public LayoutPage(){super();}
+    public LayoutPage() {
+        super();
+    }
 
     public static String blockID;
 
@@ -45,7 +49,9 @@ public class LayoutPage {
         executeJavaScript("arguments[0].click();", layoutProperties);
 
         $(".ui-dialog-title").shouldBe(Condition.exist);
-        if(setting_UseDelayedLoadingOfSection.isSelected())
+        sleep(2000);
+        setting_UseDelayedLoadingOfSection.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+        if (setting_UseDelayedLoadingOfSection.isSelected())
             setting_UseDelayedLoadingOfSection.click();
         button_SaveLayoutSettings.click();
     }

@@ -137,7 +137,6 @@ public class ThemeSettings {
 
                 case "Отображать \"Вы экономите\"":
                     setting_ShowYouSave.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-                    System.out.println("Значение для выбора: " + value);
                     setting_ShowYouSave.selectOptionContainingText(value);
                     break;
 

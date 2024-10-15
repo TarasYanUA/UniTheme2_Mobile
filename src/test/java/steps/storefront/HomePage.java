@@ -65,7 +65,7 @@ public class HomePage {
     public void clickButton_ShowMore__makeScreenshot(String screenshot) {
         int num = 1;
         while (true) {
-            executeJavaScript("window.scrollBy(0, 450);");
+            executeJavaScript("window.scrollBy(0, 500);");
             sleep(1500);
             screenshot(screenshot + num);
             ElementsCollection buttons = $$("span[id*='ut2_load_more_block_" + blockID + "']");

@@ -1,6 +1,5 @@
 package steps.storefront;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import hooks.CollectAssertMessages;
@@ -9,7 +8,6 @@ import io.cucumber.java.en.And;
 import org.assertj.core.api.SoftAssertions;
 import steps.adminPanel.LayoutPage;
 
-import java.time.Duration;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -67,22 +65,7 @@ public class AssertsOnStorefront {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-add-to-compare");
     }
 
-    //Настройка "Отображать кнопки "Быстрый просмотр, Добавить в избранное, Добавить в список сравнения" при наведении на ячейку товара"
-    SelenideElement buttonsAreDisplayedOnHover = $(".ut2-w-c-q__buttons.w_c_q-hover");
-
-    SelenideElement getButtonsAreDisplayedOnHover() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-w-c-q__buttons.w_c_q-hover");
-    }
-
-
-    //Настройка "Отображать "Вы экономите -- Полный вид"
-    SelenideElement text_YouSave_Full = $("span.ty-save-price");
-
-    SelenideElement getText_YouSave_Full() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] span.ty-save-price");
-    }
-
-    //Настройка "Отображать "Вы экономите -- Сокращенный вид"
+    //Настройка "Отображать "Вы экономите -- Сокращенный вид" (вариант "Полный вид" на мобильном отсутствует)
     SelenideElement text_YouSave_Short = $(".ut2-sld-short span.ty-save-price");
 
     SelenideElement getText_YouSave_Short() {
@@ -132,32 +115,8 @@ public class AssertsOnStorefront {
     //Настройка "Дополнительная информация о товаре -- Краткое описание"
     SelenideElement additionalInformationOfProduct_ShortDescription = $(".product-description");
 
-    SelenideElement getAdditionalInformationOfProduct_ShortDescription() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .product-description");
-    }
-
     //Настройка "Дополнительная информация о товаре -- Характеристики"
     SelenideElement additionalInformationOfProduct_Features = $(".ut2-gl__feature");
-
-    SelenideElement getAdditionalInformationOfProduct_Features() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-gl__feature");
-    }
-
-
-    //Настройка "Отображать дополнительную информацию при наведении"
-    SelenideElement additionalInformationOnHover = $("div[class='ut2-gl__body content-on-hover']");
-
-    SelenideElement getAdditionalInformationOnHover() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[class='ut2-gl__body content-on-hover']");
-    }
-
-    //Настройка "Отображать логотип бренда"
-    SelenideElement brandLogo = $(".brand-img");
-
-    SelenideElement getBrandLogo() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .brand-img");
-    }
-
 
     //Настройка "Отображать стандартную галерею изображений -- Навигация точками"
     SelenideElement galleryOgMiniIcons_Dots = $(".owl-pagination");
@@ -167,15 +126,12 @@ public class AssertsOnStorefront {
     }
 
     //Настройка "Отображать стандартную галерею изображений -- Навигация стрелками"
-    SelenideElement galleryOgMiniIcons_Arrows = $(".ut2-gl__body.content-on-hover .icon-right-circle");
+    SelenideElement galleryOgMiniIcons_Arrows = $(".icon-right-circle");
 
     SelenideElement getGalleryOgMiniIcons_Arrows() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-gl__body.content-on-hover .icon-right-circle");
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .icon-right-circle");
     }
 
-
-    //Настройка "Переключать изображение товара при движении мышки -- с полосками"
-    SelenideElement switchProductImage_WithStripes = $("div[class='cm-ab-hover-gallery abt__ut2_hover_gallery lines']");
 
 
     //Настройки -- Общие настройки -- Внешний вид
@@ -264,25 +220,12 @@ public class AssertsOnStorefront {
                 //Проверяем кнопку "Сравнить" присутствует
                 case "Отображать кнопку \"Добавить в список сравнения\"":
                     if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(getButton_AddToComparisonList().shouldBe(Condition.visible, Duration.ofSeconds(10)).exists())
+                        softAssert.assertThat(getButton_AddToComparisonList().exists())
                                 .as("There is no button 'Add to comparison list' in the product block!")
                                 .isTrue();
                     } else {
                         softAssert.assertThat(getButton_AddToComparisonList().exists())
                                 .as("There is a button 'Add to comparison list' but shouldn't in the product block!")
-                                .isFalse();
-                    }
-                    break;
-
-                //Проверяем отображение кнопок "Быстрый просмотр, Добавить в избранное, Добавить в список сравнения" при наведении на ячейку товара
-                case "Отображать кнопки \"Быстрый просмотр, Добавить в избранное, Добавить в список сравнения\" при наведении на ячейку товара":
-                    if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(getButtonsAreDisplayedOnHover().exists())
-                                .as("Buttons are not displayed when hovering over a product cell in the product block!")
-                                .isTrue();
-                    } else {
-                        softAssert.assertThat(getButtonsAreDisplayedOnHover().exists())
-                                .as("Buttons are displayed when hovering over a product cell but shouldn't in the product block!")
                                 .isFalse();
                     }
                     break;
@@ -293,10 +236,10 @@ public class AssertsOnStorefront {
                         softAssert.assertThat(getText_YouSave_Short().exists())
                                 .as("The text 'You save' is not Short or missed in the product block!")
                                 .isTrue();
-                    } else if (value.equalsIgnoreCase("Полный вид")) {
-                        softAssert.assertThat(getText_YouSave_Full().exists())
-                                .as("The text 'You save' is not Full or missed in the product block!")
-                                .isTrue();
+                    } else {
+                        softAssert.assertThat(getText_YouSave_Short().exists())
+                                .as("There is a text 'You save'  but shouldn't in the product block!")
+                                .isFalse();
                     }
                     break;
 
@@ -354,50 +297,6 @@ public class AssertsOnStorefront {
                                         && getGridList__ShowAddToCartButton_TextOnly().exists())
                                 .as("The button 'Add to cart' does not have a view 'Icon and Text' in the product block!")
                                 .isTrue();
-                    }
-                    break;
-
-                //Проверяем дополнительную информацию о товаре
-                case "Дополнительная информация о товаре":
-                    if (value.equalsIgnoreCase("Краткое описание")) {
-                        softAssert.assertThat(getAdditionalInformationOfProduct_ShortDescription().exists())
-                                .as("Additional information about products is not 'Short description' in the product block!")
-                                .isTrue();
-                    } else if (value.equalsIgnoreCase("Характеристики")) {
-                        softAssert.assertThat(getAdditionalInformationOfProduct_Features().exists())
-                                .as("Additional information about products is not 'Features' in the product block!")
-                                .isTrue();
-                    } else if (value.equalsIgnoreCase("Краткое описание и характеристики")) {
-                        softAssert.assertThat(getAdditionalInformationOfProduct_ShortDescription().exists()
-                                        && getAdditionalInformationOfProduct_Features().exists())
-                                .as("Additional information about products is not 'Short description and features' in the product block!")
-                                .isTrue();
-                    }
-                    break;
-
-                //Проверяем отображение дополнительной информации при наведении на ячейку товара
-                case "Отображать дополнительную информацию при наведении":
-                    if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(getAdditionalInformationOnHover().exists())
-                                .as("Additional information is displayed without mouse hover in the product block!")
-                                .isTrue();
-                    } else {
-                        softAssert.assertThat(getAdditionalInformationOnHover().exists())
-                                .as("Additional information is displayed with mouse hover but shouldn't in the product block!")
-                                .isFalse();
-                    }
-                    break;
-
-                //Проверяем логотип бренда
-                case "Отображать логотип бренда":
-                    if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(getBrandLogo().exists())
-                                .as("There is no brand logo in the product block!")
-                                .isTrue();
-                    } else {
-                        softAssert.assertThat(getBrandLogo().exists())
-                                .as("There is a brand logo but shouldn't in the product block!")
-                                .isFalse();
                     }
                     break;
 

@@ -8,7 +8,6 @@ public interface CheckMenuToBeActive {
     default void checkMenuToBeActive(String mainMenu) {
         SelenideElement activeMenu = $x("//a[contains(@class, 'main-menu-1__toggle--active')]" + mainMenu);
         SelenideElement myMenu = $x(mainMenu);
-        System.out.println(activeMenu);
         try {
             if (!activeMenu.exists())
                 myMenu.click();

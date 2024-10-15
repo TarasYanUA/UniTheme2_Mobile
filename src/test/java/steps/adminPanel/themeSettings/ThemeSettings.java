@@ -35,19 +35,16 @@ public class ThemeSettings {
     SelenideElement setting_CommonValueOfProductRating = $("input[id='settings.abt__ut2.product_list.show_rating_num']");
     SelenideElement setting_DisplayCartStatus = $(By.id("settings.abt__ut2.product_list.show_cart_status"));
     SelenideElement setting_DisplayStatusesForButtons = $(By.id("settings.abt__ut2.product_list.show_favorite_compare_status"));
-    SelenideElement setting_DisplayButtonWishList = $(By.id("settings.abt__ut2.product_list.button_wish_list_view.desktop"));
-    SelenideElement setting_DisplayButtonComparisonList = $(By.id("settings.abt__ut2.product_list.button_compare_view.desktop"));
-    SelenideElement setting_DisplayButtonsWhenHoveringMouse = $(By.id("settings.abt__ut2.product_list.hover_buttons_w_c_q.desktop"));
-    SelenideElement setting_ShowYouSave = $(By.id("settings.abt__ut2.product_list.show_you_save.desktop"));
-    SelenideElement setting_ShowProductCode = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_sku.desktop']");
-    SelenideElement setting_DisplayAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.desktop']");
-    SelenideElement setting_ShowQuantityChanger = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_qty.desktop']");
-    SelenideElement setting_ShowAddToCartButton = $("select[id='settings.abt__ut2.product_list.products_multicolumns.show_button_add_to_cart.desktop']");
-    SelenideElement setting_AdditionalProductInformation = $("select[id='settings.abt__ut2.product_list.products_multicolumns.grid_item_bottom_content.desktop']");
-    SelenideElement setting_ShowAdditionalInformationOnHover = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_content_on_hover.desktop']");
-    SelenideElement setting_ShowBrandLogo = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_brand_logo.desktop"));
-    SelenideElement setting_ShowStandardImageGallery_Grid = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_gallery.desktop"));
-    SelenideElement setting_SwitchProductImageWhenHovering = $(By.id("settings.abt__ut2.product_list.products_multicolumns.enable_hover_gallery.desktop"));
+    SelenideElement setting_DisplayButtonWishList = $(By.id("settings.abt__ut2.product_list.button_wish_list_view.mobile"));
+    SelenideElement setting_DisplayButtonComparisonList = $(By.id("settings.abt__ut2.product_list.button_compare_view.mobile"));
+    SelenideElement setting_ShowYouSave = $(By.id("settings.abt__ut2.product_list.show_you_save.mobile"));
+    SelenideElement setting_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_multicolumns.lines_number_in_name_product.mobile"));
+    SelenideElement setting_ShowProductCode = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_sku.mobile']");
+    SelenideElement setting_DisplayAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.mobile']");
+    SelenideElement setting_ShowQuantityChanger = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_qty.mobile']");
+    SelenideElement setting_ShowAddToCartButton = $("select[id='settings.abt__ut2.product_list.products_multicolumns.show_button_add_to_cart.mobile']");
+    SelenideElement setting_AdditionalProductInformation = $("select[id='settings.abt__ut2.product_list.products_multicolumns.grid_item_bottom_content.mobile']");
+    SelenideElement setting_ShowStandardImageGallery_Grid = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_gallery.mobile"));
 
 
     @And("Устанавливаем настройки темы:")
@@ -111,7 +108,7 @@ public class ThemeSettings {
                     }
                     break;
 
-                case "Отображать кнопку \"Добавить в список сравнения\" ":
+                case "Отображать кнопку \"Добавить в список сравнения\"":
                     if (value.equalsIgnoreCase("n")) {
                         if (setting_DisplayButtonComparisonList.isSelected()) {
                             setting_DisplayButtonComparisonList.click();
@@ -119,18 +116,6 @@ public class ThemeSettings {
                     } else {
                         if (!setting_DisplayButtonComparisonList.isSelected()) {
                             setting_DisplayButtonComparisonList.click();
-                        }
-                    }
-                    break;
-
-                case "Отображать кнопки \"Быстрый просмотр, Добавить в избранное, Добавить в список сравнения\" при наведении на ячейку товара":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_DisplayButtonsWhenHoveringMouse.isSelected()) {
-                            setting_DisplayButtonsWhenHoveringMouse.click();
-                        }
-                    } else {
-                        if (!setting_DisplayButtonsWhenHoveringMouse.isSelected()) {
-                            setting_DisplayButtonsWhenHoveringMouse.click();
                         }
                     }
                     break;
@@ -184,36 +169,8 @@ public class ThemeSettings {
                     setting_AdditionalProductInformation.selectOptionContainingText(value);
                     break;
 
-                case "Отображать дополнительную информацию при наведении":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ShowAdditionalInformationOnHover.isSelected()) {
-                            setting_ShowAdditionalInformationOnHover.click();
-                        }
-                    } else {
-                        if (!setting_ShowAdditionalInformationOnHover.isSelected()) {
-                            setting_ShowAdditionalInformationOnHover.click();
-                        }
-                    }
-                    break;
-
-                case "Отображать логотип бренда":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ShowBrandLogo.isSelected()) {
-                            setting_ShowBrandLogo.click();
-                        }
-                    } else {
-                        if (!setting_ShowBrandLogo.isSelected()) {
-                            setting_ShowBrandLogo.click();
-                        }
-                    }
-                    break;
-
                 case "Отображать стандартную галерею изображений":
                     setting_ShowStandardImageGallery_Grid.selectOptionContainingText(value);
-                    break;
-
-                case "Переключать изображение товара при движении мышки":
-                    setting_SwitchProductImageWhenHovering.selectOptionContainingText(value);
                     break;
             }
         }

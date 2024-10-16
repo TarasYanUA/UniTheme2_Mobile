@@ -23,7 +23,9 @@ public class ColorSchemeSettings {
 
     @Given("Переходим на страницу \"UniTheme2 -- Настройки цветосхемы\", вкладка {string}")
     public void navigateTo_ColorSchemeSettings(String tabName) {
-        themeSectionsOnPage_DownloadedAddons.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}").click();
+        themeSectionsOnPage_DownloadedAddons.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+        sleep(1000);
+        themeSectionsOnPage_DownloadedAddons.click();
         colorSchemeSettings.click();
         fieldOfActiveColorScheme.click();
         activeColorScheme.click();

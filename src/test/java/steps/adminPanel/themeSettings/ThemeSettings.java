@@ -18,10 +18,10 @@ public class ThemeSettings {
     SelenideElement themeSectionsOnPage_DownloadedAddons = $x("//tr[@id='addon_abt__unitheme2']//button[@class='btn dropdown-toggle']");
     SelenideElement themeSettings = $("div[class='btn-group dropleft open'] a[href$='abt__ut2.settings']");
 
-
     @Given("Переходим на страницу \"UniTheme2 -- Настройки темы\", вкладка {string}")
     public void navigateTo_ThemeSettings(String tabName) {
         themeSectionsOnPage_DownloadedAddons.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}").click();
+        sleep(1000);
         themeSettings.click();
         $x("//div[contains(@class, 'tabs')]//a[text()='" + tabName + "']").click();
     }

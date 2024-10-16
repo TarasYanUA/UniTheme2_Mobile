@@ -33,7 +33,7 @@ public class BasicPage implements CheckMenuToBeActive {
     public void navigateTo_SectionOfMainMenu(String mainMenu, String section) {
         String menuElement = "//span[contains(@class, 'main-menu-1__link-content')][text()='" + mainMenu + "']";
         SelenideElement sectionElement = $x("//span[contains(@class, 'main-menu-2__link-content')][text()='" + section + "']");
-
+//span[contains(@class, 'main-menu-2__link-content')][text()='Скачанные модули']
         mobile_MainMenu.click();
         checkMenuToBeActive(menuElement);
         sectionElement.click();

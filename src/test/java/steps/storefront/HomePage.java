@@ -65,14 +65,14 @@ public class HomePage {
     public void clickButton_ShowMore__makeScreenshot(String screenshot) {
         int num = 1;
         while (true) {
-            executeJavaScript("window.scrollBy(0, 500);");
-            sleep(1500);
-            screenshot(screenshot + num);
             ElementsCollection buttons = $$("span[id*='ut2_load_more_block_" + blockID + "']");
             if (!buttons.isEmpty() && buttons.first().isDisplayed()) {
                 SelenideElement button_ShowMore = buttons.first(); // Берем первый элемент из списка
-                button_ShowMore.scrollIntoView(true).click();
+                button_ShowMore.scrollIntoView(true);
+                button_ShowMore.click();
+                executeJavaScript("window.scrollBy(0, -500);");
                 sleep(3000);
+                screenshot(screenshot + num);
                 num++;
             } else {
                 break;

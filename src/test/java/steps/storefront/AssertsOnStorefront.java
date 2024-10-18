@@ -310,6 +310,10 @@ public class AssertsOnStorefront {
                         softAssert.assertThat(getGalleryOgMiniIcons_Arrows().exists())
                                 .as("Image gallery of the product is not with Arrows navigation in the product block!")
                                 .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(getGalleryOgMiniIcons_Dots().exists() && getGalleryOgMiniIcons_Arrows().exists())
+                                .as("Image gallery of the product is not switched off in the product block!")
+                                .isFalse();
                     }
                     break;
 

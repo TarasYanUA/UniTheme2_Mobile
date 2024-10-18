@@ -26,7 +26,7 @@ public class CsCartSettings {
 
 
     @And("Устанавливаем настройки CS-Cart:")
-    public void устанавливаемНастройкиCSCart(DataTable table) {
+    public void setCsCartSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
 
         for (List<String> row : rows) {
@@ -62,7 +62,6 @@ public class CsCartSettings {
                             setting_priceIncludesTax.click();
                     }
                     break;
-
             }
         }
     }

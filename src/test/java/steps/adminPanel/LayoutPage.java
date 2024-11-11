@@ -30,6 +30,10 @@ public class LayoutPage {
     SelenideElement checkbox_ShowItemNumber = $("input[id$='_products_properties_item_number']");
     SelenideElement field_NumberOfColumnsInList = $("input[id$='_products_properties_number_of_columns']");
     SelenideElement setting_LoadingType = $("select[id$='_products_properties_abt__ut2_loading_type']");
+    SelenideElement setting_ShowPrice = $("input[id$='_products_properties_show_price']");
+    SelenideElement setting_EnableQuickView = $("input[id$='_products_properties_enable_quick_view']");
+    SelenideElement setting_ItemQuantity = $("input[id$='_products_properties_item_quantity']");
+    SelenideElement setting_OutsideNavigation = $("input[id$='_products_properties_outside_navigation']");
     SelenideElement tabOfBlock_Content = $("li[id^='block_contents_'] a");
     SelenideElement setting_Filling = $("select[id$='_content_items_filling']");
     SelenideElement field_Limit = $("input[id$='_content_items_properties_items_limit']");
@@ -78,6 +82,14 @@ public class LayoutPage {
         button_SettingsOfTemplate.click();
     }
 
+    private void setCheckboxState(SelenideElement checkbox, String value) {
+        boolean isValueNo = value.equalsIgnoreCase("n");
+        boolean isCheckboxSelected = checkbox.isSelected();
+
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected)) {
+            checkbox.click();
+        }
+    }
     @And("Устанавливаем настройки блока:")
     public void setBlockSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -88,20 +100,10 @@ public class LayoutPage {
 
             switch (setting) {
                 case "Показать номер элемента":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (checkbox_ShowItemNumber.isSelected()) {
-                            checkbox_ShowItemNumber.click();
-                        }
-                    } else {
-                        if (!checkbox_ShowItemNumber.isSelected()) {
-                            checkbox_ShowItemNumber.click();
-                        }
-                    }
+                    setCheckboxState(checkbox_ShowItemNumber, value);
                     break;
 
                 case "Количество колонок в списке":
-                    field_NumberOfColumnsInList.click();
-                    field_NumberOfColumnsInList.clear();
                     field_NumberOfColumnsInList.setValue(value);
                     break;
 
@@ -109,28 +111,36 @@ public class LayoutPage {
                     setting_LoadingType.selectOptionContainingText(value);
                     break;
 
+                case "Показывать цену":
+                    setCheckboxState(setting_ShowPrice, value);
+                    break;
+
+                case "Включить быстрый просмотр":
+                    setCheckboxState(setting_EnableQuickView, value);
+                    break;
+
+                case "Количество элементов":
+                    setting_ItemQuantity.setValue(value);
+                    break;
+
+                case "Внешняя навигация":
+                    setCheckboxState(setting_OutsideNavigation, value);
+                    break;
+
+                // Настройки вкладки "Контент"
                 case "Заполнение":
                     tabOfBlock_Content.click();
                     setting_Filling.selectOptionContainingText(value);
                     break;
 
                 case "Макс. число элементов":
-                    field_Limit.click();
-                    field_Limit.clear();
                     field_Limit.setValue(value);
                     break;
 
+                // Настройки вкладки "Настройки блока"
                 case "Спрятать кнопку добавления":
                     tabOfBlock_BlockSettings.click();
-                    if (value.equalsIgnoreCase("n")) {
-                        if (checkbox_HideAddToCartButton.isSelected()) {
-                            checkbox_HideAddToCartButton.click();
-                        }
-                    } else {
-                        if (!checkbox_HideAddToCartButton.isSelected()) {
-                            checkbox_HideAddToCartButton.click();
-                        }
-                    }
+                    setCheckboxState(checkbox_HideAddToCartButton, value);
                     break;
 
                 default:
@@ -140,7 +150,8 @@ public class LayoutPage {
         }
     }
 
-    @Then("Сохраняем настройки блока")
+
+            @Then("Сохраняем настройки блока")
     public void saveBlockSettings() {
         button_SaveBlockProperties.click();
     }

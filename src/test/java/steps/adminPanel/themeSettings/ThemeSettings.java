@@ -46,7 +46,21 @@ public class ThemeSettings {
     SelenideElement setting_AdditionalProductInformation = $("select[id='settings.abt__ut2.product_list.products_multicolumns.grid_item_bottom_content.mobile']");
     SelenideElement setting_ShowStandardImageGallery_Grid = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_gallery.mobile"));
 
+    //Настройки для вида списка товаров с шаблоном "Скроллер"
+    SelenideElement scroller_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_scroller.lines_number_in_name_product.mobile"));
+    SelenideElement scroller_AvailabilityStatus = $(By.id("settings.abt__ut2.product_list.products_scroller.show_amount.mobile"));
+    SelenideElement scroller_QuantityChanger = $(By.id("settings.abt__ut2.product_list.products_scroller.show_qty.mobile"));
+    SelenideElement scroller_AddToCartButton = $(By.id("settings.abt__ut2.product_list.products_scroller.show_button_add_to_cart.mobile"));
 
+
+    private void setCheckboxState(SelenideElement checkbox, String value) {
+        boolean isValueNo = value.equalsIgnoreCase("n");
+        boolean isCheckboxSelected = checkbox.isSelected();
+
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected)) {
+            checkbox.click();
+        }
+    }
     @And("Устанавливаем настройки темы:")
     public void setThemeSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -61,63 +75,23 @@ public class ThemeSettings {
                     break;
 
                 case "Отображать цену вверху":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_PriceAtTheTop.isSelected()) {
-                            setting_PriceAtTheTop.click();
-                        }
-                    } else {
-                        if (!setting_PriceAtTheTop.isSelected()) {
-                            setting_PriceAtTheTop.click();
-                        }
-                    }
+                    setCheckboxState(setting_PriceAtTheTop, value);
                     break;
 
                 case "Отображать пустые звёзды рейтинга товара":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_EmptyStarsOfProductRating.isSelected()) {
-                            setting_EmptyStarsOfProductRating.click();
-                        }
-                    } else {
-                        if (!setting_EmptyStarsOfProductRating.isSelected()) {
-                            setting_EmptyStarsOfProductRating.click();
-                        }
-                    }
+                    setCheckboxState(setting_EmptyStarsOfProductRating, value);
                     break;
 
                 case "Отображать общее значение рейтинга товара":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_CommonValueOfProductRating.isSelected()) {
-                            setting_CommonValueOfProductRating.click();
-                        }
-                    } else {
-                        if (!setting_CommonValueOfProductRating.isSelected()) {
-                            setting_CommonValueOfProductRating.click();
-                        }
-                    }
+                    setCheckboxState(setting_CommonValueOfProductRating, value);
                     break;
 
                 case "Отображать кнопку \"Добавить в избранное\"":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_DisplayButtonWishList.isSelected()) {
-                            setting_DisplayButtonWishList.click();
-                        }
-                    } else {
-                        if (!setting_DisplayButtonWishList.isSelected()) {
-                            setting_DisplayButtonWishList.click();
-                        }
-                    }
+                    setCheckboxState(setting_DisplayButtonWishList, value);
                     break;
 
                 case "Отображать кнопку \"Добавить в список сравнения\"":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_DisplayButtonComparisonList.isSelected()) {
-                            setting_DisplayButtonComparisonList.click();
-                        }
-                    } else {
-                        if (!setting_DisplayButtonComparisonList.isSelected()) {
-                            setting_DisplayButtonComparisonList.click();
-                        }
-                    }
+                    setCheckboxState(setting_DisplayButtonComparisonList, value);
                     break;
 
                 case "Отображать \"Вы экономите\"":
@@ -125,6 +99,7 @@ public class ThemeSettings {
                     setting_ShowYouSave.selectOptionContainingText(value);
                     break;
 
+                //Настройки для вида списка товаров "Сетка"
                 case "Отображать код товара":
                     if (value.equalsIgnoreCase("n")) {
                         if (setting_ShowProductCode.isSelected()) {
@@ -171,6 +146,15 @@ public class ThemeSettings {
 
                 case "Отображать стандартную галерею изображений":
                     setting_ShowStandardImageGallery_Grid.selectOptionContainingText(value);
+                    break;
+
+                //Настройки для вида списка товаров с шаблоном "Скроллер"
+                case "Скроллер, Количество строк в названии товара":
+                    scroller_NumberOfLinesInProductName.selectOptionContainingText(value);
+                    break;
+
+                default:
+                    System.out.println("Неизвестная настройка: " + setting);
                     break;
             }
         }

@@ -17,6 +17,7 @@ public class CsCartSettings {
 
     //Вкладка "Внешний вид"
     SelenideElement setting_DisplayPricesWithTaxesOnCategoryAndProductPages = $(By.id("field___show_prices_taxed_clean_116"));
+    SelenideElement setting_QuickView = $("input[id*='field___enable_quick_view']");
 
     //Вкладка "Оформление заказа"
     SelenideElement setting_TaxCalculationMethodBasedOn = $(By.id("field___tax_calculation_179"));
@@ -25,6 +26,13 @@ public class CsCartSettings {
     SelenideElement setting_priceIncludesTax = $x("//input[@type='checkbox'][@name='tax_data[7][price_includes_tax]']");
 
 
+    private void setCheckboxState(SelenideElement checkbox, String value) {
+        boolean isValueNo = value.equalsIgnoreCase("n");
+        boolean isCheckboxSelected = checkbox.isSelected();
+
+        if ((isValueNo && isCheckboxSelected || !isValueNo && !isCheckboxSelected))
+            checkbox.click();
+    }
     @And("Устанавливаем настройки CS-Cart:")
     public void setCsCartSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -36,13 +44,11 @@ public class CsCartSettings {
             switch (setting) {
                 //Вкладка "Внешний вид"
                 case "Показывать цены с налогом на страницах категорий и товаров":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_DisplayPricesWithTaxesOnCategoryAndProductPages.isSelected())
-                            setting_DisplayPricesWithTaxesOnCategoryAndProductPages.click();
-                    } else {
-                        if (!setting_DisplayPricesWithTaxesOnCategoryAndProductPages.isSelected())
-                            setting_DisplayPricesWithTaxesOnCategoryAndProductPages.click();
-                    }
+                    setCheckboxState(setting_DisplayPricesWithTaxesOnCategoryAndProductPages, value);
+                    break;
+
+                case "Включить быстрый просмотр":
+                    setCheckboxState(setting_QuickView, value);
                     break;
 
 
@@ -54,13 +60,11 @@ public class CsCartSettings {
 
                 //Страница "Настройки -- Налоги"
                 case "Цена включает налог":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_priceIncludesTax.isSelected())
-                            setting_priceIncludesTax.click();
-                    } else {
-                        if (!setting_priceIncludesTax.isSelected())
-                            setting_priceIncludesTax.click();
-                    }
+                    setCheckboxState(setting_priceIncludesTax, value);
+                    break;
+
+                default:
+                    System.out.println("Неизвестная настройка: " + setting);
                     break;
             }
         }

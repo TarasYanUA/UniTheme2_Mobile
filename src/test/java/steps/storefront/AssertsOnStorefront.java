@@ -72,7 +72,6 @@ public class AssertsOnStorefront {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-sld-short span.ty-save-price");
     }
 
-
     //Настройка "Отображать код товара"
     SelenideElement productCode = $("label[id*='sku_']");
 
@@ -134,6 +133,15 @@ public class AssertsOnStorefront {
 
 
 
+    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Скроллер"
+
+    //Настройка "Количество строк в названии товара"
+    SelenideElement getNumberOfLinesInProductName_Scroller(int number) {
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style='--sl-lines-in-name-product: " + number + ";']");
+    }
+
+
+
     //Настройки -- Общие настройки -- Внешний вид
 
     //Текст налога "[цена налога] + Вкл налог". Настройка "Показывать цены с налогом на страницах категорий и товаров"
@@ -146,6 +154,12 @@ public class AssertsOnStorefront {
     //Настройка "Показывать мини-иконки в виде галереи"
     SelenideElement miniThumbnailImagesAsGallery = $(".ty-icon-right-open-thin");
 
+    //Настройка "Отображать кнопку "Быстрый просмотр"
+    SelenideElement getQuickViewButton() {
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='\" + blockID + \"'] a[class*='ut2-quick-view-button']");
+    }
+
+
 
     //Настройки блока товаров
 
@@ -157,6 +171,10 @@ public class AssertsOnStorefront {
     //Настройка "Максимальное число элементов"
     ElementsCollection getMaxNumberOfColumnsInBlock() {
         return $$("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-gl__item");
+    }
+
+    ElementsCollection getNumberOfElements() {
+        return $$("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .owl-item.active");
     }
 
 
@@ -174,6 +192,20 @@ public class AssertsOnStorefront {
                 case "Количество колонок в списке":
                     softAssert.assertThat(getNumberOfColumnsInBlock().size())
                             .as("Number of columns is not equal to " + value + " in the product block!")
+                            .isEqualTo(Integer.parseInt(value));
+                    break;
+
+                //Проверяем максимальное количество элементов в блоке (не превышает указанное значение). Настройка блока "Макс. число элементов"
+                case "Макс. число элементов":
+                    softAssert.assertThat(getMaxNumberOfColumnsInBlock().size())
+                            .as("Max number of products increases " + value + " products in the product block!")
+                            .isLessThanOrEqualTo(Integer.parseInt(value));
+                    break;
+
+                //Проверяем, количество элементов в блоке. Настройка блока "Количество элементов"
+                case "Количество элементов":
+                    softAssert.assertThat(getNumberOfElements().size())
+                            .as("Number of elements is not equal " + value + " in the product block!")
                             .isEqualTo(Integer.parseInt(value));
                     break;
 
@@ -242,6 +274,12 @@ public class AssertsOnStorefront {
                                 .isFalse();
                     }
                     break;
+
+                //Проверяем Количество строк в названии товара
+                case "Количество строк в названии товара":
+                    softAssert.assertThat(getNumberOfLinesInProductName_Scroller(Integer.parseInt(value)).exists())
+                            .as("Number of lines in the product name is not " + value)
+                            .isTrue();
 
                 //Проверяем код товара
                 case "Отображать код товара":
@@ -317,13 +355,6 @@ public class AssertsOnStorefront {
                     }
                     break;
 
-                //Проверяем максимальное количество элементов в блоке (не превышает указанное значение)
-                case "Макс. число элементов":
-                    softAssert.assertThat(getMaxNumberOfColumnsInBlock().size())
-                            .as("Max number of products increases " + value + " products in the product block!")
-                            .isLessThanOrEqualTo(Integer.parseInt(value));
-                    break;
-
                 //Проверяем текст "[цена налога] + Вкл налог"
                 case "Текст налога \"[цена налога] + Вкл налог\"":
                     if (value.equalsIgnoreCase("y")) {
@@ -335,6 +366,23 @@ public class AssertsOnStorefront {
                                 .as("There is a text of a product tax but shouldn't in the product block!")
                                 .isFalse();
                     }
+                    break;
+
+                //Проверяем кнопку "Быстрый просмотр" в блоке товаров
+                case "Отображать кнопку \"Быстрый просмотр\"":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(getQuickViewButton().exists())
+                                .as("There is no Quick view button in the product block!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(getQuickViewButton().exists())
+                                .as("There is a Quick view button but shouldn't in the product block!")
+                                .isFalse();
+                    }
+                    break;
+
+                default:
+                    System.out.println("Неизвестная проверка: " + setting);
                     break;
             }
         }

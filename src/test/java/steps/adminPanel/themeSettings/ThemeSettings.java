@@ -57,9 +57,8 @@ public class ThemeSettings {
         boolean isValueNo = value.equalsIgnoreCase("n");
         boolean isCheckboxSelected = checkbox.isSelected();
 
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected)) {
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
             checkbox.click();
-        }
     }
     @And("Устанавливаем настройки темы:")
     public void setThemeSettings(DataTable table) {
@@ -101,39 +100,15 @@ public class ThemeSettings {
 
                 //Настройки для вида списка товаров "Сетка"
                 case "Отображать код товара":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ShowProductCode.isSelected()) {
-                            setting_ShowProductCode.click();
-                        }
-                    } else {
-                        if (!setting_ShowProductCode.isSelected()) {
-                            setting_ShowProductCode.click();
-                        }
-                    }
+                    setCheckboxState(setting_ShowProductCode, value);
                     break;
 
                 case "Отображать статус наличия":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_DisplayAvailabilityStatus.isSelected()) {
-                            setting_DisplayAvailabilityStatus.click();
-                        }
-                    } else {
-                        if (!setting_DisplayAvailabilityStatus.isSelected()) {
-                            setting_DisplayAvailabilityStatus.click();
-                        }
-                    }
+                        setCheckboxState(setting_DisplayAvailabilityStatus, value);
                     break;
 
                 case "Отображать модификатор количества":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ShowQuantityChanger.isSelected()) {
-                            setting_ShowQuantityChanger.click();
-                        }
-                    } else {
-                        if (!setting_ShowQuantityChanger.isSelected()) {
-                            setting_ShowQuantityChanger.click();
-                        }
-                    }
+                    setCheckboxState(setting_ShowQuantityChanger, value);
                     break;
 
                 case "Отображать кнопку \"Купить\"":
@@ -150,7 +125,19 @@ public class ThemeSettings {
 
                 //Настройки для вида списка товаров с шаблоном "Скроллер"
                 case "Скроллер, Количество строк в названии товара":
-                    scroller_NumberOfLinesInProductName.selectOptionContainingText(value);
+                    scroller_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
+                    break;
+
+                case "Скроллер, Отображать статус наличия":
+                    setCheckboxState(scroller_AvailabilityStatus, value);
+                    break;
+
+                case "Скроллер, Отображать модификатор количества":
+                    setCheckboxState(scroller_QuantityChanger, value);
+                    break;
+
+                case "Скроллер, Отображать кнопку \"Купить\"":
+                    scroller_AddToCartButton.selectOptionContainingText(value);
                     break;
 
                 default:

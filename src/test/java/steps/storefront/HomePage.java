@@ -1,9 +1,11 @@
 package steps.storefront;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import steps.adminPanel.LayoutPage;
 
@@ -80,8 +82,11 @@ public class HomePage {
         }
     }
 
-
-
+    @Then("Делаем скриншот {string}")
+    public void takeScreenshot(String screenshotName) {
+        Selenide.sleep(1500);
+        screenshot(screenshotName);
+    }
 
     @And("Переходим на страницу категории {string} {string}")
     public void navigateTo_CategoryPage__mobile(String mainCategory, String subCategory) {
@@ -89,5 +94,10 @@ public class HomePage {
         $(".ut2-lfl.ty-menu-item__" + mainCategory + " strong").click();
         $x("//strong[text()='" + subCategory + "']").click();
         flyMenu_button_ViewDetails_SecondLevel.click();
+    }
+
+    @And("Скроллимся вниз по странице на {int} px")
+    public void scrollBelowOfPage(int value) {
+        Selenide.executeJavaScript("window.scrollBy(0, " + value + ");");
     }
 }

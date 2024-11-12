@@ -32,6 +32,7 @@ public class LayoutPage {
     SelenideElement setting_LoadingType = $("select[id$='_products_properties_abt__ut2_loading_type']");
     SelenideElement setting_ShowPrice = $("input[id$='_products_properties_show_price']");
     SelenideElement setting_EnableQuickView = $("input[id$='_products_properties_enable_quick_view']");
+    SelenideElement setting_DoNotScrollAutomatically = $("input[id$='_products_properties_not_scroll_automatically']");
     SelenideElement setting_ItemQuantity = $("input[id$='_products_properties_item_quantity']");
     SelenideElement setting_OutsideNavigation = $("input[id$='_products_properties_outside_navigation']");
     SelenideElement tabOfBlock_Content = $("li[id^='block_contents_'] a");
@@ -86,9 +87,8 @@ public class LayoutPage {
         boolean isValueNo = value.equalsIgnoreCase("n");
         boolean isCheckboxSelected = checkbox.isSelected();
 
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected)) {
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
             checkbox.click();
-        }
     }
     @And("Устанавливаем настройки блока:")
     public void setBlockSettings(DataTable table) {
@@ -119,11 +119,16 @@ public class LayoutPage {
                     setCheckboxState(setting_EnableQuickView, value);
                     break;
 
+                case "Не прокручивать автоматически":
+                    setCheckboxState(setting_DoNotScrollAutomatically, value);
+                    break;
+
                 case "Количество элементов":
                     setting_ItemQuantity.setValue(value);
                     break;
 
                 case "Внешняя навигация":
+                    setting_OutsideNavigation.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
                     setCheckboxState(setting_OutsideNavigation, value);
                     break;
 

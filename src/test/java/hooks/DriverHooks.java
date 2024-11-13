@@ -14,7 +14,7 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.*;
 
 public class DriverHooks {
-    public static final String BASIC_URL = "https://trs.test.abt.team/4183ultru/admin.php?dispatch=addons.manage";
+    public static final String BASIC_URL = "https://abd-911cc5db8b.demos.abt.team/admin.php?dispatch=addons.manage";
 
     public DriverHooks() {super();}
 
@@ -35,7 +35,8 @@ public class DriverHooks {
 
         $(".btn.btn-primary").click();
         $("#bp_off_bottom_panel").click();
-        $(".close.cm-notification-close").click();
+        if ($(".cm-notification-close").isDisplayed())
+            $(".cm-notification-close").click();
         Selenide.sleep(1000);
     }
 

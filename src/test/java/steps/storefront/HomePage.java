@@ -73,7 +73,7 @@ public class HomePage {
                 button_ShowMore.scrollIntoView(true);
                 button_ShowMore.click();
                 executeJavaScript("window.scrollBy(0, -500);");
-                sleep(3000);
+                sleep(5000);
                 screenshot(screenshot + num);
                 num++;
             } else {

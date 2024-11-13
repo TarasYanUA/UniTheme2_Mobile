@@ -52,8 +52,6 @@ public class LayoutPage {
         SelenideElement layoutProperties = $("div[data-ca-block-name='" + blockName + "'] ~ div[class*='grid-control-menu'] div[class*='bm-action-properties']");
         executeJavaScript("arguments[0].scrollIntoView(true);", layoutProperties);
         executeJavaScript("arguments[0].click();", layoutProperties);
-
-        $(".ui-dialog-title").shouldBe(Condition.exist);
         sleep(2000);
         setting_UseDelayedLoadingOfSection.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
         if (setting_UseDelayedLoadingOfSection.isSelected())

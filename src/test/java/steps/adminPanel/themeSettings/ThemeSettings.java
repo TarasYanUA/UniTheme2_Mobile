@@ -98,7 +98,12 @@ public class ThemeSettings {
                     setting_ShowYouSave.selectOptionContainingText(value);
                     break;
 
+
                 //Настройки для вида списка товаров "Сетка"
+                case "Количество строк в названии товара":
+                    setting_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
+                    break;
+
                 case "Отображать код товара":
                     setCheckboxState(setting_ShowProductCode, value);
                     break;

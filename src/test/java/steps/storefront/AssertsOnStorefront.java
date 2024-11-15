@@ -42,6 +42,7 @@ public class AssertsOnStorefront {
 
     //Настройка "Отображать статусы для кнопок "Купить" -- Иконка"
     SelenideElement statusesForButton_AddToCart_Icon = $("a.ut2-added-to-cart");
+    
     //Настройка "Отображать статусы для кнопок "Купить" -- Количество товаров"
     SelenideElement statusesForButton_AddToCart_Number = $("a.ut2-added-to-cart[data-added-amount='1']");
 
@@ -95,6 +96,11 @@ public class AssertsOnStorefront {
 
 
     //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Сетка"
+
+    //Настройка "Количество строк в названии товара"
+    SelenideElement getNumberOfLinesInProductName_Grid(int number) {
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style='--gl-lines-in-name-product: " + number + ";']");
+    }
 
     // Настройка "Отображать кнопку "Купить" -- Только иконка корзины"
     SelenideElement gridList__ShowAddToCartButton_IconOnly = $(".ut2-icon-use_icon_cart");
@@ -293,8 +299,14 @@ public class AssertsOnStorefront {
                     }
                     break;
 
-                //Проверяем Количество строк в названии товара
-                case "Количество строк в названии товара":
+                //Проверяем Количество строк в названии товара - Сетка
+                case "Сетка, Количество строк в названии товара":
+                    softAssert.assertThat(getNumberOfLinesInProductName_Grid(Integer.parseInt(value)).exists())
+                            .as("Number of lines in the product name is not " + value)
+                            .isTrue();
+
+                //Проверяем Количество строк в названии товара - Скроллер
+                case "Скроллер, Количество строк в названии товара":
                     softAssert.assertThat(getNumberOfLinesInProductName_Scroller(Integer.parseInt(value)).exists())
                             .as("Number of lines in the product name is not " + value)
                             .isTrue();

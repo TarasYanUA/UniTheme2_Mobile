@@ -173,8 +173,13 @@ public class AssertsOnStorefront {
         return $$("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-gl__item");
     }
 
-    ElementsCollection getNumberOfElements() {
+    ElementsCollection getNumberOfElements_Mobile() {
         return $$("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .owl-item.active");
+    }
+
+    //Настройка "Внешняя навигация"
+    SelenideElement getOutsideNavigation() {
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .owl-theme.ty-owl-controls");
     }
 
 
@@ -202,11 +207,24 @@ public class AssertsOnStorefront {
                             .isLessThanOrEqualTo(Integer.parseInt(value));
                     break;
 
-                //Проверяем, количество элементов в блоке. Настройка блока "Количество элементов"
-                case "Количество элементов":
-                    softAssert.assertThat(getNumberOfElements().size())
+                //Проверяем, количество элементов в блоке. Настройка блока "Количество элементов (мобильный)"
+                case "Количество элементов (мобильный)":
+                    softAssert.assertThat(getNumberOfElements_Mobile().size())
                             .as("Number of elements is not equal " + value + " in the product block!")
                             .isEqualTo(Integer.parseInt(value));
+                    break;
+
+                //Проверяем Внешнюю навигацию в блоке товаров
+                case "Внешняя навигация":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(getOutsideNavigation().exists())
+                                .as("There is no Outside navigation in the product block!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(getOutsideNavigation().exists())
+                                .as("There is Outside navigation but shouldn't in the product block!")
+                                .isFalse();
+                    }
                     break;
 
                 //Проверяем пустые звёздочки рейтинга

@@ -33,7 +33,7 @@ public class LayoutPage {
     SelenideElement setting_ShowPrice = $("input[id$='_products_properties_show_price']");
     SelenideElement setting_EnableQuickView = $("input[id$='_products_properties_enable_quick_view']");
     SelenideElement setting_DoNotScrollAutomatically = $("input[id$='_products_properties_not_scroll_automatically']");
-    SelenideElement setting_ItemQuantity = $("input[id$='_products_properties_item_quantity']");
+    SelenideElement setting_ItemQuantity_Mobile = $("input[id*='_products_properties_item_quantity_mobile']");
     SelenideElement setting_OutsideNavigation = $("input[id$='_products_properties_outside_navigation']");
     SelenideElement tabOfBlock_Content = $("li[id^='block_contents_'] a");
     SelenideElement setting_Filling = $("select[id$='_content_items_filling']");
@@ -121,8 +121,8 @@ public class LayoutPage {
                     setCheckboxState(setting_DoNotScrollAutomatically, value);
                     break;
 
-                case "Количество элементов":
-                    setting_ItemQuantity.setValue(value);
+                case "Количество элементов (мобильный)":
+                    setting_ItemQuantity_Mobile.setValue(value);
                     break;
 
                 case "Внешняя навигация":

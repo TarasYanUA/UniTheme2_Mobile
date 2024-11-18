@@ -42,6 +42,13 @@ public class ColorSchemeSettings {
     SelenideElement setting_ProductLists_FontWeightForProductName = $(By.id("settings.abt__ut2.product_list.grid-list.product_name_font_weight"));
 
 
+    private void setCheckboxState(SelenideElement checkbox, String value) {
+        boolean isValueNo = value.equalsIgnoreCase("n");
+        boolean isCheckboxSelected = checkbox.isSelected();
+
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
+            checkbox.click();
+    }
     @And("Устанавливаем настройки цветосхемы:")
     public void setColorSchemeSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -56,33 +63,15 @@ public class ColorSchemeSettings {
                     break;
 
                 case "Добавить фон/маску для изображений товара":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ProductLists_MaskForProductImages.isSelected())
-                            setting_ProductLists_MaskForProductImages.click();
-                    } else {
-                        if (!setting_ProductLists_MaskForProductImages.isSelected())
-                            setting_ProductLists_MaskForProductImages.click();
-                    }
+                    setCheckboxState(setting_ProductLists_MaskForProductImages, value);
                     break;
 
                 case "Использовать выравнивание элементов в товарной сетке":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ProductLists_ElementsAlignment.isSelected())
-                            setting_ProductLists_ElementsAlignment.click();
-                    } else {
-                        if (!setting_ProductLists_ElementsAlignment.isSelected())
-                            setting_ProductLists_ElementsAlignment.click();
-                    }
+                    setCheckboxState(setting_ProductLists_ElementsAlignment, value);
                     break;
 
                 case "Эффект увеличения ячейки при наведении":
-                    if (value.equalsIgnoreCase("n")) {
-                        if (setting_ProductLists_ExpandGridItemOnHover.isSelected())
-                            setting_ProductLists_ExpandGridItemOnHover.click();
-                    } else {
-                        if (!setting_ProductLists_ExpandGridItemOnHover.isSelected())
-                            setting_ProductLists_ExpandGridItemOnHover.click();
-                    }
+                    setCheckboxState(setting_ProductLists_ExpandGridItemOnHover, value);
                     break;
 
                 case "Насыщенность шрифта для названия товара":

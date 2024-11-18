@@ -95,24 +95,25 @@ public class AssertsOnStorefront {
     }
 
 
-    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Сетка"
+    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Сетка", "Мелкие элементы", "Скроллер"
 
     //Настройка "Количество строк в названии товара"
-    SelenideElement getNumberOfLinesInProductName_Grid(int number) {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style='--gl-lines-in-name-product: " + number + ";']");
+    SelenideElement getNumberOfLinesInProductName(int number) {
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style*='lines-in-name-product: " + number + ";']");
     }
 
-    // Настройка "Отображать кнопку "Купить" -- Только иконка корзины"
-    SelenideElement gridList__ShowAddToCartButton_IconOnly = $(".ut2-icon-use_icon_cart");
 
-    SelenideElement getGridList__ShowAddToCartButton_IconOnly() {
+    // Настройка "Отображать кнопку "Купить" -- Только иконка корзины"
+    SelenideElement showAddToCartButton_IconOnly = $(".ut2-icon-use_icon_cart");
+
+    SelenideElement getShowAddToCartButton_IconOnly() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-icon-use_icon_cart");
     }
 
     //Настройка "Отображать кнопку "Купить" -- Только текст"
     SelenideElement gridList__ShowAddToCartButton_TextOnly = $(".ty-btn__primary.ty-btn__add-to-cart.cm-form-dialog-closer");
 
-    SelenideElement getGridList__ShowAddToCartButton_TextOnly() {
+    SelenideElement getShowAddToCartButton_TextOnly() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ty-btn__primary.ty-btn__add-to-cart.cm-form-dialog-closer");
     }
 
@@ -124,28 +125,18 @@ public class AssertsOnStorefront {
     SelenideElement additionalInformationOfProduct_Features = $(".ut2-gl__feature");
 
     //Настройка "Отображать стандартную галерею изображений -- Навигация точками"
-    SelenideElement galleryOgMiniIcons_Dots = $(".owl-pagination");
+    SelenideElement galleryOfMiniIcons_Dots = $(".owl-pagination");
 
-    SelenideElement getGalleryOgMiniIcons_Dots() {
+    SelenideElement getGalleryOfMiniIcons_Dots() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .owl-pagination");
     }
 
     //Настройка "Отображать стандартную галерею изображений -- Навигация стрелками"
     SelenideElement galleryOgMiniIcons_Arrows = $(".icon-right-circle");
 
-    SelenideElement getGalleryOgMiniIcons_Arrows() {
+    SelenideElement getGalleryOfMiniIcons_Arrows() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .icon-right-circle");
     }
-
-
-
-    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Скроллер"
-
-    //Настройка "Количество строк в названии товара"
-    SelenideElement getNumberOfLinesInProductName_Scroller(int number) {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style='--sl-lines-in-name-product: " + number + ";']");
-    }
-
 
 
     //Настройки -- Общие настройки -- Внешний вид
@@ -294,22 +285,17 @@ public class AssertsOnStorefront {
                                 .isTrue();
                     } else {
                         softAssert.assertThat(getText_YouSave_Short().exists())
-                                .as("There is a text 'You save'  but shouldn't in the product block!")
+                                .as("There is a text 'You save' but shouldn't in the product block!")
                                 .isFalse();
                     }
                     break;
 
-                //Проверяем Количество строк в названии товара - Сетка
+                //Проверяем Количество строк в названии товара
                 case "Сетка, Количество строк в названии товара":
-                    softAssert.assertThat(getNumberOfLinesInProductName_Grid(Integer.parseInt(value)).exists())
+                    softAssert.assertThat(getNumberOfLinesInProductName(Integer.parseInt(value)).exists())
                             .as("Number of lines in the product name is not " + value)
                             .isTrue();
-
-                //Проверяем Количество строк в названии товара - Скроллер
-                case "Скроллер, Количество строк в названии товара":
-                    softAssert.assertThat(getNumberOfLinesInProductName_Scroller(Integer.parseInt(value)).exists())
-                            .as("Number of lines in the product name is not " + value)
-                            .isTrue();
+                    break;
 
                 //Проверяем код товара
                 case "Отображать код товара":
@@ -353,16 +339,16 @@ public class AssertsOnStorefront {
                 //Проверяем вид кнопки "Купить"
                 case "Отображать кнопку \"Купить\"":
                     if (value.equalsIgnoreCase("Только иконка корзины")) {
-                        softAssert.assertThat(getGridList__ShowAddToCartButton_IconOnly().exists())
+                        softAssert.assertThat(getShowAddToCartButton_IconOnly().exists())
                                 .as("The button 'Add to cart' does not have a view 'Icon only' in the product block!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Только текст")) {
-                        softAssert.assertThat(getGridList__ShowAddToCartButton_TextOnly().exists())
+                        softAssert.assertThat(getShowAddToCartButton_TextOnly().exists())
                                 .as("The button 'Add to cart' does not have a view 'Text only' in the product block!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Иконка корзины и текст")) {
-                        softAssert.assertThat(getGridList__ShowAddToCartButton_IconOnly().exists()
-                                        && getGridList__ShowAddToCartButton_TextOnly().exists())
+                        softAssert.assertThat(getShowAddToCartButton_IconOnly().exists()
+                                        && getShowAddToCartButton_TextOnly().exists())
                                 .as("The button 'Add to cart' does not have a view 'Icon and Text' in the product block!")
                                 .isTrue();
                     }
@@ -371,15 +357,15 @@ public class AssertsOnStorefront {
                 //Проверяем настройку "Отображать стандартную галерею изображений"
                 case "Отображать стандартную галерею изображений":
                     if (value.equalsIgnoreCase("Навигация точками")) {
-                        softAssert.assertThat(getGalleryOgMiniIcons_Dots().exists())
+                        softAssert.assertThat(getGalleryOfMiniIcons_Dots().exists())
                                 .as("Image gallery of the product is not with Dots navigation in the product block!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Навигация стрелками")) {
-                        softAssert.assertThat(getGalleryOgMiniIcons_Arrows().exists())
+                        softAssert.assertThat(getGalleryOfMiniIcons_Arrows().exists())
                                 .as("Image gallery of the product is not with Arrows navigation in the product block!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Не отображать")) {
-                        softAssert.assertThat(getGalleryOgMiniIcons_Dots().exists() && getGalleryOgMiniIcons_Arrows().exists())
+                        softAssert.assertThat(getGalleryOfMiniIcons_Dots().exists() && getGalleryOfMiniIcons_Arrows().exists())
                                 .as("Image gallery of the product is not switched off in the product block!")
                                 .isFalse();
                     }
@@ -410,6 +396,7 @@ public class AssertsOnStorefront {
                                 .isFalse();
                     }
                     break;
+
 
                 default:
                     System.out.println("Неизвестная проверка: " + setting);

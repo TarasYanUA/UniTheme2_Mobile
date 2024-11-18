@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
 
 public class ThemeSettings {
     public ThemeSettings() {
@@ -40,11 +41,18 @@ public class ThemeSettings {
     SelenideElement setting_ShowYouSave = $(By.id("settings.abt__ut2.product_list.show_you_save.mobile"));
     SelenideElement setting_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_multicolumns.lines_number_in_name_product.mobile"));
     SelenideElement setting_ShowProductCode = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_sku.mobile']");
-    SelenideElement setting_DisplayAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.mobile']");
+    SelenideElement setting_ShowAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.mobile']");
     SelenideElement setting_ShowQuantityChanger = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_qty.mobile']");
     SelenideElement setting_ShowAddToCartButton = $("select[id='settings.abt__ut2.product_list.products_multicolumns.show_button_add_to_cart.mobile']");
     SelenideElement setting_AdditionalProductInformation = $("select[id='settings.abt__ut2.product_list.products_multicolumns.grid_item_bottom_content.mobile']");
     SelenideElement setting_ShowStandardImageGallery_Grid = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_gallery.mobile"));
+
+    //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
+    SelenideElement smallItems_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.small_items.lines_number_in_name_product.mobile"));
+    SelenideElement smallItems_ShowProductCode = $(By.id("settings.abt__ut2.product_list.small_items.show_sku.mobile"));
+    SelenideElement smallItems_ShowAvailabilityStatus = $(By.id("settings.abt__ut2.product_list.small_items.show_amount.mobile"));
+    SelenideElement smallItems_ShowQuantityChanger = $(By.id("settings.abt__ut2.product_list.small_items.show_qty.mobile"));
+    SelenideElement smallItems_ShowAddToCartButton = $(By.id("settings.abt__ut2.product_list.small_items.show_button_add_to_cart.mobile"));
 
     //Настройки для вида списка товаров с шаблоном "Скроллер"
     SelenideElement scroller_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_scroller.lines_number_in_name_product.mobile"));
@@ -109,7 +117,7 @@ public class ThemeSettings {
                     break;
 
                 case "Отображать статус наличия":
-                        setCheckboxState(setting_DisplayAvailabilityStatus, value);
+                        setCheckboxState(setting_ShowAvailabilityStatus, value);
                     break;
 
                 case "Отображать модификатор количества":
@@ -128,6 +136,29 @@ public class ThemeSettings {
                     setting_ShowStandardImageGallery_Grid.selectOptionContainingText(value);
                     break;
 
+
+                //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
+                case "Мелкие элементы, Количество строк в названии товара":
+                    smallItems_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
+                    break;
+
+                case "Мелкие элементы, Отображать код товара":
+                    setCheckboxState(smallItems_ShowProductCode, value);
+                    break;
+
+                case "Мелкие элементы, Отображать статус наличия":
+                    setCheckboxState(smallItems_ShowAvailabilityStatus, value);
+                    break;
+
+                case "Мелкие элементы, Отображать модификатор количества":
+                    setCheckboxState(smallItems_ShowQuantityChanger, value);
+                    break;
+
+                case "Мелкие элементы, Отображать кнопку \"Купить\"":
+                    smallItems_ShowAddToCartButton.selectOptionContainingText(value);
+                    break;
+
+
                 //Настройки для вида списка товаров с шаблоном "Скроллер"
                 case "Скроллер, Количество строк в названии товара":
                     scroller_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
@@ -144,6 +175,7 @@ public class ThemeSettings {
                 case "Скроллер, Отображать кнопку \"Купить\"":
                     scroller_AddToCartButton.selectOptionContainingText(value);
                     break;
+
 
                 default:
                     System.out.println("Неизвестная настройка: " + setting);

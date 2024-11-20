@@ -179,6 +179,9 @@ public class AssertsOnStorefront {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .owl-theme.ty-owl-controls");
     }
 
+    //Настройка "Показать номер элемента"
+    SelenideElement numbersOfElements = $(".ut2-hit");
+
 
     @And("Выполняем проверки в блоке:")
     public void assertsAtBlock(DataTable table) {
@@ -220,6 +223,19 @@ public class AssertsOnStorefront {
                     } else {
                         softAssert.assertThat(getOutsideNavigation().exists())
                                 .as("There is Outside navigation but shouldn't in the product block!")
+                                .isFalse();
+                    }
+                    break;
+
+                //Проверяем номера элементов в блоке товаров. Настройка блока "Показать номер элемента"
+                case "Показать номер элемента":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(numbersOfElements.exists())
+                                .as("There are no Item numbers in the product block!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(numbersOfElements.exists())
+                                .as("There are Item numbers but shouldn't in the product block!")
                                 .isFalse();
                     }
                     break;

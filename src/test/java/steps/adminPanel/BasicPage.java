@@ -24,7 +24,7 @@ public class BasicPage implements CheckMenuToBeActive {
 
 
     @Given("Переходим на страницу {string}, что на странице 'Темы'")
-    public void navigateTo_PageFromPage_Themes(String pageName) {
+    public void navigateTo_PageName_FromThemes(String pageName) {
         menuOf_WebsiteThemes.click();
         $x("//ul[@id='tools_list_actions_menu']//span[text()='" + pageName + "']").click();
     }

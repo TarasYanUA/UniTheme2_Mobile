@@ -413,7 +413,6 @@ public class AssertsOnStorefront {
                     }
                     break;
 
-
                 default:
                     System.out.println("Неизвестная проверка: " + setting);
                     break;

@@ -1,8 +1,10 @@
 package steps.adminPanel.themeSettings;
 
 import com.codeborne.selenide.SelenideElement;
+import hooks.CollectAssertMessages;
 import io.cucumber.java.en.And;
 import io.cucumber.datatable.DataTable;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 
 import java.util.List;
@@ -52,86 +54,128 @@ public class BottomStickyPanelSettings {
             String value = row.get(1);       // Значение настройки
 
             switch (setting) {
-                case "Отображать блок с контактами для элемента \"Контакты\". Укажите ID блока":
+                case "Отображать блок с контактами для элемента \"Контакты\". Укажите ID блока" -> {
                     setting_BlockID_ContactUs.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
                     setting_BlockID_ContactUs.setValue(value);
-                    break;
+                }
+                case "Включить нижнюю липкую панель" -> setCheckboxState(setting_EnableBottomStickyPanel, value);
+                case "Отображать названия элементов панели" -> setCheckboxState(setting_DisplayTitlesForPanelItems, value);
+                case "Ссылка на главную страницу" -> setCheckboxState(setting_LinkToHomePage, value);
+                case "Ссылка на главную страницу, Позиция" -> position_LinkToHomePage.setValue(value);
+                case "Главное Меню" -> setCheckboxState(setting_CatalogMenu, value);
+                case "Главное Меню, Позиция" -> position_CatalogMenu.setValue(value);
+                case "Поиск товаров" -> setCheckboxState(setting_SearchProducts, value);
+                case "Поиск товаров, Позиция" -> position_SearchProducts.setValue(value);
+                case "Мини корзина" -> setCheckboxState(setting_MiniCart, value);
+                case "Мини корзина, Позиция" -> position_MiniCart.setValue(value);
+                case "Избранные товары" -> setCheckboxState(setting_Wishlist, value);
+                case "Избранные товары, Позиция" -> position_Wishlist.setValue(value);
+                case "Сравнение товаров" -> setCheckboxState(setting_ComparisonList, value);
+                case "Сравнение товаров, Позиция" -> position_ComparisonList.setValue(value);
+                case "Аккаунт" -> setCheckboxState(setting_Account, value);
+                case "Аккаунт, Позиция" -> position_Account.setValue(value);
+                case "Контакты" -> setCheckboxState(setting_Contacts, value);
+                case "Контакты, Позиция" -> position_Contacts.setValue(value);
+                default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);
+            }
 
-                case "Включить нижнюю липкую панель":
-                    setCheckboxState(setting_EnableBottomStickyPanel, value);
-                    break;
+        }
+    }
 
-                case "Отображать названия элементов панели":
-                    setCheckboxState(setting_DisplayTitlesForPanelItems, value);
-                    break;
+    //Кнопки/Проверки на витрине
+    String bottomStickyPanel = ".ut2-sticky-panel__wrap ";
+    SelenideElement element_BottomStickyPanel = $(bottomStickyPanel);
+    SelenideElement linkToHomePage = $(".ut2-icon-home_page");
+    SelenideElement catalogMenu = $(bottomStickyPanel + ".ut2-icon-outline-menu");
+    SelenideElement searchProducts = $(bottomStickyPanel + ".ut2-icon-search");
+    SelenideElement miniCart = $(bottomStickyPanel + ".ut2-icon-use_icon_cart");
+    SelenideElement wishlist = $(".ut2-icon-baseline-favorite-border");
+    SelenideElement comparisonList = $(".ut2-icon-addchart");
+    SelenideElement account = $(bottomStickyPanel + ".ut2-icon-outline-account-circle");
+    SelenideElement contacts = $(".ut2-icon-local_phone");
 
-                case "Ссылка на главную страницу":
-                    setCheckboxState(setting_LinkToHomePage, value);
-                    break;
+    @And("Выполняем проверки в Нижней липкой панели:")
+    public void assertsOfBottomStickyPanel(DataTable table) {
+        List<List<String>> rows = table.asLists(String.class);
+        SoftAssertions softAssert = CollectAssertMessages.getSoftAssertions();
 
-                case "Ссылка на главную страницу, Позиция":
-                    position_LinkToHomePage.setValue(value);
-                    break;
+        for (List<String> row : rows) {
+            String setting = row.get(0); // Ключ (название настройки)
+            String value = row.get(1);   // Значение настройки
 
-                case "Главное Меню":
-                    setCheckboxState(setting_CatalogMenu, value);
-                    break;
+            switch (setting) {
+                case "Нижняя липкая панель" -> softAssert.assertThat(element_BottomStickyPanel.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Bottom Sticky Panel!"
+                                : "There is a Bottom Sticky Panel but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Главное Меню, Позиция":
-                    position_CatalogMenu.setValue(value);
-                    break;
+                case "Ссылка на главную страницу" -> softAssert.assertThat(linkToHomePage.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Link To Home Page!"
+                                : "There is a Link To Home Page but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Поиск товаров":
-                    setCheckboxState(setting_SearchProducts, value);
-                    break;
+                case "Главное Меню" -> softAssert.assertThat(catalogMenu.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Catalog Menu!"
+                                : "There is a Catalog Menu but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Поиск товаров, Позиция":
-                    position_SearchProducts.setValue(value);
-                    break;
+                case "Поиск товаров" -> softAssert.assertThat(searchProducts.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Search Products button!"
+                                : "There is a Search Products button but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Мини корзина":
-                    setCheckboxState(setting_MiniCart, value);
-                    break;
+                case "Мини корзина" -> softAssert.assertThat(miniCart.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Mini Cart!"
+                                : "There is a Mini Cart but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Мини корзина, Позиция":
-                    position_MiniCart.setValue(value);
-                    break;
+                case "Избранные товары" -> softAssert.assertThat(wishlist.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Wish List!"
+                                : "There is a Wish List but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Избранные товары":
-                    setCheckboxState(setting_Wishlist, value);
-                    break;
+                case "Сравнение товаров" -> softAssert.assertThat(comparisonList.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Comparison List!"
+                                : "There is a Comparison List but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Избранные товары, Позиция":
-                    position_Wishlist.setValue(value);
-                    break;
+                case "Аккаунт" -> softAssert.assertThat(account.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Account!"
+                                : "There is an Account but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Сравнение товаров":
-                    setCheckboxState(setting_ComparisonList, value);
-                    break;
+                case "Контакты" -> softAssert.assertThat(contacts.exists())
+                        .as(value.equalsIgnoreCase("y")
+                                ? "There is no Contacts button!"
+                                : "There is a Contacts button but shouldn't!")
+                        .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Сравнение товаров, Позиция":
-                    position_ComparisonList.setValue(value);
-                    break;
-
-                case "Аккаунт":
-                    setCheckboxState(setting_Account, value);
-                    break;
-
-                case "Аккаунт, Позиция":
-                    position_Account.setValue(value);
-                    break;
-
-                case "Контакты":
-                    setCheckboxState(setting_Contacts, value);
-                    break;
-
-                case "Контакты, Позиция":
-                    position_Contacts.setValue(value);
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("Неизвестная настройка: " + setting);
+                default -> System.out.println("Неизвестная проверка: " + setting);
             }
         }
+    }
+
+    private SelenideElement getButtonByName(String buttonName) {
+        return switch (buttonName) {
+            case "Главное Меню" -> catalogMenu;
+            case "Поиск товаров" -> searchProducts;
+            case "Мини корзина" -> miniCart;
+            case "Аккаунт" -> account;
+            case "Контакты" -> contacts;
+            default -> throw new IllegalArgumentException("Неизвестная кнопка: " + buttonName);
+        };
+    }
+    @And("Нажимаем кнопку {string} в Нижней липкой панели")
+    public void clickButton(String buttonName) {
+        SelenideElement button = getButtonByName(buttonName);
+        button.click();
     }
 }

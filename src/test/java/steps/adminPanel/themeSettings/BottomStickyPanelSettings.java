@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.datatable.DataTable;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
+import steps.adminPanel.LayoutPage;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class BottomStickyPanelSettings {
     public BottomStickyPanelSettings() {
         super();
     }
+
+    SoftAssertions softAssert = CollectAssertMessages.getSoftAssertions();
+    String blockID = LayoutPage.blockID;
 
     SelenideElement setting_BlockID_ContactUs = $(By.id("settings.abt__ut2.general.sticky_panel.sticky_panel_contacts_block_id"));
     SelenideElement setting_EnableBottomStickyPanel = $(By.id("settings.abt__ut2.general.sticky_panel.enable_sticky_panel.mobile"));
@@ -50,13 +54,18 @@ public class BottomStickyPanelSettings {
         List<List<String>> rows = table.asLists((String.class));
 
         for (List<String> row : rows) {
-            String setting = row.getFirst(); // Ключ (название настройки)
-            String value = row.get(1);       // Значение настройки
+            String setting = row.getFirst(); //Ключ (название настройки)
+            String value = row.get(1);       //Значение настройки
 
             switch (setting) {
                 case "Отображать блок с контактами для элемента \"Контакты\". Укажите ID блока" -> {
-                    setting_BlockID_ContactUs.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-                    setting_BlockID_ContactUs.setValue(value);
+                    if (!value.equals("0")) {
+                        setting_BlockID_ContactUs.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+                        setting_BlockID_ContactUs.setValue(value);
+                    } else {
+                        setting_BlockID_ContactUs.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+                        setting_BlockID_ContactUs.setValue(blockID);
+                    }
                 }
                 case "Включить нижнюю липкую панель" -> setCheckboxState(setting_EnableBottomStickyPanel, value);
                 case "Отображать названия элементов панели" -> setCheckboxState(setting_DisplayTitlesForPanelItems, value);
@@ -97,7 +106,6 @@ public class BottomStickyPanelSettings {
     @And("Выполняем проверки в Нижней липкой панели:")
     public void assertsOfBottomStickyPanel(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
-        SoftAssertions softAssert = CollectAssertMessages.getSoftAssertions();
 
         for (List<String> row : rows) {
             String setting = row.get(0); // Ключ (название настройки)

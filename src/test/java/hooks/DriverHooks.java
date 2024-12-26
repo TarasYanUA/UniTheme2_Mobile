@@ -49,7 +49,6 @@ public class DriverHooks {
             System.out.println("\nОшибки в asserts:");
             System.out.println(e.getMessage());
         }
-
         closeWebDriver();
     }
 }

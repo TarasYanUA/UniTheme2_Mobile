@@ -24,6 +24,8 @@ public class LayoutPage {
     SelenideElement popupWindow = $(".ui-dialog-title");
     SelenideElement button_SaveLayoutSettings = $("input[name='dispatch[block_manager.grid.update]']");
     SelenideElement setting_UseDelayedLoadingOfSection = $("input[id^='elm_grid_abt__ut2_use_lazy_load']");
+    SelenideElement button_CreateNewBlock = $("#opener_block_type_list");
+
 
     //Настройки блока товаров
     SelenideElement blockTemplate = $("select[id$='_products_template']");
@@ -153,9 +155,50 @@ public class LayoutPage {
         }
     }
 
-
             @Then("Сохраняем настройки блока")
     public void saveBlockSettings() {
         button_SaveBlockProperties.click();
+    }
+
+    @Given("Переходим на страницу {string}, что на странице 'Макеты'")
+    public void navigateTo_BlocksPage(String pageName) {
+        BasicPage.sideBar.click();
+        $x("//a[text()='" + pageName + "']").click();
+    }
+
+    @And("Создаём блок с шаблоном {string}")
+    public void createNewBlock(String blockTemplate) {
+        button_CreateNewBlock.click();
+        $("strong[title='" + blockTemplate +"']").click();
+    }
+
+    @And("Создаём блок 'Контакты \\(ручное наполнение)'")
+    public void createBlock_ContactsManualFilling() {
+        $("input[name='block_data[description][name]']").setValue("111 Контакты (ручное наполнение)");
+        button_SettingsOfTemplate.click();
+        sleep(1000);
+        SelenideElement setting_ShowContentInSidebar = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_open_right_panel]']");
+        if(setting_ShowContentInSidebar.isSelected())
+            setting_ShowContentInSidebar.click();
+        SelenideElement setting_DisplayRequestCallButton = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_show_call_request_button]']");
+        if(!setting_DisplayRequestCallButton.isSelected())
+            setting_DisplayRequestCallButton.click();
+        SelenideElement setting_DisplayButtonsOnSocialNetworks = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_show_social_buttons]']");
+        if(!setting_DisplayButtonsOnSocialNetworks.isSelected())
+            setting_DisplayButtonsOnSocialNetworks.click();
+        $("li[id*='block_contents_']").click();
+        $("input[name='block_data[content][phone_1]']").setValue("+380938941111");
+        $("input[name='block_data[content][phone_2]']").setValue("+380938942222");
+        $("input[name='block_data[content][phone_3]']").setValue("+380938943333");
+        $("input[name='block_data[content][email]']").setValue("myemail@ukr.net");
+        $("textarea[name='block_data[content][working_hours]']").setValue("from 9 a.m. to 8 p.m. every day except Saturday");
+        $("textarea[name='block_data[content][address]']").setValue("Юридична адреса. 03026, м. Київ, шосе Столичне 103 корп. 1, пов. 9");
+        button_SaveBlockProperties.click();
+    }
+
+    @Given("Получаем ID блока {string} на странице 'Блоки'")
+    public void getBlockIDFrom_BlocksPage(String blockName) {
+        blockID = $x("//input[@value='" + blockName + "']/../span/small").getText().trim().split("#")[1];
+        System.out.println("ID блока '" + blockName + "': " + blockID);
     }
 }

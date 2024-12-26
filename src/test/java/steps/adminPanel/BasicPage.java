@@ -16,8 +16,7 @@ public class BasicPage implements CheckMenuToBeActive {
     SelenideElement button_Save_OnTop = $(".btn.btn-primary.cm-submit");
     SelenideElement button_Save_OnTop_Other = $(".nav__actions-btn-save");
     SelenideElement mobile_MainMenu = $(".mobile-menu-toggler");
-    SelenideElement sideBar = $(".sidebar-toggle");
-
+    public static SelenideElement sideBar = $(".sidebar-toggle");
     SelenideElement menuOf_WebsiteThemes = $(".actions-menu__dropdown-toggle");
     SelenideElement menuOf_Settings = $(By.id("administration"));
     SelenideElement featureSetting_showInProductList = $("input[id='elm_feature_display_on_catalog_18']");

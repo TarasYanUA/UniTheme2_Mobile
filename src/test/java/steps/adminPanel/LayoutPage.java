@@ -170,10 +170,6 @@ public class LayoutPage {
     public void createNewBlock(String blockTemplate) {
         button_CreateNewBlock.click();
         $("strong[title='" + blockTemplate +"']").click();
-    }
-
-    @And("Создаём блок 'Контакты \\(ручное наполнение)'")
-    public void createBlock_ContactsManualFilling() {
         $("input[name='block_data[description][name]']").setValue("111 Контакты (ручное наполнение)");
         button_SettingsOfTemplate.click();
         sleep(1000);

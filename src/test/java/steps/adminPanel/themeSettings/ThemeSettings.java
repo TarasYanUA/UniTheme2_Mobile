@@ -29,7 +29,7 @@ public class ThemeSettings {
 
 
     //Вкладка "Списки товаров"
-    SelenideElement setting_OutOfStockProducts = $("input[id='settings.abt__ut2.product_list.decolorate_out_of_stock_products']");
+    SelenideElement setting_DecolorizeOutOfStockProducts = $("input[id='settings.abt__ut2.product_list.decolorate_out_of_stock_products']");
     SelenideElement setting_PriceDisplayFormat = $(By.id("settings.abt__ut2.product_list.price_display_format"));
     SelenideElement setting_PriceAtTheTop = $("input[id='settings.abt__ut2.product_list.price_position_top']");
     SelenideElement setting_EmptyStarsOfProductRating = $("input[id='settings.abt__ut2.product_list.show_rating']");
@@ -39,6 +39,10 @@ public class ThemeSettings {
     SelenideElement setting_DisplayButtonWishList = $(By.id("settings.abt__ut2.product_list.button_wish_list_view.mobile"));
     SelenideElement setting_DisplayButtonComparisonList = $(By.id("settings.abt__ut2.product_list.button_compare_view.mobile"));
     SelenideElement setting_ShowYouSave = $(By.id("settings.abt__ut2.product_list.show_you_save.mobile"));
+
+    //Настройки для вида списка товаров "Сетка"
+    SelenideElement setting_ProductIconWidth = $(By.id("settings.abt__ut2.product_list.products_multicolumns.image_width.mobile"));
+    SelenideElement setting_ProductIconHeight = $(By.id("settings.abt__ut2.product_list.products_multicolumns.image_height.mobile"));
     SelenideElement setting_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_multicolumns.lines_number_in_name_product.mobile"));
     SelenideElement setting_ShowProductCode = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_sku.mobile']");
     SelenideElement setting_ShowAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.mobile']");
@@ -77,109 +81,40 @@ public class ThemeSettings {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Формат отображения цен":
-                    setting_PriceDisplayFormat.selectOptionContainingText(value);
-                    break;
-
-                case "Отображать цену вверху":
-                    setCheckboxState(setting_PriceAtTheTop, value);
-                    break;
-
-                case "Отображать пустые звёзды рейтинга товара":
-                    setCheckboxState(setting_EmptyStarsOfProductRating, value);
-                    break;
-
-                case "Отображать общее значение рейтинга товара":
-                    setCheckboxState(setting_CommonValueOfProductRating, value);
-                    break;
-
-                case "Отображать кнопку \"Добавить в избранное\"":
-                    setCheckboxState(setting_DisplayButtonWishList, value);
-                    break;
-
-                case "Отображать кнопку \"Добавить в список сравнения\"":
-                    setCheckboxState(setting_DisplayButtonComparisonList, value);
-                    break;
-
-                case "Отображать \"Вы экономите\"":
-                    setting_ShowYouSave.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-                    setting_ShowYouSave.selectOptionContainingText(value);
-                    break;
-
+                case "Обесцвечивать товары, которых нет в наличии" -> setCheckboxState(setting_DecolorizeOutOfStockProducts, value);
+                case "Формат отображения цен" -> setting_PriceDisplayFormat.selectOptionContainingText(value);
+                case "Отображать цену вверху" -> setCheckboxState(setting_PriceAtTheTop, value);
+                case "Отображать пустые звёзды рейтинга товара" -> setCheckboxState(setting_EmptyStarsOfProductRating, value);
+                case "Отображать общее значение рейтинга товара" -> setCheckboxState(setting_CommonValueOfProductRating, value);
+                case "Отображать кнопку \"Добавить в избранное\"" -> setCheckboxState(setting_DisplayButtonWishList, value);
+                case "Отображать кнопку \"Добавить в список сравнения\"" -> setCheckboxState(setting_DisplayButtonComparisonList, value);
+                case "Отображать \"Вы экономите\"" -> setting_ShowYouSave.scrollIntoCenter().selectOptionContainingText(value);
 
                 //Настройки для вида списка товаров "Сетка"
-                case "Количество строк в названии товара":
-                    setting_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
-                    break;
-
-                case "Отображать код товара":
-                    setCheckboxState(setting_ShowProductCode, value);
-                    break;
-
-                case "Отображать статус наличия":
-                        setCheckboxState(setting_ShowAvailabilityStatus, value);
-                    break;
-
-                case "Отображать модификатор количества":
-                    setCheckboxState(setting_ShowQuantityChanger, value);
-                    break;
-
-                case "Отображать кнопку \"Купить\"":
-                    setting_ShowAddToCartButton.selectOptionContainingText(value);
-                    break;
-
-                case "Дополнительная информация о товаре":
-                    setting_AdditionalProductInformation.selectOptionContainingText(value);
-                    break;
-
-                case "Отображать стандартную галерею изображений":
-                    setting_ShowStandardImageGallery_Grid.selectOptionContainingText(value);
-                    break;
-
+                case "Ширина иконки товара" -> setting_ProductIconWidth.setValue(value);
+                case "Высота иконки товара" -> setting_ProductIconHeight.setValue(value);
+                case "Количество строк в названии товара" -> setting_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);
+                case "Отображать код товара" -> setCheckboxState(setting_ShowProductCode, value);
+                case "Отображать статус наличия" -> setCheckboxState(setting_ShowAvailabilityStatus, value);
+                case "Отображать модификатор количества" -> setCheckboxState(setting_ShowQuantityChanger, value);
+                case "Отображать кнопку \"Купить\"" -> setting_ShowAddToCartButton.selectOptionContainingText(value);
+                case "Дополнительная информация о товаре" -> setting_AdditionalProductInformation.selectOptionContainingText(value);
+                case "Отображать стандартную галерею изображений" -> setting_ShowStandardImageGallery_Grid.selectOptionContainingText(value);
 
                 //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
-                case "Мелкие элементы, Количество строк в названии товара":
-                    smallItems_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
-                    break;
+                case "Мелкие элементы, Количество строк в названии товара" -> smallItems_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);
+                case "Мелкие элементы, Отображать код товара" -> setCheckboxState(smallItems_ShowProductCode, value);
+                case "Мелкие элементы, Отображать статус наличия" -> setCheckboxState(smallItems_ShowAvailabilityStatus, value);
+                case "Мелкие элементы, Отображать модификатор количества" -> setCheckboxState(smallItems_ShowQuantityChanger, value);
+                case "Мелкие элементы, Отображать кнопку \"Купить\"" -> smallItems_ShowAddToCartButton.selectOptionContainingText(value);
 
-                case "Мелкие элементы, Отображать код товара":
-                    setCheckboxState(smallItems_ShowProductCode, value);
-                    break;
+                // Настройки для вида списка товаров с шаблоном "Скроллер"
+                case "Скроллер, Количество строк в названии товара" -> scroller_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);
+                case "Скроллер, Отображать статус наличия" -> setCheckboxState(scroller_AvailabilityStatus, value);
+                case "Скроллер, Отображать модификатор количества" -> setCheckboxState(scroller_QuantityChanger, value);
+                case "Скроллер, Отображать кнопку \"Купить\"" -> scroller_AddToCartButton.selectOptionContainingText(value);
 
-                case "Мелкие элементы, Отображать статус наличия":
-                    setCheckboxState(smallItems_ShowAvailabilityStatus, value);
-                    break;
-
-                case "Мелкие элементы, Отображать модификатор количества":
-                    setCheckboxState(smallItems_ShowQuantityChanger, value);
-                    break;
-
-                case "Мелкие элементы, Отображать кнопку \"Купить\"":
-                    smallItems_ShowAddToCartButton.selectOptionContainingText(value);
-                    break;
-
-
-                //Настройки для вида списка товаров с шаблоном "Скроллер"
-                case "Скроллер, Количество строк в названии товара":
-                    scroller_NumberOfLinesInProductName.scrollTo().selectOptionContainingText(value);
-                    break;
-
-                case "Скроллер, Отображать статус наличия":
-                    setCheckboxState(scroller_AvailabilityStatus, value);
-                    break;
-
-                case "Скроллер, Отображать модификатор количества":
-                    setCheckboxState(scroller_QuantityChanger, value);
-                    break;
-
-                case "Скроллер, Отображать кнопку \"Купить\"":
-                    scroller_AddToCartButton.selectOptionContainingText(value);
-                    break;
-
-
-                default:
-                    System.out.println("Неизвестная настройка: " + setting);
-                    break;
+                default -> System.out.println("Неизвестная настройка: " + setting);
             }
         }
     }

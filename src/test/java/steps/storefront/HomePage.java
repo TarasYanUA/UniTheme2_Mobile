@@ -12,7 +12,9 @@ import steps.adminPanel.LayoutPage;
 import static com.codeborne.selenide.Selenide.*;
 
 public class HomePage {
-    public HomePage(){super();}
+    public HomePage() {
+        super();
+    }
 
     String blockID = LayoutPage.blockID;
 
@@ -33,11 +35,11 @@ public class HomePage {
     public void navigateToStorefront_HomePage() {
         button_ShowAdminPanel.click();
         goTo_Storefront.click();
-        if(button_CloseAdminBottomPanel.isDisplayed()) {
+        if (button_CloseAdminBottomPanel.isDisplayed()) {
             button_CloseAdminBottomPanel.click();
         }
         cookie.click();
-        if(notification_close.exists())
+        if (notification_close.exists())
             notification_close.click();
     }
 
@@ -89,11 +91,12 @@ public class HomePage {
     }
 
     @And("Переходим на страницу категории {string} {string}")
-    public void navigateTo_CategoryPage__mobile(String mainCategory, String subCategory) {
+    public void navigateTo_CategoryPage(String mainCategory, String subCategory) {
         flyMenu_button.click();
         $(".ut2-lfl.ty-menu-item__" + mainCategory + " strong").click();
         $x("//strong[text()='" + subCategory + "']").click();
-        flyMenu_button_ViewDetails_SecondLevel.click();
+        if (flyMenu_button_ViewDetails_SecondLevel.exists())
+            flyMenu_button_ViewDetails_SecondLevel.click();
     }
 
     @And("Скроллимся вниз по странице на {int} px")

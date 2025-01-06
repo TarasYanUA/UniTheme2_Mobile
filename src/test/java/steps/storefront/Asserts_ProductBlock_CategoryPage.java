@@ -12,8 +12,8 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class AssertsOnStorefront {
-    public AssertsOnStorefront() {
+public class Asserts_ProductBlock_CategoryPage {
+    public Asserts_ProductBlock_CategoryPage() {
         super();
     }
 
@@ -24,7 +24,7 @@ public class AssertsOnStorefront {
     //Настройки темы -- вкладка "Списки товаров"
 
     //Настройка "Обесцвечивать товары, которых нет в наличии"
-    SelenideElement decolorizeOutOfStockProducts = $(".ut2-gl__body.content-on-hover.decolorize");
+    SelenideElement decolorizeOutOfStockProducts = $(".decolorize");
 
     //Настройка "Отображать пустые звёзды рейтинга товара"
     SelenideElement emptyStarsOfProductRating = $("div[class*='ty-product-review-reviews-stars'][data-ca-product-review-reviews-stars-full='0']");
@@ -42,7 +42,7 @@ public class AssertsOnStorefront {
 
     //Настройка "Отображать статусы для кнопок "Купить" -- Иконка"
     SelenideElement statusesForButton_AddToCart_Icon = $("a.ut2-added-to-cart");
-    
+
     //Настройка "Отображать статусы для кнопок "Купить" -- Количество товаров"
     SelenideElement statusesForButton_AddToCart_Number = $("a.ut2-added-to-cart[data-added-amount='1']");
 
@@ -102,6 +102,10 @@ public class AssertsOnStorefront {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style*='lines-in-name-product: " + number + ";']");
     }
 
+    SelenideElement numberOfLinesInProductName_GridList(String number) {
+        return $("div[style*='lines-in-name-product: " + number + ";']");
+    }
+
 
     // Настройка "Отображать кнопку "Купить" -- Только иконка корзины"
     SelenideElement showAddToCartButton_IconOnly = $(".ut2-icon-use_icon_cart");
@@ -111,7 +115,7 @@ public class AssertsOnStorefront {
     }
 
     //Настройка "Отображать кнопку "Купить" -- Только текст"
-    SelenideElement gridList__ShowAddToCartButton_TextOnly = $(".ty-btn__primary.ty-btn__add-to-cart.cm-form-dialog-closer");
+    SelenideElement showAddToCartButton_TextOnly = $(".ut2-view-qty.text");
 
     SelenideElement getShowAddToCartButton_TextOnly() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ty-btn__primary.ty-btn__add-to-cart.cm-form-dialog-closer");
@@ -155,7 +159,6 @@ public class AssertsOnStorefront {
     SelenideElement getQuickViewButton() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='\" + blockID + \"'] a[class*='ut2-quick-view-button']");
     }
-
 
 
     //Настройки блока товаров
@@ -258,11 +261,11 @@ public class AssertsOnStorefront {
                 case "Отображать общее значение рейтинга товара":
                     if (value.equalsIgnoreCase("y")) {
                         softAssert.assertThat(getCommonValueOfProductRating().exists())
-                                .as("There are no common value of product rating in the product block!")
+                                .as("There is no common value of product rating in the product block!")
                                 .isTrue();
                     } else {
                         softAssert.assertThat(getCommonValueOfProductRating().exists())
-                                .as("There is common value of product rating but shouldn't in the product block!")
+                                .as("There is a common value of product rating but shouldn't in the product block!")
                                 .isFalse();
                     }
                     break;
@@ -409,6 +412,182 @@ public class AssertsOnStorefront {
                     } else {
                         softAssert.assertThat(getQuickViewButton().exists())
                                 .as("There is a Quick view button but shouldn't in the product block!")
+                                .isFalse();
+                    }
+                    break;
+
+                default:
+                    System.out.println("Неизвестная проверка: " + setting);
+                    break;
+            }
+        }
+    }
+
+    @And("Выполняем проверки на странице категории:")
+    public void assertsOnCategoryPage(DataTable table) {
+        executeJavaScript("window.scrollBy(0, -450);");
+        List<List<String>> rows = table.asLists(String.class);
+
+        for (List<String> row : rows) {
+            String setting = row.get(0); // Ключ (название настройки)
+            String value = row.get(1);   // Значение настройки
+
+            switch (setting) {
+                case "Обесцвечивать товары, которых нет в наличии":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(decolorizeOutOfStockProducts.exists())
+                                .as("There is no decolorized product on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(decolorizeOutOfStockProducts.exists())
+                                .as("There are decolorized products but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать пустые звёзды рейтинга товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(emptyStarsOfProductRating.exists())
+                                .as("There are no empty stars on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(emptyStarsOfProductRating.exists())
+                                .as("There are empty stars but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать общее значение рейтинга товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(commonValueOfProductRating.exists())
+                                .as("There is no common value of product rating on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(commonValueOfProductRating.exists())
+                                .as("There is a common value of product rating but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать кнопку \"Добавить в избранное\"":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(button_AddToWishList.exists())
+                                .as("There is no button 'Add to wish list' on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(button_AddToWishList.exists())
+                                .as("There is a button 'Add to wish list' but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать кнопку \"Добавить в список сравнения\"":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(button_AddToComparisonList.exists())
+                                .as("There is no button 'Add to comparison list' on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(button_AddToComparisonList.exists())
+                                .as("There is a button 'Add to comparison list' but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать \"Вы экономите\"":
+                    if (value.equalsIgnoreCase("Сокращенный вид")) {
+                        softAssert.assertThat(getText_YouSave_Short().exists())
+                                .as("The text 'You save' is not Short or missed on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(getText_YouSave_Short().exists())
+                                .as("There is a text 'You save' but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Сетка, Количество строк в названии товара":
+                    softAssert.assertThat(numberOfLinesInProductName_GridList(value).exists())
+                            .as("Number of lines in the product name is not " + value)
+                            .isTrue();
+                    break;
+
+                case "Отображать код товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(productCode.exists())
+                                .as("There is no product code on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(productCode.exists())
+                                .as("There is a product code but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать статус наличия":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(availabilityStatus.exists())
+                                .as("There is no availability status on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(availabilityStatus.exists())
+                                .as("There is an availability status but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать модификатор количества":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(quantityChanger.exists())
+                                .as("There is no quantity Changer on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(quantityChanger.exists())
+                                .as("There is a quantity Changer but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Отображать кнопку \"Купить\"":
+                    if (value.equalsIgnoreCase("Только иконка корзины")) {
+                        softAssert.assertThat(showAddToCartButton_IconOnly.exists())
+                                .as("The button 'Add to cart' does not have a view 'Icon only' on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Только текст")) {
+                        softAssert.assertThat(showAddToCartButton_TextOnly.exists())
+                                .as("The button 'Add to cart' does not have a view 'Text only' on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Иконка корзины и текст")) {
+                        softAssert.assertThat(showAddToCartButton_IconOnly.exists()
+                                        && showAddToCartButton_TextOnly.exists())
+                                .as("The button 'Add to cart' does not have a view 'Icon and Text' on the category page!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Отображать стандартную галерею изображений":
+                    if (value.equalsIgnoreCase("Навигация точками")) {
+                        softAssert.assertThat(galleryOfMiniIcons_Dots.exists())
+                                .as("Image gallery of the product is not with Dots navigation on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Навигация стрелками")) {
+                        softAssert.assertThat(galleryOgMiniIcons_Arrows.exists())
+                                .as("Image gallery of the product is not with Arrows navigation on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(galleryOfMiniIcons_Dots.exists() && galleryOgMiniIcons_Arrows.exists())
+                                .as("Image gallery of the product is not switched off on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Текст налога \"[цена налога] + Вкл налог\"":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(pricesWithTaxes.exists())
+                                .as("There is no text of a product tax on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(pricesWithTaxes.exists())
+                                .as("There is a text of a product tax but shouldn't on the category page!")
                                 .isFalse();
                     }
                     break;

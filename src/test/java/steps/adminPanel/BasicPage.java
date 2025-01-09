@@ -87,4 +87,13 @@ public class BasicPage implements CheckMenuToBeActive {
     public void saveTaxSettings() {
         button_Save_OnTop_Other.click();
     }
+
+    @Given("Выключаем модуль с ИД {string}, если модуль включён")
+    public void disableAddon(String addonID) {
+        if(!$x("//tr[@id='" + addonID + "']//a[contains(text(), 'Включить')]").exists()) {
+            $x("//tr[@id='" + addonID + "']//span[contains(@class, 'cs-icon--type-cog')]").scrollIntoCenter().click(); //шестерёнка модуля
+            $x("//tr[@id='" +addonID + "']//a[@data-ca-event='ce.update_object_status_callback']").click();   //Кнопка "Выкл."
+            sleep(6000);
+        }
+    }
 }

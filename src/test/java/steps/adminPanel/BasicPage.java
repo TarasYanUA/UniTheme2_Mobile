@@ -58,8 +58,7 @@ public class BasicPage implements CheckMenuToBeActive {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Показывать в списке товаров" ->
-                    setCheckboxState(featureSetting_showInProductList, value);
+                case "Показывать в списке товаров" -> setCheckboxState(featureSetting_showInProductList, value);
             }
         }
     }
@@ -90,9 +89,9 @@ public class BasicPage implements CheckMenuToBeActive {
 
     @Given("Выключаем модуль с ИД {string}, если модуль включён")
     public void disableAddon(String addonID) {
-        if(!$x("//tr[@id='" + addonID + "']//a[contains(text(), 'Включить')]").exists()) {
-            $x("//tr[@id='" + addonID + "']//span[contains(@class, 'cs-icon--type-cog')]").scrollIntoCenter().click(); //шестерёнка модуля
-            $x("//tr[@id='" +addonID + "']//a[@data-ca-event='ce.update_object_status_callback']").click();   //Кнопка "Выкл."
+        if(!$(By.id(addonID)).find(By.xpath(".//a[contains(text(), 'Включить')]")).exists()) {
+            $(By.id(addonID)).find(By.xpath(".//span[contains(@class, 'cs-icon--type-cog')]")).scrollIntoCenter().click(); // шестерёнка модуля
+            $(By.id(addonID)).find(By.xpath(".//a[@data-ca-event='ce.update_object_status_callback']")).click(); // кнопка "Выкл."
             sleep(6000);
         }
     }

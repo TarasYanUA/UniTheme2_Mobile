@@ -86,6 +86,9 @@ public class ThemeSettings {
                 case "Отображать цену вверху" -> setCheckboxState(setting_PriceAtTheTop, value);
                 case "Отображать пустые звёзды рейтинга товара" -> setCheckboxState(setting_EmptyStarsOfProductRating, value);
                 case "Отображать общее значение рейтинга товара" -> setCheckboxState(setting_CommonValueOfProductRating, value);
+                case "Отображать статусы для кнопок \"Купить\"" -> setting_DisplayCartStatus.selectOptionContainingText(value);
+                case "Отображать статусы для кнопок \"Добавить в избранное\", \"Добавить в список сравнения\"" ->
+                    setCheckboxState(setting_DisplayStatusesForButtons, value);
                 case "Отображать кнопку \"Добавить в избранное\"" -> setCheckboxState(setting_DisplayButtonWishList, value);
                 case "Отображать кнопку \"Добавить в список сравнения\"" -> setCheckboxState(setting_DisplayButtonComparisonList, value);
                 case "Отображать \"Вы экономите\"" -> setting_ShowYouSave.scrollIntoCenter().selectOptionContainingText(value);

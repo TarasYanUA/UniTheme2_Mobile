@@ -34,6 +34,17 @@ public class ColorSchemeSettings {
     }
 
 
+    //Вкладка "Общие"
+    SelenideElement setting_General_RoundCornersForElements = $(By.id("settings.abt__ut2.general.use_rounding"));
+    SelenideElement setting_General_RoundCornersOfBlocks = $(By.id("settings.abt__ut2.general.use_rounding_blocks"));
+    SelenideElement setting_General_DisplayHeadersInCapitalLetters = $(By.id("settings.abt__ut2.general.use_titles_uppercase"));
+    SelenideElement setting_General_ButtonsStyle = $(By.id("settings.abt__ut2.general.buttons.style"));
+    SelenideElement setting_General_DisplayTextInCapitalLetters = $(By.id("settings.abt__ut2.general.buttons.use_text_uppercase"));
+    SelenideElement setting_General_AddShadow = $(By.id("settings.abt__ut2.general.buttons.use_shadow"));
+    SelenideElement setting_General_AddBulk = $(By.id("settings.abt__ut2.general.buttons.use_gradient"));
+    SelenideElement setting_General_CartIcon = $(By.id("settings.abt__ut2.general.buttons.use_icon_cart"));
+
+
     //Вкладка "Списки товаров"
     SelenideElement setting_FrameType = $(By.id("settings.abt__ut2.product_list.show_grid_border"));
     SelenideElement setting_ProductLists_MaskForProductImages = $(By.id("settings.abt__ut2.product_list.mask_images_gallery"));
@@ -58,25 +69,24 @@ public class ColorSchemeSettings {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Тип обрамления товара в сетке":
-                    setting_FrameType.selectOptionContainingText(value);
-                    break;
+                //Вкладка "Общие"
+                case "Скруглить углы для элементов интерфейса" -> setting_General_RoundCornersForElements.selectOptionContainingText(value);
+                case "Скруглить углы блоков, окон, баннеров" -> setCheckboxState(setting_General_RoundCornersOfBlocks, value);
+                case "Отображать заголовки заглавными буквами" -> setCheckboxState(setting_General_DisplayHeadersInCapitalLetters, value);
+                case "Кнопки, Стиль" -> setting_General_ButtonsStyle.selectOptionContainingText(value);
+                case "Кнопки, Отображать текст заглавными буквами" -> setCheckboxState(setting_General_DisplayTextInCapitalLetters, value);
+                case "Кнопки, Отображать тень" -> setCheckboxState(setting_General_AddShadow, value);
+                case "Кнопки, Добавить объем" -> setCheckboxState(setting_General_AddBulk, value);
+                case "Кнопки, Иконка Корзины" -> setting_General_CartIcon.selectOptionContainingText(value);
 
-                case "Добавить фон/маску для изображений товара":
-                    setCheckboxState(setting_ProductLists_MaskForProductImages, value);
-                    break;
+                //Вкладка "Списки товаров"
+                case "Тип обрамления товара в сетке" -> setting_FrameType.selectOptionContainingText(value);
+                case "Добавить фон/маску для изображений товара" -> setCheckboxState(setting_ProductLists_MaskForProductImages, value);
+                case "Использовать выравнивание элементов в товарной сетке" -> setCheckboxState(setting_ProductLists_ElementsAlignment, value);
+                case "Эффект увеличения ячейки при наведении" -> setCheckboxState(setting_ProductLists_ExpandGridItemOnHover, value);
+                case "Насыщенность шрифта для названия товара" -> setting_ProductLists_FontWeightForProductName.selectOptionContainingText(value);
 
-                case "Использовать выравнивание элементов в товарной сетке":
-                    setCheckboxState(setting_ProductLists_ElementsAlignment, value);
-                    break;
-
-                case "Эффект увеличения ячейки при наведении":
-                    setCheckboxState(setting_ProductLists_ExpandGridItemOnHover, value);
-                    break;
-
-                case "Насыщенность шрифта для названия товара":
-                    setting_ProductLists_FontWeightForProductName.selectOptionContainingText(value);
-                    break;
+                default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);
             }
         }
     }

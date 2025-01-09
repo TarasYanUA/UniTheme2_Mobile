@@ -42,6 +42,13 @@ public class BasicPage implements CheckMenuToBeActive {
         $x("//a[contains(@href, 'feature_id=')][text()='" + featureName + "']").click();
     }
 
+    private void setCheckboxState(SelenideElement checkbox, String value) {
+        boolean isValueNo = value.equalsIgnoreCase("n");
+        boolean isCheckboxSelected = checkbox.isSelected();
+
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
+            checkbox.click();
+    }
     @And("Устанавливаем настройки характеристики Бренд:")
     public void setSettingsOfFeature_Brand(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -51,15 +58,8 @@ public class BasicPage implements CheckMenuToBeActive {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Показывать в списке товаров":
-                    if(value.equalsIgnoreCase("n")){
-                        if(featureSetting_showInProductList.isSelected())
-                            featureSetting_showInProductList.click();
-                    } else {
-                        if(!featureSetting_showInProductList.isSelected())
-                            featureSetting_showInProductList.click();
-                    }
-                    break;
+                case "Показывать в списке товаров" ->
+                    setCheckboxState(featureSetting_showInProductList, value);
             }
         }
     }

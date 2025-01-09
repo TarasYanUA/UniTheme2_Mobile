@@ -50,13 +50,9 @@ public class ProductPageSettings {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Название товара":
-                    field_ProductName.setValue(value);
-                    break;
+                case "Название товара" -> setCheckboxState(field_ProductName, value);
 
-                default:
-                    System.out.println("Неизвестная настройка: " + setting);
-                    break;
+                default -> System.out.println("Неизвестная настройка: " + setting);
             }
         }
     }

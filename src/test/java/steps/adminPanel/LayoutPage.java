@@ -99,59 +99,42 @@ public class LayoutPage {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Показать номер элемента":
-                    setCheckboxState(checkbox_ShowItemNumber, value);
-                    break;
+                case "Показать номер элемента" -> setCheckboxState(checkbox_ShowItemNumber, value);
 
-                case "Количество колонок в списке":
-                    field_NumberOfColumnsInList.setValue(value);
-                    break;
+                case "Количество колонок в списке" -> field_NumberOfColumnsInList.setValue(value);
 
-                case "Тип загрузки":
-                    setting_LoadingType.selectOptionContainingText(value);
-                    break;
+                case "Тип загрузки" -> setting_LoadingType.selectOptionContainingText(value);
 
-                case "Показывать цену":
-                    setCheckboxState(setting_ShowPrice, value);
-                    break;
+                case "Показывать цену" -> setCheckboxState(setting_ShowPrice, value);
 
-                case "Включить быстрый просмотр":
-                    setCheckboxState(setting_EnableQuickView, value);
-                    break;
+                case "Включить быстрый просмотр" -> setCheckboxState(setting_EnableQuickView, value);
 
-                case "Не прокручивать автоматически":
-                    setCheckboxState(setting_DoNotScrollAutomatically, value);
-                    break;
+                case "Не прокручивать автоматически" -> setCheckboxState(setting_DoNotScrollAutomatically, value);
 
-                case "Количество элементов (мобильный)":
-                    setting_ItemQuantity_Mobile.setValue(value);
-                    break;
+                case "Количество элементов (мобильный)" -> setting_ItemQuantity_Mobile.setValue(value);
 
-                case "Внешняя навигация":
+                case "Внешняя навигация" -> {
                     setting_OutsideNavigation.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
                     setCheckboxState(setting_OutsideNavigation, value);
-                    break;
+                }
 
                 // Настройки вкладки "Контент"
-                case "Заполнение":
+                case "Заполнение" -> {
                     tabOfBlock_Content.click();
                     setting_Filling.selectOptionContainingText(value);
-                    break;
+                }
 
-                case "Макс. число элементов":
-                    field_Limit.setValue(value);
-                    break;
+                case "Макс. число элементов" -> field_Limit.setValue(value);
 
                 // Настройки вкладки "Настройки блока"
-                case "Спрятать кнопку добавления":
+                case "Спрятать кнопку добавления" -> {
                     tabOfBlock_BlockSettings.click();
                     setCheckboxState(checkbox_HideAddToCartButton, value);
-                    break;
+                }
 
-                default:
-                    System.out.println("Неизвестная настройка: " + setting);
-                    break;
+                default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);
             }
+
         }
     }
 

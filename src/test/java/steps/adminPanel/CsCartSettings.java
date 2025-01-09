@@ -42,30 +42,23 @@ public class CsCartSettings {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                //Вкладка "Внешний вид"
-                case "Показывать цены с налогом на страницах категорий и товаров":
-                    setCheckboxState(setting_DisplayPricesWithTaxesOnCategoryAndProductPages, value);
-                    break;
+                // Вкладка "Внешний вид"
+                case "Показывать цены с налогом на страницах категорий и товаров" ->
+                        setCheckboxState(setting_DisplayPricesWithTaxesOnCategoryAndProductPages, value);
 
-                case "Включить быстрый просмотр":
-                    setCheckboxState(setting_QuickView, value);
-                    break;
+                case "Включить быстрый просмотр" ->
+                        setCheckboxState(setting_QuickView, value);
 
+                // Вкладка "Оформление заказа"
+                case "Расчет налога по" ->
+                        setting_TaxCalculationMethodBasedOn.selectOptionContainingText(value);
 
-                //Вкладка "Оформление заказа"
-                case "Расчет налога по":
-                    setting_TaxCalculationMethodBasedOn.selectOptionContainingText(value);
-                    break;
+                // Страница "Настройки -- Налоги"
+                case "Цена включает налог" ->
+                        setCheckboxState(setting_priceIncludesTax, value);
 
-
-                //Страница "Настройки -- Налоги"
-                case "Цена включает налог":
-                    setCheckboxState(setting_priceIncludesTax, value);
-                    break;
-
-                default:
-                    System.out.println("Неизвестная настройка: " + setting);
-                    break;
+                default ->
+                        throw new IllegalArgumentException("Неизвестная настройка: " + setting);
             }
         }
     }

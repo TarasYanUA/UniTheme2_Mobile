@@ -59,6 +59,8 @@ public class BasicPage implements CheckMenuToBeActive {
 
             switch (setting) {
                 case "Показывать в списке товаров" -> setCheckboxState(featureSetting_showInProductList, value);
+
+                default -> System.out.println("Неизвестная настройка: " + setting);
             }
         }
     }
@@ -92,7 +94,7 @@ public class BasicPage implements CheckMenuToBeActive {
         if(!$(By.id(addonID)).find(By.xpath(".//a[contains(text(), 'Включить')]")).exists()) {
             $(By.id(addonID)).find(By.xpath(".//span[contains(@class, 'cs-icon--type-cog')]")).scrollIntoCenter().click(); // шестерёнка модуля
             $(By.id(addonID)).find(By.xpath(".//a[@data-ca-event='ce.update_object_status_callback']")).click(); // кнопка "Выкл."
-            sleep(6000);
+            sleep(8000);
         }
     }
 }

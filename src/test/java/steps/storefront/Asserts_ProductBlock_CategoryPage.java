@@ -55,10 +55,12 @@ public class Asserts_ProductBlock_CategoryPage {
     }
 
     //Настройка "Отображать "Вы экономите -- Сокращенный вид" (вариант "Полный вид" на мобильном отсутствует)
-    SelenideElement text_YouSave_Short = $(".ut2-sld-short span.ty-save-price");
+    String text_YouSave_Short = " .ut2-sld-short span.ty-save-price";
+
+    SelenideElement grid_Text_YouSave_Short = $(".ut2-gl__body" + text_YouSave_Short);
 
     SelenideElement getText_YouSave_Short() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-sld-short span.ty-save-price");
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + text_YouSave_Short);
     }
 
     //Настройка "Отображать код товара"
@@ -474,11 +476,11 @@ public class Asserts_ProductBlock_CategoryPage {
 
                 case "Отображать \"Вы экономите\"":
                     if (value.equalsIgnoreCase("Сокращенный вид")) {
-                        softAssert.assertThat(getText_YouSave_Short().exists())
+                        softAssert.assertThat(grid_Text_YouSave_Short.exists())
                                 .as("The text 'You save' is not Short or missed on the category page!")
                                 .isTrue();
                     } else {
-                        softAssert.assertThat(getText_YouSave_Short().exists())
+                        softAssert.assertThat(grid_Text_YouSave_Short.exists())
                                 .as("There is a text 'You save' but shouldn't on the category page!")
                                 .isFalse();
                     }

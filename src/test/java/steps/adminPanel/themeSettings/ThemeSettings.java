@@ -41,15 +41,27 @@ public class ThemeSettings {
     SelenideElement setting_ShowYouSave = $(By.id("settings.abt__ut2.product_list.show_you_save.mobile"));
 
     //Настройки для вида списка товаров "Сетка"
-    SelenideElement setting_ProductIconWidth = $(By.id("settings.abt__ut2.product_list.products_multicolumns.image_width.mobile"));
-    SelenideElement setting_ProductIconHeight = $(By.id("settings.abt__ut2.product_list.products_multicolumns.image_height.mobile"));
-    SelenideElement setting_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_multicolumns.lines_number_in_name_product.mobile"));
-    SelenideElement setting_ShowProductCode = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_sku.mobile']");
-    SelenideElement setting_ShowAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.mobile']");
-    SelenideElement setting_ShowQuantityChanger = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_qty.mobile']");
-    SelenideElement setting_ShowAddToCartButton = $("select[id='settings.abt__ut2.product_list.products_multicolumns.show_button_add_to_cart.mobile']");
-    SelenideElement setting_AdditionalProductInformation = $("select[id='settings.abt__ut2.product_list.products_multicolumns.grid_item_bottom_content.mobile']");
-    SelenideElement setting_ShowStandardImageGallery_Grid = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_gallery.mobile"));
+    SelenideElement grid_ProductIconWidth = $(By.id("settings.abt__ut2.product_list.products_multicolumns.image_width.mobile"));
+    SelenideElement grid_ProductIconHeight = $(By.id("settings.abt__ut2.product_list.products_multicolumns.image_height.mobile"));
+    SelenideElement grid_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.products_multicolumns.lines_number_in_name_product.mobile"));
+    SelenideElement grid_ShowProductCode = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_sku.mobile']");
+    SelenideElement grid_ShowAvailabilityStatus = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_amount.mobile']");
+    SelenideElement grid_ShowQuantityChanger = $("input[id='settings.abt__ut2.product_list.products_multicolumns.show_qty.mobile']");
+    SelenideElement grid_ShowAddToCartButton = $("select[id='settings.abt__ut2.product_list.products_multicolumns.show_button_add_to_cart.mobile']");
+    SelenideElement grid_AdditionalProductInformation = $("select[id='settings.abt__ut2.product_list.products_multicolumns.grid_item_bottom_content.mobile']");
+    SelenideElement grid_ShowStandardImageGallery = $(By.id("settings.abt__ut2.product_list.products_multicolumns.show_gallery.mobile"));
+
+    //Настройки для вида списка товаров "Список без опций"
+    SelenideElement listWithoutOptions_ProductIconWidth = $(By.id("settings.abt__ut2.product_list.products_without_options.image_width.mobile"));
+    SelenideElement listWithoutOptions_ProductIconHeight = $(By.id(("settings.abt__ut2.product_list.products_without_options.image_height.mobile")));
+    SelenideElement listWithoutOptions_ShowProductCode = $(By.id("settings.abt__ut2.product_list.products_without_options.show_sku.mobile"));
+    SelenideElement listWithoutOptions_ShowAvailabilityStatus = $(By.id("settings.abt__ut2.product_list.products_without_options.show_amount.mobile"));
+    SelenideElement listWithoutOptions_ShowQuantityChanger = $(By.id("settings.abt__ut2.product_list.products_without_options.show_qty.mobile"));
+    SelenideElement listWithoutOptions_ShowAddToCartButton = $(By.id("settings.abt__ut2.product_list.products_without_options.show_button_add_to_cart.mobile"));
+    SelenideElement listWithoutOptions_ContentUnderDescription = $(By.id("settings.abt__ut2.product_list.products_without_options.grid_item_bottom_content.mobile"));
+    SelenideElement listWithoutOptions_ShowProductOptions = $(By.id("settings.abt__ut2.product_list.products_without_options.show_options.mobile"));
+    SelenideElement listWithoutOptions_ShowBrandLogo = $(By.id("settings.abt__ut2.product_list.products_without_options.show_brand_logo.mobile"));
+    SelenideElement listWithoutOptions_ShowStandardImageGallery = $(By.id("settings.abt__ut2.product_list.products_without_options.show_gallery.mobile"));
 
     //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
     SelenideElement smallItems_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.small_items.lines_number_in_name_product.mobile"));
@@ -94,15 +106,27 @@ public class ThemeSettings {
                 case "Отображать \"Вы экономите\"" -> setting_ShowYouSave.scrollIntoCenter().selectOptionContainingText(value);
 
                 //Настройки для вида списка товаров "Сетка"
-                case "Ширина иконки товара" -> setting_ProductIconWidth.setValue(value);
-                case "Высота иконки товара" -> setting_ProductIconHeight.setValue(value);
-                case "Количество строк в названии товара" -> setting_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);
-                case "Отображать код товара" -> setCheckboxState(setting_ShowProductCode, value);
-                case "Отображать статус наличия" -> setCheckboxState(setting_ShowAvailabilityStatus, value);
-                case "Отображать модификатор количества" -> setCheckboxState(setting_ShowQuantityChanger, value);
-                case "Отображать кнопку \"Купить\"" -> setting_ShowAddToCartButton.selectOptionContainingText(value);
-                case "Дополнительная информация о товаре" -> setting_AdditionalProductInformation.selectOptionContainingText(value);
-                case "Отображать стандартную галерею изображений" -> setting_ShowStandardImageGallery_Grid.selectOptionContainingText(value);
+                case "Сетка, Ширина иконки товара" -> grid_ProductIconWidth.setValue(value);
+                case "Сетка, Высота иконки товара" -> grid_ProductIconHeight.setValue(value);
+                case "Сетка, Количество строк в названии товара" -> grid_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);
+                case "Сетка, Отображать код товара" -> setCheckboxState(grid_ShowProductCode, value);
+                case "Сетка, Отображать статус наличия" -> setCheckboxState(grid_ShowAvailabilityStatus, value);
+                case "Сетка, Отображать модификатор количества" -> setCheckboxState(grid_ShowQuantityChanger, value);
+                case "Сетка, Отображать кнопку \"Купить\"" -> grid_ShowAddToCartButton.selectOptionContainingText(value);
+                case "Сетка, Дополнительная информация о товаре" -> grid_AdditionalProductInformation.selectOptionContainingText(value);
+                case "Сетка, Отображать стандартную галерею изображений" -> grid_ShowStandardImageGallery.selectOptionContainingText(value);
+
+                //Настройки для вида списка товаров "Список без опций"
+                case "Список без опций, Ширина иконки товара" -> listWithoutOptions_ProductIconWidth.setValue(value);
+                case "Список без опций, Высота иконки товара" -> listWithoutOptions_ProductIconHeight.setValue(value);
+                case "Список без опций, Отображать код товара" -> setCheckboxState(listWithoutOptions_ShowProductCode, value);
+                case "Список без опций, Отображать статус наличия" -> setCheckboxState(listWithoutOptions_ShowAvailabilityStatus, value);
+                case "Список без опций, Отображать модификатор количества" -> setCheckboxState(listWithoutOptions_ShowQuantityChanger, value);
+                case "Список без опций, Отображать кнопку \"Купить\"" -> listWithoutOptions_ShowAddToCartButton.selectOptionContainingText(value);
+                case "Список без опций, Содержимое под описанием" -> listWithoutOptions_ContentUnderDescription.selectOptionContainingText(value);
+                case "Список без опций, Отображать опции товара" -> setCheckboxState(listWithoutOptions_ShowProductOptions, value);
+                case "Список без опций, Отображать логотип бренда" -> setCheckboxState(listWithoutOptions_ShowBrandLogo, value);
+                case "Список без опций, Отображать стандартную галерею изображений" -> listWithoutOptions_ShowStandardImageGallery.selectOptionContainingText(value);
 
                 //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
                 case "Мелкие элементы, Количество строк в названии товара" -> smallItems_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);

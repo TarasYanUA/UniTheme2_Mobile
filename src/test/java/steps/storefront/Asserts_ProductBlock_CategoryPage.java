@@ -94,7 +94,7 @@ public class Asserts_ProductBlock_CategoryPage {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style*='lines-in-name-product: " + number + ";']");
     }
 
-    SelenideElement numberOfLinesInProductName_GridList(String number) {
+    SelenideElement numberOfLinesInProductName(String number) {
         return $("div[style*='lines-in-name-product: " + number + ";']");
     }
 
@@ -486,8 +486,8 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
-                case "Сетка, Количество строк в названии товара":
-                    softAssert.assertThat(numberOfLinesInProductName_GridList(value).exists())
+                case "Количество строк в названии товара":
+                    softAssert.assertThat(numberOfLinesInProductName(value).exists())
                             .as("Number of lines in the product name is not " + value)
                             .isTrue();
                     break;

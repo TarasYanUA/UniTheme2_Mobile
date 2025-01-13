@@ -40,18 +40,6 @@ public class Asserts_ProductBlock_CategoryPage {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ut2-show-rating-num");
     }
 
-    //Настройка "Отображать статусы для кнопок "Купить" -- Иконка"
-    SelenideElement statusesForButton_AddToCart_Icon = $("a.ut2-added-to-cart");
-
-    //Настройка "Отображать статусы для кнопок "Купить" -- Количество товаров"
-    SelenideElement statusesForButton_AddToCart_Number = $("a.ut2-added-to-cart[data-added-amount='1']");
-
-    //Настройка "Отображать статусы для кнопок... "Добавить в избранное"
-    SelenideElement statusesForButton_AddToWishList = $("a.ut2-add-to-wish.active");
-
-    //Настройка "Отображать статусы для кнопок... "Добавить в список сравнения"
-    SelenideElement statusesForButton_AddToComparisonList = $("a.ut2-add-to-wish.active");
-
     //Настройка "Отображать кнопку "Добавить в избранное""
     SelenideElement button_AddToWishList = $(".ut2-add-to-wish");
 
@@ -81,10 +69,12 @@ public class Asserts_ProductBlock_CategoryPage {
     }
 
     //Настройка "Отображать статус наличия"
-    SelenideElement availabilityStatus = $(".ty-qty-in-stock.ty-control-group__item");
+    String availabilityStatus = " .ty-qty-in-stock.ty-control-group__item";
+
+    SelenideElement availabilityStatus_Grid = $(".ut2-gl__body" + availabilityStatus);
 
     SelenideElement getAvailabilityStatus() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ty-qty-in-stock.ty-control-group__item");
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + availabilityStatus);
     }
 
     //Настройка "Отображать модификатор количества"
@@ -121,12 +111,19 @@ public class Asserts_ProductBlock_CategoryPage {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ty-btn__primary.ty-btn__add-to-cart.cm-form-dialog-closer");
     }
 
+    //Настройка "Отображать кнопку "Купить" -- Иконка корзины и текст"
+    SelenideElement showAddToCartButton_IconAndText = $x("//i[@class='ut2-icon-use_icon_cart']//..//bdi[text()='В корзину']");
+
 
     //Настройка "Дополнительная информация о товаре -- Краткое описание"
     SelenideElement additionalInformationOfProduct_ShortDescription = $(".product-description");
 
     //Настройка "Дополнительная информация о товаре -- Характеристики"
     SelenideElement additionalInformationOfProduct_Features = $(".ut2-gl__feature");
+
+    //Настройка "Дополнительная информация о товаре -- Список характеристик и вариаций"
+    SelenideElement additionalInformationOfProduct_Variations = $(".ut2-lv__item-features");
+
 
     //Настройка "Отображать стандартную галерею изображений -- Навигация точками"
     SelenideElement galleryOfMiniIcons_Dots = $(".owl-pagination");
@@ -154,11 +151,6 @@ public class Asserts_ProductBlock_CategoryPage {
 
     //Настройка "Показывать мини-иконки в виде галереи"
     SelenideElement miniThumbnailImagesAsGallery = $(".ty-icon-right-open-thin");
-
-    //Настройка "Отображать кнопку "Быстрый просмотр"
-    SelenideElement getQuickViewButton() {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='\" + blockID + \"'] a[class*='ut2-quick-view-button']");
-    }
 
 
     //Настройки блока товаров
@@ -403,19 +395,6 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
-                //Проверяем кнопку "Быстрый просмотр" в блоке товаров
-                case "Отображать кнопку \"Быстрый просмотр\"":
-                    if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(getQuickViewButton().exists())
-                                .as("There is no Quick view button in the product block!")
-                                .isTrue();
-                    } else {
-                        softAssert.assertThat(getQuickViewButton().exists())
-                                .as("There is a Quick view button but shouldn't in the product block!")
-                                .isFalse();
-                    }
-                    break;
-
                 default:
                     System.out.println("Неизвестная проверка: " + setting);
                     break;
@@ -525,11 +504,11 @@ public class Asserts_ProductBlock_CategoryPage {
 
                 case "Отображать статус наличия":
                     if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(availabilityStatus.exists())
+                        softAssert.assertThat(availabilityStatus_Grid.exists())
                                 .as("There is no availability status on the category page!")
                                 .isTrue();
                     } else {
-                        softAssert.assertThat(availabilityStatus.exists())
+                        softAssert.assertThat(availabilityStatus_Grid.exists())
                                 .as("There is an availability status but shouldn't on the category page!")
                                 .isFalse();
                     }
@@ -548,7 +527,7 @@ public class Asserts_ProductBlock_CategoryPage {
                     break;
 
                 case "Отображать кнопку \"Купить\"":
-                    if (value.equalsIgnoreCase("Только иконка корзины")) {
+                    if (value.equalsIgnoreCase("Только Иконка корзины")) {
                         softAssert.assertThat(showAddToCartButton_IconOnly.exists())
                                 .as("The button 'Add to cart' does not have a view 'Icon only' on the category page!")
                                 .isTrue();
@@ -557,9 +536,20 @@ public class Asserts_ProductBlock_CategoryPage {
                                 .as("The button 'Add to cart' does not have a view 'Text only' on the category page!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Иконка корзины и текст")) {
-                        softAssert.assertThat(showAddToCartButton_IconOnly.exists()
-                                        && showAddToCartButton_TextOnly.exists())
+                        softAssert.assertThat(showAddToCartButton_IconAndText.exists())
                                 .as("The button 'Add to cart' does not have a view 'Icon and Text' on the category page!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Дополнительная информация о товаре":
+                    if (value.equalsIgnoreCase("Краткое описание и характеристики")) {
+                        softAssert.assertThat(additionalInformationOfProduct_ShortDescription.exists() && additionalInformationOfProduct_Features.exists())
+                                .as("Additional information about products is not 'Short description and variations' on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Список характеристик и вариаций")) {
+                        softAssert.assertThat(additionalInformationOfProduct_Features.exists() && additionalInformationOfProduct_Variations.exists())
+                                .as("Additional information about products is not 'Features and variations list' on the category page!")
                                 .isTrue();
                     }
                     break;
@@ -567,15 +557,15 @@ public class Asserts_ProductBlock_CategoryPage {
                 case "Отображать стандартную галерею изображений":
                     if (value.equalsIgnoreCase("Навигация точками")) {
                         softAssert.assertThat(galleryOfMiniIcons_Dots.exists())
-                                .as("Image gallery of the product is not with Dots navigation on the category page!")
+                                .as("Standard Image Gallery of the product is not with Dots navigation on the category page!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Навигация стрелками")) {
                         softAssert.assertThat(galleryOgMiniIcons_Arrows.exists())
-                                .as("Image gallery of the product is not with Arrows navigation on the category page!")
+                                .as("Standard Image Gallery of the product is not with Arrows navigation on the category page!")
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Не отображать")) {
                         softAssert.assertThat(galleryOfMiniIcons_Dots.exists() && galleryOgMiniIcons_Arrows.exists())
-                                .as("Image gallery of the product is not switched off on the category page!")
+                                .as("Standard Image Gallery of the product is not switched off on the category page!")
                                 .isFalse();
                     }
                     break;

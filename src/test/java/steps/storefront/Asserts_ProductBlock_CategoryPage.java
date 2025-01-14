@@ -57,7 +57,9 @@ public class Asserts_ProductBlock_CategoryPage {
     //Настройка "Отображать "Вы экономите -- Сокращенный вид" (вариант "Полный вид" на мобильном отсутствует)
     String text_YouSave_Short = " .ut2-sld-short span.ty-save-price";
 
-    SelenideElement grid_Text_YouSave_Short = $(".ut2-gl__body" + text_YouSave_Short);
+    SelenideElement youSave_Short_Grid = $(".ut2-gl__body" + text_YouSave_Short);
+
+    SelenideElement youSave_Short_ListWithoutOptions = $(".ty-product-list" + text_YouSave_Short);
 
     SelenideElement getText_YouSave_Short() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + text_YouSave_Short);
@@ -75,6 +77,8 @@ public class Asserts_ProductBlock_CategoryPage {
 
     SelenideElement availabilityStatus_Grid = $(".ut2-gl__body" + availabilityStatus);
 
+    SelenideElement availabilityStatus_ListWithoutOptions = $(".ty-product-list" + availabilityStatus);
+
     SelenideElement getAvailabilityStatus() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + availabilityStatus);
     }
@@ -87,7 +91,8 @@ public class Asserts_ProductBlock_CategoryPage {
     }
 
 
-    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Сетка", "Мелкие элементы", "Скроллер"
+
+    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Сетка"
 
     //Настройка "Количество строк в названии товара"
     SelenideElement getNumberOfLinesInProductName(int number) {
@@ -140,6 +145,15 @@ public class Asserts_ProductBlock_CategoryPage {
     SelenideElement getGalleryOfMiniIcons_Arrows() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .icon-right-circle");
     }
+
+
+
+    //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Список без опций"
+    SelenideElement contentUnderDescription_Features = $(".ty-product-feature__label");
+    SelenideElement contentUnderDescription_Variations = $(".ut2-lv__item-features");
+    SelenideElement showProductOptions = $(".cm-picker-product-options.ty-product-options");
+    SelenideElement showBrandLogo = $(".ut2-cat-container .brand-img");
+
 
 
     //Настройки -- Общие настройки -- Внешний вид
@@ -474,13 +488,13 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
-                case "Отображать \"Вы экономите\"":
+                case "Сетка, Отображать \"Вы экономите\"":
                     if (value.equalsIgnoreCase("Сокращенный вид")) {
-                        softAssert.assertThat(grid_Text_YouSave_Short.exists())
+                        softAssert.assertThat(youSave_Short_Grid.exists())
                                 .as("The text 'You save' is not Short or missed on the category page!")
                                 .isTrue();
                     } else {
-                        softAssert.assertThat(grid_Text_YouSave_Short.exists())
+                        softAssert.assertThat(youSave_Short_Grid.exists())
                                 .as("There is a text 'You save' but shouldn't on the category page!")
                                 .isFalse();
                     }
@@ -504,7 +518,7 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
-                case "Отображать статус наличия":
+                case "Сетка, Отображать статус наличия":
                     if (value.equalsIgnoreCase("y")) {
                         softAssert.assertThat(availabilityStatus_Grid.exists())
                                 .as("There is no availability status on the category page!")
@@ -580,6 +594,70 @@ public class Asserts_ProductBlock_CategoryPage {
                     } else {
                         softAssert.assertThat(pricesWithTaxes.exists())
                                 .as("There is a text of a product tax but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Список без опций, Отображать \"Вы экономите\"":
+                    if (value.equalsIgnoreCase("Сокращенный вид")) {
+                        softAssert.assertThat(youSave_Short_ListWithoutOptions.exists())
+                                .as("The text 'You save' is not Short or missed on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(youSave_Short_ListWithoutOptions.exists())
+                                .as("There is a text 'You save' but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Список без опций, Отображать статус наличия":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(availabilityStatus_ListWithoutOptions.exists())
+                                .as("There is no availability status on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(availabilityStatus_ListWithoutOptions.exists())
+                                .as("There is an availability status but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Список без опций, Содержимое под описанием":
+                    if (value.equalsIgnoreCase("Список характеристик")) {
+                        softAssert.assertThat(contentUnderDescription_Features.exists())
+                                .as("Content under description is not 'Features' on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Список вариаций")) {
+                        softAssert.assertThat(contentUnderDescription_Variations.exists())
+                                .as("Content under description is not 'Variations' on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Список характеристик и вариаций")) {
+                        softAssert.assertThat(contentUnderDescription_Features.exists() && contentUnderDescription_Variations.exists())
+                                .as("Content under description is not 'Features and variations list' on the category page!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Список без опций, Отображать опции товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(showProductOptions.exists())
+                                .as("There are no Product Options on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(showProductOptions.exists())
+                                .as("There are Product Options but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Список без опций, Отображать логотип бренда":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(showBrandLogo.exists())
+                                .as("There is no Brand logo on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(showBrandLogo.exists())
+                                .as("There is a Brand logo but shouldn't on the category page!")
                                 .isFalse();
                     }
                     break;

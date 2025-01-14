@@ -1,5 +1,6 @@
 package steps.storefront;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -8,6 +9,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import steps.adminPanel.LayoutPage;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -29,6 +32,7 @@ public class HomePage {
     SelenideElement cookie = $(".cm-btn-success");
     SelenideElement notification_close = $(".cm-notification-close");
     SelenideElement blockWithProducts = $("div.ty-mainbox-container.clearfix");
+    SelenideElement categoryTemplate_ListWithoutOptions = $(".ut2-icon-products-without-options");
 
 
     @When("Переходим на витрину")
@@ -97,6 +101,13 @@ public class HomePage {
         $x("//strong[text()='" + subCategory + "']").click();
         if (flyMenu_button_ViewDetails_SecondLevel.exists())
             flyMenu_button_ViewDetails_SecondLevel.click();
+    }
+
+    @And("Переходим на шаблон 'Список без опций' страницы категории")
+    public void navigateTo_ListWithoutOptions_CategoryPage() {
+        categoryTemplate_ListWithoutOptions.click();
+        sleep(3000);
+        $("div[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(6));
     }
 
     @And("Скроллимся вниз по странице на {int} px")

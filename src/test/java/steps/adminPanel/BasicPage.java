@@ -19,7 +19,11 @@ public class BasicPage implements CheckMenuToBeActive {
     public static SelenideElement sideBar = $(".sidebar-toggle");
     SelenideElement menuOf_WebsiteThemes = $(".actions-menu__dropdown-toggle");
     SelenideElement menuOf_Settings = $(By.id("administration"));
-    SelenideElement featureSetting_showInProductList = $("input[id='elm_feature_display_on_catalog_18']");
+
+    //Настройки характеристики "Бренд"
+    SelenideElement featureSetting_ShowOnTheFeaturesTab = $(By.id("elm_feature_display_on_product_18"));
+    SelenideElement featureSetting_ShowInProductList = $(By.id("elm_feature_display_on_catalog_18"));
+    SelenideElement featureSetting_ShowInHeaderOnTheProductDetailsPage = $(By.id("elm_feature_display_on_header_18"));
 
 
     @Given("Переходим на страницу {string}, что на странице 'Темы'")
@@ -58,7 +62,9 @@ public class BasicPage implements CheckMenuToBeActive {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Показывать в списке товаров" -> setCheckboxState(featureSetting_showInProductList, value);
+                case "Показывать во вкладке «Характеристики» карточки товара" -> setCheckboxState(featureSetting_ShowOnTheFeaturesTab, value);
+                case "Показывать в списке товаров" -> setCheckboxState(featureSetting_ShowInProductList, value);
+                case "Показывать в заголовке карточки товара" -> setCheckboxState(featureSetting_ShowInHeaderOnTheProductDetailsPage, value);
 
                 default -> System.out.println("Неизвестная настройка: " + setting);
             }

@@ -61,6 +61,8 @@ public class Asserts_ProductBlock_CategoryPage {
 
     SelenideElement youSave_Short_ListWithoutOptions = $(".ty-product-list" + text_YouSave_Short);
 
+    SelenideElement youSave_Short_CompactList = $(".ty-compact-list__content" + text_YouSave_Short);
+
     SelenideElement getText_YouSave_Short() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + text_YouSave_Short);
     }
@@ -79,6 +81,8 @@ public class Asserts_ProductBlock_CategoryPage {
 
     SelenideElement availabilityStatus_ListWithoutOptions = $(".ty-product-list" + availabilityStatus);
 
+    SelenideElement availabilityStatus_CompactList = $(".ty-compact-list__content" + availabilityStatus);
+
     SelenideElement getAvailabilityStatus() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + availabilityStatus);
     }
@@ -89,7 +93,6 @@ public class Asserts_ProductBlock_CategoryPage {
     SelenideElement getQuantityChanger() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[class='ty-center ty-value-changer cm-value-changer']");
     }
-
 
 
     //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Сетка"
@@ -147,13 +150,11 @@ public class Asserts_ProductBlock_CategoryPage {
     }
 
 
-
     //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Список без опций"
     SelenideElement contentUnderDescription_Features = $(".ty-product-feature__label");
     SelenideElement contentUnderDescription_Variations = $(".ut2-lv__item-features");
     SelenideElement showProductOptions = $(".cm-picker-product-options.ty-product-options");
     SelenideElement showBrandLogo = $(".ut2-cat-container .brand-img");
-
 
 
     //Настройки -- Общие настройки -- Внешний вид
@@ -658,6 +659,30 @@ public class Asserts_ProductBlock_CategoryPage {
                     } else {
                         softAssert.assertThat(showBrandLogo.exists())
                                 .as("There is a Brand logo but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Компактный список, Отображать \"Вы экономите\"":
+                    if (value.equalsIgnoreCase("Сокращенный вид")) {
+                        softAssert.assertThat(youSave_Short_CompactList.exists())
+                                .as("The text 'You save' is not Short or missed on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(youSave_Short_CompactList.exists())
+                                .as("There is a text 'You save' but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Компактный список, Отображать статус наличия":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(availabilityStatus_CompactList.exists())
+                                .as("There is no availability status on the category page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(availabilityStatus_CompactList.exists())
+                                .as("There is an availability status but shouldn't on the category page!")
                                 .isFalse();
                     }
                     break;

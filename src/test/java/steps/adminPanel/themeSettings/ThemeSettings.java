@@ -53,7 +53,7 @@ public class ThemeSettings {
 
     //Настройки для вида списка товаров "Список без опций"
     SelenideElement listWithoutOptions_ProductIconWidth = $(By.id("settings.abt__ut2.product_list.products_without_options.image_width.mobile"));
-    SelenideElement listWithoutOptions_ProductIconHeight = $(By.id(("settings.abt__ut2.product_list.products_without_options.image_height.mobile")));
+    SelenideElement listWithoutOptions_ProductIconHeight = $(By.id("settings.abt__ut2.product_list.products_without_options.image_height.mobile"));
     SelenideElement listWithoutOptions_ShowProductCode = $(By.id("settings.abt__ut2.product_list.products_without_options.show_sku.mobile"));
     SelenideElement listWithoutOptions_ShowAvailabilityStatus = $(By.id("settings.abt__ut2.product_list.products_without_options.show_amount.mobile"));
     SelenideElement listWithoutOptions_ShowQuantityChanger = $(By.id("settings.abt__ut2.product_list.products_without_options.show_qty.mobile"));
@@ -62,6 +62,14 @@ public class ThemeSettings {
     SelenideElement listWithoutOptions_ShowProductOptions = $(By.id("settings.abt__ut2.product_list.products_without_options.show_options.mobile"));
     SelenideElement listWithoutOptions_ShowBrandLogo = $(By.id("settings.abt__ut2.product_list.products_without_options.show_brand_logo.mobile"));
     SelenideElement listWithoutOptions_ShowStandardImageGallery = $(By.id("settings.abt__ut2.product_list.products_without_options.show_gallery.mobile"));
+
+    //Настройки для вида списка товаров "Компактный список"
+    SelenideElement compactList_ProductIconWidth = $(By.id("settings.abt__ut2.product_list.short_list.image_width.mobile"));
+    SelenideElement compactList_ProductIconHeight = $(By.id("settings.abt__ut2.product_list.short_list.image_height.mobile"));
+    SelenideElement compactList_ShowProductCode = $(By.id("settings.abt__ut2.product_list.short_list.show_sku.mobile"));
+    SelenideElement compactList_ShowAvailabilityStatus = $(By.id("settings.abt__ut2.product_list.short_list.show_amount.mobile"));
+    SelenideElement compactList_ShowQuantityChanger = $(By.id("settings.abt__ut2.product_list.short_list.show_qty.mobile"));
+    SelenideElement compactList_ShowAddToCartButton = $(By.id("settings.abt__ut2.product_list.short_list.show_button_add_to_cart.mobile"));
 
     //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
     SelenideElement smallItems_NumberOfLinesInProductName = $(By.id("settings.abt__ut2.product_list.small_items.lines_number_in_name_product.mobile"));
@@ -127,6 +135,14 @@ public class ThemeSettings {
                 case "Список без опций, Отображать опции товара" -> setCheckboxState(listWithoutOptions_ShowProductOptions, value);
                 case "Список без опций, Отображать логотип бренда" -> setCheckboxState(listWithoutOptions_ShowBrandLogo, value);
                 case "Список без опций, Отображать стандартную галерею изображений" -> listWithoutOptions_ShowStandardImageGallery.selectOptionContainingText(value);
+
+                //Настройки для вида списка товаров "Компактный список"
+                case "Компактный список, Ширина иконки товара" -> compactList_ProductIconWidth.setValue(value);
+                case "Компактный список, Высота иконки товара" -> compactList_ProductIconHeight.setValue(value);
+                case "Компактный список, Отображать код товара" -> setCheckboxState(compactList_ShowProductCode, value);
+                case "Компактный список, Отображать статус наличия" -> setCheckboxState(compactList_ShowAvailabilityStatus, value);
+                case "Компактный список, Отображать модификатор количества" -> setCheckboxState(compactList_ShowQuantityChanger, value);
+                case "Компактный список, Отображать кнопку \"Купить\"" -> compactList_ShowAddToCartButton.selectOptionContainingText(value);
 
                 //Настройки для вида списка товаров с шаблоном "Мелкие элементы"
                 case "Мелкие элементы, Количество строк в названии товара" -> smallItems_NumberOfLinesInProductName.scrollIntoCenter().selectOptionContainingText(value);

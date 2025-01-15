@@ -32,7 +32,9 @@ public class HomePage {
     SelenideElement cookie = $(".cm-btn-success");
     SelenideElement notification_close = $(".cm-notification-close");
     SelenideElement blockWithProducts = $("div.ty-mainbox-container.clearfix");
+    SelenideElement categoryTemplate_Grid = $(".ut2-icon-products-multicolumns");
     SelenideElement categoryTemplate_ListWithoutOptions = $(".ut2-icon-products-without-options");
+    SelenideElement categoryTemplate_CompactList = $(".ut2-icon-short-list");
 
 
     @When("Переходим на витрину")
@@ -103,12 +105,18 @@ public class HomePage {
             flyMenu_button_ViewDetails_SecondLevel.click();
     }
 
-    @And("Переходим на шаблон 'Список без опций' страницы категории")
-    public void navigateTo_ListWithoutOptions_CategoryPage() {
-        categoryTemplate_ListWithoutOptions.click();
+    @And("Переходим на шаблон {string} страницы категории")
+    public void navigateTo_CategoryTemplate(String templateName) {
+        switch (templateName) {
+            case "Сетка" -> categoryTemplate_Grid.click();
+            case "Список без опций" -> categoryTemplate_ListWithoutOptions.click();
+            case "Компактный список" -> categoryTemplate_CompactList.click();
+            default -> throw new IllegalArgumentException("Неизвестный шаблон: " + templateName);
+        }
         $("div[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(8));
         sleep(1000);
     }
+
 
     @And("Скроллимся вниз по странице на {int} px")
     public void scrollBelowOfPage(int value) {

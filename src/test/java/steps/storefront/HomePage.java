@@ -106,8 +106,8 @@ public class HomePage {
     @And("Переходим на шаблон 'Список без опций' страницы категории")
     public void navigateTo_ListWithoutOptions_CategoryPage() {
         categoryTemplate_ListWithoutOptions.click();
-        sleep(3000);
-        $("div[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(6));
+        $("div[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(8));
+        sleep(1000);
     }
 
     @And("Скроллимся вниз по странице на {int} px")

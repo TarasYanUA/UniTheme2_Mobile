@@ -17,7 +17,9 @@ public class CsCartSettings {
 
     //Вкладка "Внешний вид"
     SelenideElement setting_DisplayPricesWithTaxesOnCategoryAndProductPages = $(By.id("field___show_prices_taxed_clean_116"));
-    SelenideElement setting_QuickView = $("input[id*='field___enable_quick_view']");
+    SelenideElement setting_ShowNumberOfAvailableProducts = $(By.id("field___in_stock_field_146"));
+    SelenideElement setting_DisplayMiniThumbnailImagesAsGallery = $(By.id("field___thumbnails_gallery_147"));
+    SelenideElement setting_DisplayProductDetailsInTabs = $(By.id("field___product_details_in_tab_288"));
 
     //Вкладка "Оформление заказа"
     SelenideElement setting_TaxCalculationMethodBasedOn = $(By.id("field___tax_calculation_179"));
@@ -45,9 +47,9 @@ public class CsCartSettings {
                 // Вкладка "Внешний вид"
                 case "Показывать цены с налогом на страницах категорий и товаров" ->
                         setCheckboxState(setting_DisplayPricesWithTaxesOnCategoryAndProductPages, value);
-
-                case "Включить быстрый просмотр" ->
-                        setCheckboxState(setting_QuickView, value);
+                case "Показывать количество доступных товаров" -> setCheckboxState(setting_ShowNumberOfAvailableProducts, value);
+                case "Показывать мини-иконки в виде галереи" -> setCheckboxState(setting_DisplayMiniThumbnailImagesAsGallery, value);
+                case "Показывать информацию о товаре во вкладках" -> setCheckboxState(setting_DisplayProductDetailsInTabs, value);
 
                 // Вкладка "Оформление заказа"
                 case "Расчет налога по" ->

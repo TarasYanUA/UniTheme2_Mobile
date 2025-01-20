@@ -11,8 +11,8 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
 
-public class ThemeSettings {
-    public ThemeSettings() {
+public class CategoryPageSettings {
+    public CategoryPageSettings() {
         super();
     }
 
@@ -93,7 +93,7 @@ public class ThemeSettings {
             checkbox.click();
     }
     @And("Устанавливаем настройки темы:")
-    public void setThemeSettings(DataTable table) {
+    public void setThemeSettings_CategoryPage(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
 
         for (List<String> row : rows) {

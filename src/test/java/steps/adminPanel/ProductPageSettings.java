@@ -20,7 +20,7 @@ public class ProductPageSettings {
     SelenideElement anyProduct = $(".products-list__image");
 
     // Вкладка товара "Общее"
-    SelenideElement field_ProductName = $(By.id("product_description_product"));
+    SelenideElement field_Name = $(By.id("product_description_product"));
     SelenideElement field_Price = $(By.id("elm_price_price"));
     SelenideElement field_ListPrice = $(By.id("elm_list_price"));
     SelenideElement field_InStock = $(By.id("elm_in_stock"));
@@ -34,6 +34,15 @@ public class ProductPageSettings {
     SelenideElement field_ShortDescription = $(By.id("redactor-uuid-1"));
     SelenideElement fieldName_PromoText = $(By.cssSelector("label[for='elm_product_promo_text']"));
     SelenideElement field_PromoText = $(By.id("redactor-uuid-2"));
+
+    //Вкладка товара "Бонусные баллы"
+    SelenideElement tab_RewardPoints = $(".content__tabs-navigation #reward_points");
+    SelenideElement setting_AllowPaymentByPoints = $(By.id("pd_is_pbp"));
+
+    //Вкладка товара "Оптовые скидки"
+    SelenideElement tab_QuantityDiscounts = $(By.id("qty_discounts"));
+    SelenideElement field_Quantity = $("#box_add_qty_discount .cm-value-decimal");
+    SelenideElement field_Value = $("#box_add_qty_discount .cm-numeric");
 
 
     void closeNotificationIfPresent() {
@@ -58,7 +67,45 @@ public class ProductPageSettings {
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Название товара" -> field_ProductName.setValue(value);
+                case "Название" -> field_Name.setValue(value);
+                case "Цена" -> field_Price.setValue(value);
+                case "Рекомендованная цена" -> field_ListPrice.setValue(value);
+                case "В наличии" -> field_InStock.setValue(value);
+                case "Действие при нулевой цене" -> setting_ZeroPriceAction.selectOptionContainingText(value);
+                case "Название единицы" -> field_UnitName.setValue(value);
+                case "Единиц в товаре" -> field_UnitsInProduct.setValue(value);
+                case "Цена за X единиц" -> field_PricePerUnit.setValue(value);
+                case "Действие при отсутствии товара в наличии" -> setting_OutOfStockActions.selectOptionContainingText(value);
+                case "Отображение карточки товара" -> setting_ProductTemplate.selectOptionContainingText(value);
+                case "Краткое описание" -> {
+                    fieldName_ShortDescription.scrollIntoCenter().click();
+                    field_ShortDescription.setValue(value);
+                }
+                case "Промо-текст" -> {
+                    fieldName_PromoText.scrollIntoCenter().click();
+                    field_PromoText.setValue(value);
+                }
+
+                //Вкладка товара "Бонусные баллы"
+                case "Бонусные баллы, Разрешить оплату баллами" -> {
+                    executeJavaScript("window.scrollTo(0, 0);");
+                    tab_RewardPoints.click();
+                    if (value.equalsIgnoreCase("n")) {
+                        if (setting_AllowPaymentByPoints.isSelected())
+                            setting_AllowPaymentByPoints.click();
+                    } else {
+                        if (!setting_AllowPaymentByPoints.isSelected())
+                            setting_AllowPaymentByPoints.click();
+                    }
+                }
+
+                //Вкладка товара "Оптовые скидки"
+                case "Оптовые скидки, Кол-во" -> {
+                    executeJavaScript("window.scrollTo(0, 0);");
+                    tab_QuantityDiscounts.click();
+                    field_Quantity.setValue(value);
+                }
+                case "Оптовые скидки, Значение" -> field_Value.setValue(value);
 
                 default -> System.out.println("Неизвестная настройка: " + setting);
             }

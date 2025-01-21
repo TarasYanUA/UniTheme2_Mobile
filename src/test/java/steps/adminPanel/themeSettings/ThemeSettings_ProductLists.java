@@ -11,8 +11,8 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
 
-public class CategoryPageSettings {
-    public CategoryPageSettings() {
+public class ThemeSettings_ProductLists {
+    public ThemeSettings_ProductLists() {
         super();
     }
 

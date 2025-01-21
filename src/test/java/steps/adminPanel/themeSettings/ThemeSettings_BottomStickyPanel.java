@@ -12,8 +12,8 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class BottomStickyPanelSettings {
-    public BottomStickyPanelSettings() {
+public class ThemeSettings_BottomStickyPanel {
+    public ThemeSettings_BottomStickyPanel() {
         super();
     }
 

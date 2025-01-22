@@ -131,8 +131,12 @@ public class Asserts_ProductPage {
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Сокращенный вид")) {
                         softAssert.assertThat(youSave_Short.exists())
-                                .as("The text 'You save' is not Short or missed in the product page!")
+                                .as("The text 'You save' is not Short or missed on the product page!")
                                 .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(youSave_Full.exists() || youSave_Short.exists())
+                                .as("There is a text 'You save' but shouldn't on the product page!")
+                                .isFalse();
                     }
                     break;
 
@@ -229,6 +233,9 @@ public class Asserts_ProductPage {
                     }
                     break;
 
+                default:
+                    System.out.println("Неизвестная проверка: " + setting);
+                    break;
             }
         }
     }

@@ -8,6 +8,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import steps.adminPanel.LayoutPage;
 
 import java.time.Duration;
@@ -35,6 +37,8 @@ public class HomePage {
     SelenideElement categoryTemplate_Grid = $(".ut2-icon-products-multicolumns");
     SelenideElement categoryTemplate_ListWithoutOptions = $(".ut2-icon-products-without-options");
     SelenideElement categoryTemplate_CompactList = $(".ut2-icon-short-list");
+    SelenideElement field_Search = $(By.id("search_input"));
+    SelenideElement chooseFirstProduct = $(".ut2-gl__image");
 
 
     @When("Переходим на витрину")
@@ -121,5 +125,12 @@ public class HomePage {
     @And("Скроллимся вниз по странице на {int} px")
     public void scrollBelowOfPage(int value) {
         Selenide.executeJavaScript("window.scrollBy(0, " + value + ");");
+    }
+
+    @And("Переходим на страницу товара {string}")
+    public void navigateTo_ProductPage(String productName) {
+        field_Search.setValue(productName);
+        field_Search.sendKeys(Keys.ENTER);
+        chooseFirstProduct.click();
     }
 }

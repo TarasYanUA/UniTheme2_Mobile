@@ -9,6 +9,7 @@ import org.assertj.core.api.SoftAssertions;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class Asserts_ProductPage {
     public Asserts_ProductPage() {
@@ -35,11 +36,24 @@ public class Asserts_ProductPage {
     SelenideElement shareButtons = $(".ut2-pb__share");
 
     //CS-Cart настройки
-    SelenideElement numberOfAvailableProducts = $(".ty-qty-in-stock");
+    SelenideElement pricesWithTaxes = $("span[id*='line_product_price_']");
+    SelenideElement numberOfAvailableProducts = $x("//span[contains(@class, 'ty-qty-in-stock')][text()='Доступность:']");
     SelenideElement miniThumbnailImagesAsGallery_Enabled = $(".ty-product-thumbnails_gallery");
     SelenideElement miniThumbnailImagesAsGallery_Disabled = $(".ty-product-thumbnails.ty-center");
     SelenideElement displayProductDetailsInTabs_Enabled = $(".ut2-pb__tabs .ty-accordion");
     SelenideElement displayProductDetailsInTabs_Disabled = $(".ut2-pb__tabs .tab-list-title");
+
+    //Характеристики
+    SelenideElement showOnFeaturesTab_Brand = $x("//div[@class='ty-product-feature']//span[text()='Бренд']");
+    SelenideElement showInHeaderOnProductPage_Brand = $x("//div[@class='ty-features-list']//em[text()='Бренд']");
+    SelenideElement showInHeaderOnProductPage_HardDrive = $x("//div[@class='ty-features-list']//em[text()='Жесткий диск']");
+
+    //Настройки из страницы редактирования товара
+    SelenideElement listPrice = $("span[id*='old_price_update_'] .ty-list-price");
+    SelenideElement pricePerUnit = $(".ty-price-per-unit");
+    SelenideElement promoText = $(".ut2-pb__note");
+    SelenideElement product_allowPaymentByPoints = $(".ty-reward-group");
+    SelenideElement quantityDiscounts = $(".ut2__qty-discounts");
 
 
     @And("Выполняем проверки на странице товара:")
@@ -196,7 +210,20 @@ public class Asserts_ProductPage {
                     }
                     break;
 
+
                 //CS-Cart настройки
+                case "Показывать цены с налогом на страницах категорий и товаров":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(pricesWithTaxes.exists())
+                                .as("There is no text of a product tax on the product page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(pricesWithTaxes.exists())
+                                .as("There is a text of a product tax but shouldn't on the product page!")
+                                .isFalse();
+                    }
+                    break;
+
                 case "Показывать количество доступных товаров":
                     if (value.equalsIgnoreCase("y")) {
                         softAssert.assertThat(numberOfAvailableProducts.exists())
@@ -230,6 +257,106 @@ public class Asserts_ProductPage {
                         softAssert.assertThat(displayProductDetailsInTabs_Disabled.exists())
                                 .as("Product information is displayed in tabs but shouldn't on the product page!")
                                 .isTrue();
+                    }
+                    break;
+
+
+                //Характеристики
+                case "Бренд, Показывать во вкладке «Характеристики» карточки товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(showOnFeaturesTab_Brand.exists())
+                                .as("There is no feature Brand in the product tab of features!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(showOnFeaturesTab_Brand.exists())
+                                .as("There is a feature Brand in the product tab of features but shouldn't!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Бренд, Показывать в заголовке карточки товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(showInHeaderOnProductPage_Brand.exists())
+                                .as("There is no feature Brand in the product header!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(showInHeaderOnProductPage_Brand.exists())
+                                .as("There is a feature Brand in the product header but shouldn't!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Жесткий диск, Показывать в заголовке карточки товара":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(showInHeaderOnProductPage_HardDrive.exists())
+                                .as("There is no feature HardDrive in the product header!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(showInHeaderOnProductPage_HardDrive.exists())
+                                .as("There is a feature HardDrive in the product header but shouldn't!")
+                                .isFalse();
+                    }
+                    break;
+
+
+                //Настройки из страницы редактирования товара
+                case "Рекомендованная цена":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(listPrice.exists())
+                                .as("There is no List price on the product page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(listPrice.exists())
+                                .as("There is a List price but shouldn't on the product page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Цена за единицу":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(pricePerUnit.exists())
+                                .as("There is no Price per unit on the product page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(pricePerUnit.exists())
+                                .as("There is a Price per unit but shouldn't on the product page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Промо-текст":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(promoText.exists())
+                                .as("There is no Promo-text on the product page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(promoText.exists())
+                                .as("There is a Promo-text but shouldn't on the product page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Бонусные баллы":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(product_allowPaymentByPoints.exists())
+                                .as("There is no Reward points on the product page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(product_allowPaymentByPoints.exists())
+                                .as("There is a Reward points but shouldn't on the product page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Оптовые скидки":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(quantityDiscounts.exists())
+                                .as("There is no Quantity discounts on the product page!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(quantityDiscounts.exists())
+                                .as("There is a Quantity discounts but shouldn't on the product page!")
+                                .isFalse();
                     }
                     break;
 

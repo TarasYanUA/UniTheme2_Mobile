@@ -29,7 +29,6 @@ public class ProductPageSettings {
     SelenideElement field_UnitsInProduct = $(By.id("elm_product_units_in_product"));
     SelenideElement field_PricePerUnit = $(By.id("elm_product_show_price_per_x_units"));
     SelenideElement setting_OutOfStockActions = $(By.id("elm_out_of_stock_actions"));
-    SelenideElement setting_ProductTemplate = $(By.id("elm_details_layout"));
     SelenideElement fieldName_ShortDescription = $(By.cssSelector("label[for='elm_product_short_descr']"));
     SelenideElement field_ShortDescription = $(By.id("redactor-uuid-1"));
     SelenideElement fieldName_PromoText = $(By.cssSelector("label[for='elm_product_promo_text']"));
@@ -76,7 +75,6 @@ public class ProductPageSettings {
                 case "Единиц в товаре" -> field_UnitsInProduct.setValue(value);
                 case "Цена за X единиц" -> field_PricePerUnit.setValue(value);
                 case "Действие при отсутствии товара в наличии" -> setting_OutOfStockActions.selectOptionContainingText(value);
-                case "Отображение карточки товара" -> setting_ProductTemplate.selectOptionContainingText(value);
                 case "Краткое описание" -> {
                     fieldName_ShortDescription.scrollIntoCenter().click();
                     field_ShortDescription.setValue(value);

@@ -18,7 +18,7 @@ public class ThemeSettings_Product {
     SelenideElement setting_FeaturesInTwoColumns = $(By.id("settings.abt__ut2.products.view.show_features_in_two_col.mobile"));
     SelenideElement setting_ShowShortDescription = $(By.id("settings.abt__ut2.products.view.show_short_description.mobile"));
     SelenideElement setting_ShowYouSave = $(By.id("settings.abt__ut2.products.view.show_you_save.mobile"));
-    SelenideElement setting_ShowStickyBlockAddToCart = $(By.id("settings.abt__ut2.products.view.show_sticky_add_to_cart.mobile"));
+    SelenideElement setting_ShowStickyBlockAddToCart = $(By.id("settings.abt__ut2.products.view.show_sticky_panel_add_to_cart.mobile"));
     SelenideElement setting_ShowProductBrand = $(By.id("settings.abt__ut2.products.view.show_brand_format.mobile"));
     SelenideElement setting_AppearanceOfImageGallery = $(By.id("settings.abt__ut2.products.view.thumbnails_gallery_format.mobile"));
     SelenideElement setting_ShowShareButtons = $(By.id("settings.abt__ut2.products.addon_social_buttons.view.mobile"));
@@ -49,7 +49,7 @@ public class ThemeSettings_Product {
                 case "Отображать характеристики в две колонки" -> setCheckboxState(setting_FeaturesInTwoColumns, value);
                 case "Отображать краткое описание" -> setCheckboxState(setting_ShowShortDescription, value);
                 case "Отображать \"Вы экономите\"" -> setting_ShowYouSave.selectOptionContainingText(value);
-                case "Отображать липкий блок Купить" -> setCheckboxState(setting_ShowStickyBlockAddToCart, value);
+                case "Отображать липкий блок Купить" -> setting_ShowStickyBlockAddToCart.selectOptionContainingText(value);
                 case "Отображать информацию о бренде товара" -> setting_ShowProductBrand.selectOptionContainingText(value);
                 case "Внешний вид галереи изображений" -> setting_AppearanceOfImageGallery.selectOptionContainingText(value);
                 case "Отображать кнопки социальных сетей" -> setCheckboxState(setting_ShowShareButtons, value);

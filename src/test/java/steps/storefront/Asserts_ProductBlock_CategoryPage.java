@@ -319,7 +319,7 @@ public class Asserts_ProductBlock_CategoryPage {
                     break;
 
                 //Проверяем Количество строк в названии товара
-                case "Сетка, Количество строк в названии товара":
+                case "Количество строк в названии товара":
                     softAssert.assertThat(getNumberOfLinesInProductName(Integer.parseInt(value)).exists())
                             .as("Number of lines in the product name is not " + value)
                             .isTrue();
@@ -501,7 +501,7 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
-                case "Количество строк в названии товара":
+                case "Сетка, Количество строк в названии товара":
                     softAssert.assertThat(numberOfLinesInProductName(value).exists())
                             .as("Number of lines in the product name is not " + value)
                             .isTrue();

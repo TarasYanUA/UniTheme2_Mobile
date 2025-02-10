@@ -91,6 +91,7 @@ public class ThemeSettings_ProductLists {
 
         if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
             checkbox.click();
+
     }
     @And("Устанавливаем настройки темы:")
     public void setThemeSettings_CategoryPage(DataTable table) {

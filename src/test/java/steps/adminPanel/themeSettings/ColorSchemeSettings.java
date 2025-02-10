@@ -71,7 +71,7 @@ public class ColorSchemeSettings {
             switch (setting) {
                 //Вкладка "Общие"
                 case "Скруглить углы для элементов интерфейса" -> setting_General_RoundCornersForElements.selectOptionContainingText(value);
-                case "Скруглить углы блоков, окон, баннеров" -> setCheckboxState(setting_General_RoundCornersOfBlocks, value);
+                case "Скруглить углы блоков, окон, баннеров" -> setting_General_RoundCornersOfBlocks.selectOptionContainingText(value);
                 case "Отображать заголовки заглавными буквами" -> setCheckboxState(setting_General_DisplayHeadersInCapitalLetters, value);
                 case "Кнопки, Стиль" -> setting_General_ButtonsStyle.selectOptionContainingText(value);
                 case "Кнопки, Отображать текст заглавными буквами" -> setCheckboxState(setting_General_DisplayTextInCapitalLetters, value);

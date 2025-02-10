@@ -33,7 +33,6 @@ public class LayoutPage {
     SelenideElement field_NumberOfColumnsInList = $("input[id$='_products_properties_number_of_columns']");
     SelenideElement setting_LoadingType = $("select[id$='_products_properties_abt__ut2_loading_type']");
     SelenideElement setting_ShowPrice = $("input[id$='_products_properties_show_price']");
-    SelenideElement setting_EnableQuickView = $("input[id$='_products_properties_enable_quick_view']");
     SelenideElement setting_DoNotScrollAutomatically = $("input[id$='_products_properties_not_scroll_automatically']");
     SelenideElement setting_ItemQuantity_Mobile = $("input[id*='_products_properties_item_quantity_mobile']");
     SelenideElement setting_OutsideNavigation = $("input[id$='_products_properties_outside_navigation']");
@@ -107,7 +106,6 @@ public class LayoutPage {
 
                 case "Показывать цену" -> setCheckboxState(setting_ShowPrice, value);
 
-                case "Включить быстрый просмотр" -> setCheckboxState(setting_EnableQuickView, value);
 
                 case "Не прокручивать автоматически" -> setCheckboxState(setting_DoNotScrollAutomatically, value);
 

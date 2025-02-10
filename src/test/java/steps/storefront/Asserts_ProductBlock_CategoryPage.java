@@ -99,8 +99,10 @@ public class Asserts_ProductBlock_CategoryPage {
 
     //Настройка "Количество строк в названии товара"
     SelenideElement getNumberOfLinesInProductName(int number) {
-        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style*='lines-in-name-product: " + number + ";']");
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[style*='lines-in-name-product: " + number + ";'], " +
+                "div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] ul[style*='lines-in-name-product: " + number + ";']");
     }
+
 
     SelenideElement numberOfLinesInProductName(String number) {
         return $("div[style*='lines-in-name-product: " + number + ";']");

@@ -55,7 +55,7 @@ public class Asserts_ProductBlock_CategoryPage {
     }
 
     //Настройка "Отображать "Вы экономите -- Сокращенный вид" (вариант "Полный вид" на мобильном отсутствует)
-    String text_YouSave_Short = " .ut2-sld-short span.ty-save-price";
+    String text_YouSave_Short = " .ut2-sld-short bdi.ty-save-price";
 
     SelenideElement youSave_Short_Grid = $(".ut2-gl__body" + text_YouSave_Short);
 

@@ -10,10 +10,13 @@ import org.openqa.selenium.By;
 
 import java.time.Duration;
 import java.util.List;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class BasicPage implements CheckMenuToBeActive {
-    public BasicPage(){super();}
+    public BasicPage() {
+        super();
+    }
 
     SelenideElement button_Save_OnTop = $(".btn.btn-primary.cm-submit");
     SelenideElement button_Save_OnTop_Other = $(".nav__actions-btn-save");
@@ -57,22 +60,29 @@ public class BasicPage implements CheckMenuToBeActive {
         boolean isValueNo = value.equalsIgnoreCase("n");
         boolean isCheckboxSelected = checkbox.isSelected();
 
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
+        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected)) {
+            checkbox.scrollIntoCenter();
+            sleep(1000);
             checkbox.click();
+        }
     }
+
     @And("Устанавливаем настройки характеристики:")
     public void setSettingsOfFeature_Brand(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
 
-        for(List<String> row: rows) {
+        for (List<String> row : rows) {
             String setting = row.get(0); // Ключ (название настройки)
             String value = row.get(1);   // Значение настройки
 
             switch (setting) {
-                case "Показывать во вкладке «Характеристики» карточки товара" -> setCheckboxState(featureSetting_ShowOnTheFeaturesTab, value);
+                case "Показывать во вкладке «Характеристики» карточки товара" ->
+                        setCheckboxState(featureSetting_ShowOnTheFeaturesTab, value);
                 case "Показывать в списке товаров" -> setCheckboxState(featureSetting_ShowInProductList, value);
-                case "Показывать в заголовке карточки товара" -> setCheckboxState(featureSetting_ShowInHeaderOnTheProductDetailsPage, value);
-                case "Жесткий диск, Показывать в заголовке карточки товара" -> setCheckboxState(feature_HardDrive_ShowInHeaderOnTheProductDetailsPage, value);
+                case "Показывать в заголовке карточки товара" ->
+                        setCheckboxState(featureSetting_ShowInHeaderOnTheProductDetailsPage, value);
+                case "Жесткий диск, Показывать в заголовке карточки товара" ->
+                        setCheckboxState(feature_HardDrive_ShowInHeaderOnTheProductDetailsPage, value);
 
                 default -> System.out.println("Неизвестная настройка: " + setting);
             }
@@ -97,7 +107,7 @@ public class BasicPage implements CheckMenuToBeActive {
     }
 
     @Given("Переходим на страницу 'Настройки', раздел {string}")
-    public void navigateTo_CsCartSettings (String section) {
+    public void navigateTo_CsCartSettings(String section) {
         mobile_MainMenu.click();
         executeJavaScript("arguments[0].scrollIntoView(true);", menuOf_Settings);
         executeJavaScript("arguments[0].click();", menuOf_Settings);
@@ -105,7 +115,7 @@ public class BasicPage implements CheckMenuToBeActive {
     }
 
     @Given("Переходим во вкладку настроек CS-Cart {string}")
-    public void navigateTo_TabOfCsCartSettings (String tabName) {
+    public void navigateTo_TabOfCsCartSettings(String tabName) {
         sideBar.click();
         $x("//div[@class='sidebar-row']//a[text()='" + tabName + "']").click();
     }
@@ -117,10 +127,10 @@ public class BasicPage implements CheckMenuToBeActive {
 
     @Given("Выключаем модуль с ИД {string}, если модуль включён")
     public void disableAddon(String addonID) {
-        if(!$(By.id(addonID)).find(By.xpath(".//a[contains(text(), 'Включить')]")).exists()) {
+        if (!$(By.id(addonID)).find(By.xpath(".//a[contains(text(), 'Включить')]")).exists()) {
             $(By.id(addonID)).find(By.xpath(".//span[contains(@class, 'cs-icon--type-cog')]")).scrollIntoCenter().click(); // шестерёнка модуля
             $(By.id(addonID)).find(By.xpath(".//a[@data-ca-event='ce.update_object_status_callback']")).click(); // кнопка "Выкл."
-            sleep(8000);
+            sleep(9000);
         }
     }
 }

@@ -17,7 +17,7 @@ public class ProductPageSettings {
     SelenideElement button_SaveProduct = $(".cm-product-save-buttons");
     ElementsCollection closeNotification = $$(".cm-notification-close");
     SelenideElement searchFieldOfProduct = $("input[form='search_filters_form']");
-    SelenideElement anyProduct = $(".products-list__image");
+    SelenideElement anyProduct = $(".products-list__image a");
 
     // Вкладка товара "Общее"
     SelenideElement field_Name = $(By.id("product_description_product"));

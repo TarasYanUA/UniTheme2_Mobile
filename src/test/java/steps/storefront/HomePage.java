@@ -119,7 +119,7 @@ public class HomePage {
             default -> throw new IllegalArgumentException("Неизвестный шаблон: " + templateName);
         }
         $("div[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(8));
-        sleep(1000);
+        sleep(3000);
     }
 
 

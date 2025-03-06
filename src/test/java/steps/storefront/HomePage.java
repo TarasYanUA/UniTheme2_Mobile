@@ -74,6 +74,7 @@ public class HomePage {
     @And("Раскрываем вкладку {string} у блока")
     public void openBlockTab(String tabName) {
         $x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").click();
+        sleep(2000);
     }
 
     @And("Нажимаем кнопку 'Показать ещё' в блоке товаров и делаем скриншоты {string}")

@@ -99,6 +99,7 @@ public class BasicPage implements CheckMenuToBeActive {
     @Then("Сохраняем выбранные настройки")
     public void saveSettings_SaveButtonOnTop() {
         button_Save_OnTop.click();
+        sleep(1500);
     }
 
     @Then("Сохраняем настройки характеристики")
@@ -123,6 +124,7 @@ public class BasicPage implements CheckMenuToBeActive {
     @Then("Сохраняем настройки налога")
     public void saveTaxSettings() {
         button_Save_OnTop_Other.click();
+        sleep(1500);
     }
 
     @Given("Выключаем модуль с ИД {string}, если модуль включён")

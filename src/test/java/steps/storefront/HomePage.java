@@ -73,7 +73,10 @@ public class HomePage {
 
     @And("Раскрываем вкладку {string} у блока")
     public void openBlockTab(String tabName) {
-        $x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").click();
+        if (!$$x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").isEmpty())
+            $x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").click();
+        else
+            $x("//span[@class='ty-tabs__span'][text()='On Sale']").click();
         sleep(2000);
     }
 

@@ -139,6 +139,7 @@ public class LayoutPage {
             @Then("Сохраняем настройки блока")
     public void saveBlockSettings() {
         button_SaveBlockProperties.click();
+        sleep(1500);
     }
 
     @Given("Переходим на страницу {string}, что на странице 'Макеты'")

@@ -6,7 +6,7 @@ import io.cucumber.junit.Cucumber;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"hooks", "steps"},
-        tags = "@ProductBlock_SmallItems_Var2",
+        tags = "@ProductPage_Var2",
         //@ProductBlock_GridMore_Var1 or @ProductBlock_GridMore_Var2 or @ProductBlock_GridMore_Var3
         //@ProductBlock_Scroller_Var1 or @ProductBlock_Scroller_Var2 or @ProductBlock_Scroller_Var3
         //@ProductBlock_SmallItems_Var1 or @ProductBlock_SmallItems_Var2 or @ProductBlock_SmallItems_Var3
@@ -17,7 +17,7 @@ import io.cucumber.junit.Cucumber;
         //@CategoryPage_ListWithoutOptions_Var1 or CategoryPage_ListWithoutOptions_Var2
         //@CategoryPage_CompactList_Var1 or @CategoryPage_CompactList_Var2
 
-        //@ProductPage_Var1
+        //@ProductPage_Var1 or @ProductPage_Var2
         plugin = {"pretty", "html:target/cucumber_target.html", "json:target/cucumber.json"}
 )
 public class CucumberRunnerTest {

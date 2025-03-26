@@ -50,6 +50,7 @@ public class Asserts_ProductPage {
 
     //Настройки из страницы редактирования товара
     SelenideElement listPrice = $("span[id*='old_price_update_'] .ty-list-price");
+    SelenideElement zeroPriceAction_AskCustomerToEnterPrice = $(".ty-price-curency__input");
     SelenideElement pricePerUnit = $(".ty-price-per-unit");
     SelenideElement promoText = $(".ut2-pb__note");
     SelenideElement product_allowPaymentByPoints = $(".ty-reward-group");
@@ -173,8 +174,8 @@ public class Asserts_ProductPage {
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Отображать логотип бренда товара")) {
                         softAssert.assertThat(productBrandInformation_Logo.exists())
-                                .as("There is a Product Brand Name but shouldn't on the product page!")
-                                .isFalse();
+                                .as("There is no Product Brand Logo on the product page!")
+                                .isTrue();
                     } else if (value.equalsIgnoreCase("Не отображать")) {
                         softAssert.assertThat(productBrandInformation_Name.exists() || productBrandInformation_Logo.exists())
                                 .as("There is a Brand name or Brand logo but shouldn't on the product page!")
@@ -309,6 +310,14 @@ public class Asserts_ProductPage {
                         softAssert.assertThat(listPrice.exists())
                                 .as("There is a List price but shouldn't on the product page!")
                                 .isFalse();
+                    }
+                    break;
+
+                case "Действие при нулевой цене":
+                    if (value.equalsIgnoreCase("Попросить покупателя ввести цену")) {
+                        softAssert.assertThat(zeroPriceAction_AskCustomerToEnterPrice.exists())
+                                .as("Zero price action is not 'Ask customer to enter the price'!")
+                                .isTrue();
                     }
                     break;
 

@@ -137,6 +137,6 @@ public class HomePage {
         mobileSearchIcon.click();
         field_Search.setValue(productName);
         field_Search.sendKeys(Keys.ENTER);
-        chooseFirstProduct.click();
+        chooseFirstProduct.shouldBe(Condition.enabled, Duration.ofSeconds(5)).click();
     }
 }

@@ -32,7 +32,7 @@ public class Asserts_ProductPage {
     SelenideElement productBrandInformation_Name = $(".ut2-pb__product-brand-name");
     SelenideElement productBrandInformation_Logo = $(".ut2-pb__product-brand");
     SelenideElement appearanceOfImageGallery_Counter = $(".abt__ut2_pig_counter");
-    SelenideElement appearanceOfImageGallery_Dots = $(".abt__ut2_pig_counter.lines");
+    SelenideElement appearanceOfImageGallery_Dots = $(".abt__ut2_pig_counter.dotes");
     SelenideElement shareButtons = $(".ut2-pb__share");
 
     //CS-Cart настройки
@@ -51,6 +51,7 @@ public class Asserts_ProductPage {
     //Настройки из страницы редактирования товара
     SelenideElement listPrice = $("span[id*='old_price_update_'] .ty-list-price");
     SelenideElement zeroPriceAction_AskCustomerToEnterPrice = $(".ty-price-curency__input");
+    SelenideElement outOfStockActions_SignUpForNotification = $("label[id*='label_sw_product_notify_']");
     SelenideElement pricePerUnit = $(".ty-price-per-unit");
     SelenideElement promoText = $(".ut2-pb__note");
     SelenideElement product_allowPaymentByPoints = $(".ty-reward-group");
@@ -317,6 +318,14 @@ public class Asserts_ProductPage {
                     if (value.equalsIgnoreCase("Попросить покупателя ввести цену")) {
                         softAssert.assertThat(zeroPriceAction_AskCustomerToEnterPrice.exists())
                                 .as("Zero price action is not 'Ask customer to enter the price'!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Действие при отсутствии товара в наличии":
+                    if (value.equalsIgnoreCase("Подписаться на уведомления")) {
+                        softAssert.assertThat(outOfStockActions_SignUpForNotification.exists())
+                                .as("There is no field 'Sign up for notification'!")
                                 .isTrue();
                     }
                     break;

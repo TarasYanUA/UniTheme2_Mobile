@@ -39,7 +39,6 @@ public class Asserts_ProductPage {
     SelenideElement pricesWithTaxes = $("span[id*='line_product_price_']");
     SelenideElement numberOfAvailableProducts = $x("//span[contains(@class, 'ty-qty-in-stock')][text()='Доступность:']");
     SelenideElement miniThumbnailImagesAsGallery_Enabled = $(".ty-product-thumbnails_gallery");
-    SelenideElement miniThumbnailImagesAsGallery_Disabled = $(".ty-product-thumbnails.ty-center");
     SelenideElement displayProductDetailsInTabs_Enabled = $(".ut2-pb__tabs .ty-accordion");
     SelenideElement displayProductDetailsInTabs_Disabled = $(".ut2-pb__tabs .tab-list-title");
 
@@ -244,9 +243,9 @@ public class Asserts_ProductPage {
                                 .as("Mini-icons of a product are not as a Gallery on the product page!")
                                 .isTrue();
                     } else {
-                        softAssert.assertThat(miniThumbnailImagesAsGallery_Disabled.exists())
+                        softAssert.assertThat(miniThumbnailImagesAsGallery_Enabled.exists())
                                 .as("Mini-icons of a product are as a Gallery but shouldn't on the product page!")
-                                .isTrue();
+                                .isFalse();
                     }
                     break;
 

@@ -94,14 +94,19 @@ public class ThemeSettings_BottomStickyPanel {
     //Кнопки/Проверки на витрине
     String bottomStickyPanel = ".ut2-sticky-panel__wrap ";
     SelenideElement element_BottomStickyPanel = $(bottomStickyPanel);
-    SelenideElement linkToHomePage = $(".ut2-icon-home_page");
+    SelenideElement linkToHomePage = $(bottomStickyPanel + ".ut2-icon-home_page");
     SelenideElement catalogMenu = $(bottomStickyPanel + ".ut2-icon-outline-menu");
-    SelenideElement searchProducts = $(bottomStickyPanel + ".ut2-icon-search");
+    SelenideElement searchOfProducts = $(bottomStickyPanel + ".ut2-icon-search");
     SelenideElement miniCart = $(bottomStickyPanel + ".ut2-icon-use_icon_cart");
-    SelenideElement wishlist = $(".ut2-icon-baseline-favorite-border");
-    SelenideElement comparisonList = $(".ut2-icon-addchart");
+    SelenideElement wishlist = $(bottomStickyPanel + ".ut2-icon-baseline-favorite-border");
+    SelenideElement comparisonList = $(bottomStickyPanel + ".ut2-icon-addchart");
     SelenideElement account = $(bottomStickyPanel + ".ut2-icon-outline-account-circle");
-    SelenideElement contacts = $(".ut2-icon-local_phone");
+    SelenideElement contacts = $(bottomStickyPanel + ".ut2-icon-local_phone");
+    SelenideElement closeCatalogMenu = $(".ut2-sw .ut2-icon-baseline-close");
+    SelenideElement closeSearchOfProducts = $(bottomStickyPanel + "#off_dropdown_sticky_item_search .ut2-icon-baseline-close");
+    SelenideElement closeMiniCart = $(bottomStickyPanel + ".ty-dropdown-box__content--cart.container-opened .ut2-icon-baseline-close");
+    SelenideElement closeAccount = $(bottomStickyPanel + "#account_info_sticky_item_acc .ut2-icon-baseline-close");
+    SelenideElement closeContacts = $(bottomStickyPanel + "#dropdown_phones_info_acc .ut2-icon-baseline-close");
 
     @And("Выполняем проверки в Нижней липкой панели:")
     public void assertsOfBottomStickyPanel(DataTable table) {
@@ -130,7 +135,7 @@ public class ThemeSettings_BottomStickyPanel {
                                 : "There is a Catalog Menu but shouldn't!")
                         .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Поиск товаров" -> softAssert.assertThat(searchProducts.exists())
+                case "Поиск товаров" -> softAssert.assertThat(searchOfProducts.exists())
                         .as(value.equalsIgnoreCase("y")
                                 ? "There is no Search Products button!"
                                 : "There is a Search Products button but shouldn't!")
@@ -174,7 +179,7 @@ public class ThemeSettings_BottomStickyPanel {
     private SelenideElement getButtonByName(String buttonName) {
         return switch (buttonName) {
             case "Главное Меню" -> catalogMenu;
-            case "Поиск товаров" -> searchProducts;
+            case "Поиск товаров" -> searchOfProducts;
             case "Мини корзина" -> miniCart;
             case "Аккаунт" -> account;
             case "Контакты" -> contacts;
@@ -184,6 +189,22 @@ public class ThemeSettings_BottomStickyPanel {
     @And("Нажимаем кнопку {string} в Нижней липкой панели")
     public void clickButton(String buttonName) {
         SelenideElement button = getButtonByName(buttonName);
+        button.click();
+    }
+
+    private SelenideElement getCloseButtonByName(String buttonName) {
+        return switch (buttonName) {
+            case "Главное Меню" -> closeCatalogMenu;
+            case "Поиск товаров" -> closeSearchOfProducts;
+            case "Мини корзина" -> closeMiniCart;
+            case "Аккаунт" -> closeAccount;
+            case "Контакты" -> closeContacts;
+            default -> throw new IllegalArgumentException("Неизвестная кнопка: " + buttonName);
+        };
+    }
+    @And("Закрываем {string} в Нижней липкой панели")
+    public void clickCloseButton(String buttonName) {
+        SelenideElement button = getCloseButtonByName(buttonName);
         button.click();
     }
 }

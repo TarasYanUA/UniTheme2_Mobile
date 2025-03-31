@@ -51,23 +51,31 @@ Feature: Проверка отображения Нижней липкой па�
     When Переходим на витрину
     Given Разавторизоваться на витрине
     And Скроллимся к блоку товаров
-    And Нажимаем кнопку "<Button>" в Нижней липкой панели
-    Then Делаем скриншот "<ScreenRu>"
+    Then Делаем скриншот "BottomStickyPanel_Var3 - Нижняя липкая панель"
+    And Нажимаем кнопку "<Button_01>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_01>"
+    And Закрываем "<Button_01>" в Нижней липкой панели
+    And Нажимаем кнопку "<Button_02>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_02>"
+    And Закрываем "<Button_02>" в Нижней липкой панели
 
     Examples:
-      | Button   | ScreenRu                          |
-      | Аккаунт  | BottomStickyPanel_Var3 - Аккаунт  |
-      | Контакты | BottomStickyPanel_Var3 - Контакты |
+      | Button_01 | Screen_01                        | Button_02 | Screen_02                         |
+      | Аккаунт   | BottomStickyPanel_Var3 - Аккаунт | Контакты  | BottomStickyPanel_Var3 - Контакты |
 
   Scenario Outline: Открываем окна в Нижней липкой панели и делаем скриншоты на языке RTL
     When Переходим на витрину
     Given Разавторизоваться на витрине
     And Переключаемся на "ar" язык интерфейса витрины
     And Скроллимся к блоку товаров
-    And Нажимаем кнопку "<Button>" в Нижней липкой панели
-    Then Делаем скриншот "<ScreenRTL>"
+    Then Делаем скриншот "BottomStickyPanel_Var3 - Нижняя липкая панель (RTL)"
+    And Нажимаем кнопку "<Button_01>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_01>"
+    And Закрываем "<Button_01>" в Нижней липкой панели
+    And Нажимаем кнопку "<Button_02>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_02>"
+    And Закрываем "<Button_02>" в Нижней липкой панели
 
     Examples:
-      | Button   | ScreenRTL                               |
-      | Аккаунт  | BottomStickyPanel_Var3 - Аккаунт (RTL)  |
-      | Контакты | BottomStickyPanel_Var3 - Контакты (RTL) |
+      | Button_01 | Screen_01                              | Button_02 | Screen_02                               |
+      | Аккаунт   | BottomStickyPanel_Var3 - Аккаунт (RTL) | Контакты  | BottomStickyPanel_Var3 - Контакты (RTL) |

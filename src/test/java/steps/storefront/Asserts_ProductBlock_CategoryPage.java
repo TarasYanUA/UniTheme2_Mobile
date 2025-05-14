@@ -103,7 +103,6 @@ public class Asserts_ProductBlock_CategoryPage {
                 "div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] ul[style*='lines-in-name-product: " + number + ";']");
     }
 
-
     SelenideElement numberOfLinesInProductName(String number) {
         return $("div[style*='lines-in-name-product: " + number + ";']");
     }

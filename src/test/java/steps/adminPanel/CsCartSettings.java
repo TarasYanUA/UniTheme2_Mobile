@@ -9,6 +9,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
+import static steps.adminPanel.UtilsAdmPanel.setCheckboxState;
 
 public class CsCartSettings {
     public CsCartSettings() {
@@ -28,13 +29,6 @@ public class CsCartSettings {
     SelenideElement setting_priceIncludesTax = $x("//input[@type='checkbox'][@name='tax_data[7][price_includes_tax]']");
 
 
-    private void setCheckboxState(SelenideElement checkbox, String value) {
-        boolean isValueNo = value.equalsIgnoreCase("n");
-        boolean isCheckboxSelected = checkbox.isSelected();
-
-        if ((isValueNo && isCheckboxSelected || !isValueNo && !isCheckboxSelected))
-            checkbox.click();
-    }
     @And("Устанавливаем настройки CS-Cart:")
     public void setCsCartSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);

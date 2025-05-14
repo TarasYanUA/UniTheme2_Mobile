@@ -27,8 +27,9 @@ public class DriverHooks {
         WebDriver driver = new ChromeDriver(chromeOptions);
         WebDriverRunner.setWebDriver(driver);   // Устанавливаем созданный драйвер как текущий драйвер для Selenide
         open(BASIC_URL);
-        Configuration.timeout = 2000; //Общая задержка
+        //Configuration.timeout = 2000; //Общая задержка
         Configuration.screenshots = true; //делаем скриншоты при падении
+        Configuration.savePageSource = false; //не создавать html файлы при создании скриншотов
 
         SoftAssertions softAssertions = new SoftAssertions();
         CollectAssertMessages.setSoftAssertions(softAssertions);
@@ -49,6 +50,7 @@ public class DriverHooks {
             System.out.println("\nОшибки в asserts:");
             System.out.println(e.getMessage());
         }
+
         sleep(1500);
         closeWebDriver();
     }

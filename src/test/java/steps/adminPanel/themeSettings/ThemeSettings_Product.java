@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import org.openqa.selenium.By;
+import steps.adminPanel.UtilsAdmPanel;
 
 import java.util.List;
 import static com.codeborne.selenide.Selenide.$;
@@ -24,13 +25,6 @@ public class ThemeSettings_Product {
     SelenideElement setting_ShowShareButtons = $(By.id("settings.abt__ut2.products.addon_social_buttons.view.mobile"));
 
 
-    private void setCheckboxState(SelenideElement checkbox, String value) {
-        boolean isValueNo = value.equalsIgnoreCase("n");
-        boolean isCheckboxSelected = checkbox.isSelected();
-
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
-            checkbox.click();
-    }
     @And("Устанавливаем настройки темы, вкладка 'Товар':")
     public void setThemeSettings_ProductPage(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -43,16 +37,16 @@ public class ThemeSettings_Product {
                 case "ID пользовательского блока" -> setting_CustomBlockID.setValue(value);
                 case "Ширина изображения товара" -> setting_ProductImageWidth.setValue(value);
                 case "Высота изображения товара" -> setting_ProductImageHeight.setValue(value);
-                case "Отображать модификатор количества" -> setCheckboxState(setting_ShowQuantityChanger, value);
-                case "Отображать код товара" -> setCheckboxState(setting_ShowProductCode, value);
-                case "Отображать характеристики товара" -> setCheckboxState(setting_ShowProductFeatures, value);
-                case "Отображать характеристики в две колонки" -> setCheckboxState(setting_FeaturesInTwoColumns, value);
-                case "Отображать краткое описание" -> setCheckboxState(setting_ShowShortDescription, value);
+                case "Отображать модификатор количества" -> UtilsAdmPanel.setCheckboxState(setting_ShowQuantityChanger, value);
+                case "Отображать код товара" -> UtilsAdmPanel.setCheckboxState(setting_ShowProductCode, value);
+                case "Отображать характеристики товара" -> UtilsAdmPanel.setCheckboxState(setting_ShowProductFeatures, value);
+                case "Отображать характеристики в две колонки" -> UtilsAdmPanel.setCheckboxState(setting_FeaturesInTwoColumns, value);
+                case "Отображать краткое описание" -> UtilsAdmPanel.setCheckboxState(setting_ShowShortDescription, value);
                 case "Отображать \"Вы экономите\"" -> setting_ShowYouSave.selectOptionContainingText(value);
                 case "Отображать липкий блок Купить" -> setting_ShowStickyBlockAddToCart.selectOptionContainingText(value);
                 case "Отображать информацию о бренде товара" -> setting_ShowProductBrand.selectOptionContainingText(value);
                 case "Внешний вид галереи изображений" -> setting_AppearanceOfImageGallery.selectOptionContainingText(value);
-                case "Отображать кнопки социальных сетей" -> setCheckboxState(setting_ShowShareButtons, value);
+                case "Отображать кнопки социальных сетей" -> UtilsAdmPanel.setCheckboxState(setting_ShowShareButtons, value);
             }
         }
     }

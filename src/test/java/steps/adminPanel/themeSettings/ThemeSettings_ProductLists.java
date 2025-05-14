@@ -10,6 +10,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
+import static steps.adminPanel.UtilsAdmPanel.setCheckboxState;
 
 public class ThemeSettings_ProductLists {
     public ThemeSettings_ProductLists() {
@@ -18,6 +19,7 @@ public class ThemeSettings_ProductLists {
 
     SelenideElement themeSectionsOnPage_DownloadedAddons = $x("//tr[@id='addon_abt__unitheme2']//button[@class='btn dropdown-toggle']");
     SelenideElement themeSettings = $("div[class='btn-group dropleft open'] a[href$='abt__ut2.settings']");
+
 
     @Given("Переходим на страницу \"UniTheme2 -- Настройки темы\", вкладка {string}")
     public void navigateTo_ThemeSettings(String tabName) {
@@ -85,14 +87,6 @@ public class ThemeSettings_ProductLists {
     SelenideElement scroller_AddToCartButton = $(By.id("settings.abt__ut2.product_list.products_scroller.show_button_add_to_cart.mobile"));
 
 
-    private void setCheckboxState(SelenideElement checkbox, String value) {
-        boolean isValueNo = value.equalsIgnoreCase("n");
-        boolean isCheckboxSelected = checkbox.isSelected();
-
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
-            checkbox.click();
-
-    }
     @And("Устанавливаем настройки темы:")
     public void setThemeSettings_CategoryPage(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -109,7 +103,7 @@ public class ThemeSettings_ProductLists {
                 case "Отображать общее значение рейтинга товара" -> setCheckboxState(setting_CommonValueOfProductRating, value);
                 case "Отображать статусы для кнопок \"Купить\"" -> setting_DisplayCartStatus.selectOptionContainingText(value);
                 case "Отображать статусы для кнопок \"Добавить в избранное\", \"Добавить в список сравнения\"" ->
-                    setCheckboxState(setting_DisplayStatusesForButtons, value);
+                        setCheckboxState(setting_DisplayStatusesForButtons, value);
                 case "Отображать кнопку \"Добавить в избранное\"" -> setCheckboxState(setting_DisplayButtonWishList, value);
                 case "Отображать кнопку \"Добавить в список сравнения\"" -> setCheckboxState(setting_DisplayButtonComparisonList, value);
                 case "Отображать \"Вы экономите\"" -> setting_ShowYouSave.scrollIntoCenter().selectOptionContainingText(value);

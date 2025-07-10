@@ -62,7 +62,7 @@ public class ThemeSettings_ProductLists {
     SelenideElement listWithoutOptions_ShowAddToCartButton = $(By.id("settings.abt__ut2.product_list.products_without_options.show_button_add_to_cart.mobile"));
     SelenideElement listWithoutOptions_ContentUnderDescription = $(By.id("settings.abt__ut2.product_list.products_without_options.grid_item_bottom_content.mobile"));
     SelenideElement listWithoutOptions_ShowProductOptions = $(By.id("settings.abt__ut2.product_list.products_without_options.show_options.mobile"));
-    SelenideElement listWithoutOptions_ShowBrandLogo = $(By.id("settings.abt__ut2.product_list.products_without_options.show_brand_logo.mobile"));
+    SelenideElement listWithoutOptions_ShowBrand = $(By.id("settings.abt__ut2.product_list.products_without_options.show_brand.mobile"));
     SelenideElement listWithoutOptions_ShowStandardImageGallery = $(By.id("settings.abt__ut2.product_list.products_without_options.show_gallery.mobile"));
 
     //Настройки для вида списка товаров "Компактный список"
@@ -128,7 +128,7 @@ public class ThemeSettings_ProductLists {
                 case "Список без опций, Отображать кнопку \"Купить\"" -> listWithoutOptions_ShowAddToCartButton.selectOptionContainingText(value);
                 case "Список без опций, Содержимое под описанием" -> listWithoutOptions_ContentUnderDescription.selectOptionContainingText(value);
                 case "Список без опций, Отображать опции товара" -> setCheckboxState(listWithoutOptions_ShowProductOptions, value);
-                case "Список без опций, Отображать логотип бренда" -> setCheckboxState(listWithoutOptions_ShowBrandLogo, value);
+                case "Список без опций, Отображать бренд" -> listWithoutOptions_ShowBrand.selectOptionContainingText(value);
                 case "Список без опций, Отображать стандартную галерею изображений" -> listWithoutOptions_ShowStandardImageGallery.selectOptionContainingText(value);
 
                 //Настройки для вида списка товаров "Компактный список"

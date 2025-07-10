@@ -14,10 +14,11 @@ import io.cucumber.junit.Cucumber;
         //tags = "@BottomStickyPanel_Var1 or @BottomStickyPanel_Var2 or @BottomStickyPanel_Var3",
 
         //tags = "@CategoryPage_Grid_Var1 or @CategoryPage_Grid_Var2 or @CategoryPage_Grid_Var3",
-        tags = "@CategoryPage_ListWithoutOptions_Var1 or @CategoryPage_ListWithoutOptions_Var2",
-        //tags = "@CategoryPage_CompactList_Var1 or @CategoryPage_CompactList_Var2
+        //tags = "@CategoryPage_ListWithoutOptions_Var1 or @CategoryPage_ListWithoutOptions_Var2",
+        //tags = "@CategoryPage_CompactList_Var1 or @CategoryPage_CompactList_Var2",
 
-        //tags = "@ProductPage_Var1 or @ProductPage_Var2 or @ProductPage_Var3
+        tags = "@ProductPage_Var1 or @ProductPage_Var2 or @ProductPage_Var3",
+
         plugin = {"pretty", "html:target/cucumber_target.html", "json:target/cucumber.json"}
 )
 public class CucumberRunnerTest {

@@ -156,6 +156,7 @@ public class Asserts_ProductBlock_CategoryPage {
     SelenideElement contentUnderDescription_Variations = $(".ut2-lv__item-features");
     SelenideElement showProductOptions = $(".cm-picker-product-options.ty-product-options");
     SelenideElement showBrandLogo = $(".ut2-cat-container .brand-img");
+    SelenideElement showBrandName = $(".ut2-cat-container .brand-name");
 
 
     //Настройки -- Общие настройки -- Внешний вид
@@ -652,13 +653,17 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
-                case "Список без опций, Отображать логотип бренда":
-                    if (value.equalsIgnoreCase("y")) {
+                case "Список без опций, Отображать бренд":
+                    if (value.equalsIgnoreCase("Логотип")) {
                         softAssert.assertThat(showBrandLogo.exists())
                                 .as("There is no Brand logo on the category page!")
                                 .isTrue();
+                    } else if (value.equalsIgnoreCase("Название")) {
+                        softAssert.assertThat(showBrandName.exists())
+                                .as("There is no Brand name on the category page!")
+                                .isTrue();
                     } else {
-                        softAssert.assertThat(showBrandLogo.exists())
+                        softAssert.assertThat(showBrandLogo.exists() || showBrandName.exists())
                                 .as("There is a Brand logo but shouldn't on the category page!")
                                 .isFalse();
                     }

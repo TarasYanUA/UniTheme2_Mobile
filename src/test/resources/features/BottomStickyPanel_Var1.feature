@@ -25,7 +25,7 @@ Feature: Проверка отображения Нижней липкой па�
       | Контакты, Позиция                                                      | 50 |
     Then Сохраняем выбранные настройки
 
-  Scenario: Работаем с витриной и выполняем проверки
+  Scenario Outline: Открываем окна в Нижней липкой панели, Выполняем проверки и Делаем скриншоты
     When Переходим на витрину
     Given Разавторизоваться на витрине
     And Скроллимся к блоку товаров
@@ -40,34 +40,48 @@ Feature: Проверка отображения Нижней липкой па�
       | Аккаунт                    | y |
       | Контакты                   | y |
     Then Делаем скриншот "BottomStickyPanel_Var1 - Нижняя липкая панель"
-
-  Scenario Outline: Открываем окна в Нижней липкой панели и делаем скриншоты
-    When Переходим на витрину
-    Given Разавторизоваться на витрине
-    And Скроллимся к блоку товаров
-    And Нажимаем кнопку "<Button>" в Нижней липкой панели
-    Then Делаем скриншот "<ScreenRu>"
+    And "Открываем" окно "<Button_01>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_01>"
+    And "Закрываем" окно "<Button_01>" в Нижней липкой панели
+    And "Открываем" окно "<Button_02>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_02>"
+    And "Закрываем" окно "<Button_02>" в Нижней липкой панели
+    And "Открываем" окно "<Button_03>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_03>"
+    And "Закрываем" окно "<Button_03>" в Нижней липкой панели
+    And "Открываем" окно "<Button_04>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_04>"
+    And "Закрываем" окно "<Button_04>" в Нижней липкой панели
+    And "Открываем" окно "<Button_05>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_05>"
+    And "Закрываем" окно "<Button_05>" в Нижней липкой панели
 
     Examples:
-      | Button        | ScreenRu                               |
-      | Главное Меню  | BottomStickyPanel_Var1 - Главное Меню  |
-      | Поиск товаров | BottomStickyPanel_Var1 - Поиск товаров |
-      | Мини корзина  | BottomStickyPanel_Var1 - Мини корзина  |
-      | Аккаунт       | BottomStickyPanel_Var1 - Аккаунт       |
-      | Контакты      | BottomStickyPanel_Var1 - Контакты      |
+      | Button_01    | Screen_01                             | Button_02     | Screen_02                              | Button_03    | Screen_03                             | Button_04 | Screen_04                        | Button_05 | Screen_05                         |
+      | Главное Меню | BottomStickyPanel_Var1 - Главное Меню | Поиск товаров | BottomStickyPanel_Var1 - Поиск товаров | Мини корзина | BottomStickyPanel_Var1 - Мини корзина | Аккаунт   | BottomStickyPanel_Var1 - Аккаунт | Контакты  | BottomStickyPanel_Var1 - Контакты |
 
   Scenario Outline: Открываем окна в Нижней липкой панели и делаем скриншоты на языке RTL
     When Переходим на витрину
     Given Разавторизоваться на витрине
     And Переключаемся на "ar" язык интерфейса витрины
     And Скроллимся к блоку товаров
-    And Нажимаем кнопку "<Button>" в Нижней липкой панели
-    Then Делаем скриншот "<ScreenRTL>"
+    Then Делаем скриншот "BottomStickyPanel_Var1 - Нижняя липкая панель (RTL)"
+    And "Открываем" окно "<Button_01>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_01>"
+    And "Закрываем" окно "<Button_01>" в Нижней липкой панели
+    And "Открываем" окно "<Button_02>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_02>"
+    And "Закрываем" окно "<Button_02>" в Нижней липкой панели
+    And "Открываем" окно "<Button_03>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_03>"
+    And "Закрываем" окно "<Button_03>" в Нижней липкой панели
+    And "Открываем" окно "<Button_04>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_04>"
+    And "Закрываем" окно "<Button_04>" в Нижней липкой панели
+    And "Открываем" окно "<Button_05>" в Нижней липкой панели
+    Then Делаем скриншот "<Screen_05>"
+    And "Закрываем" окно "<Button_05>" в Нижней липкой панели
 
     Examples:
-      | Button        | ScreenRTL                                    |
-      | Главное Меню  | BottomStickyPanel_Var1 - Главное Меню (RTL)  |
-      | Поиск товаров | BottomStickyPanel_Var1 - Поиск товаров (RTL) |
-      | Мини корзина  | BottomStickyPanel_Var1 - Мини корзина (RTL)  |
-      | Аккаунт       | BottomStickyPanel_Var1 - Аккаунт (RTL)       |
-      | Контакты      | BottomStickyPanel_Var1 - Контакты (RTL)      |
+      | Button_01    | Screen_01                                   | Button_02     | Screen_02                                    | Button_03    | Screen_03                                   | Button_04 | Screen_04                              | Button_05 | Screen_05                               |
+      | Главное Меню | BottomStickyPanel_Var1 - Главное Меню (RTL) | Поиск товаров | BottomStickyPanel_Var1 - Поиск товаров (RTL) | Мини корзина | BottomStickyPanel_Var1 - Мини корзина (RTL) | Аккаунт   | BottomStickyPanel_Var1 - Аккаунт (RTL) | Контакты  | BottomStickyPanel_Var1 - Контакты (RTL) |

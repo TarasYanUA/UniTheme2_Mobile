@@ -3,13 +3,11 @@ package steps.adminPanel;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
+import static steps.adminPanel.UtilsAdmPanel.setCheckboxState;
 
 public class LayoutPage {
     public LayoutPage() {
@@ -17,7 +15,6 @@ public class LayoutPage {
     }
 
     public static String blockID;
-
 
     SelenideElement button_SettingsOfTemplate = $("a[id^='sw_case_settings_']");
     SelenideElement button_SaveBlockProperties = $("input[name='dispatch[block_manager.update_block]']");
@@ -33,7 +30,6 @@ public class LayoutPage {
     SelenideElement field_NumberOfColumnsInList = $("input[id$='_products_properties_number_of_columns']");
     SelenideElement setting_LoadingType = $("select[id$='_products_properties_abt__ut2_loading_type']");
     SelenideElement setting_ShowPrice = $("input[id$='_products_properties_show_price']");
-    SelenideElement setting_EnableQuickView = $("input[id$='_products_properties_enable_quick_view']");
     SelenideElement setting_DoNotScrollAutomatically = $("input[id$='_products_properties_not_scroll_automatically']");
     SelenideElement setting_ItemQuantity_Mobile = $("input[id*='_products_properties_item_quantity_mobile']");
     SelenideElement setting_OutsideNavigation = $("input[id$='_products_properties_outside_navigation']");
@@ -44,31 +40,31 @@ public class LayoutPage {
     SelenideElement checkbox_HideAddToCartButton = $("input[id$='_products_properties_hide_add_to_cart_button']");
 
 
-    @Given("Переходим во вкладку {string}, что на странице 'Макеты'")
+    public void saveLayoutSettings() {
+        button_SaveLayoutSettings.click();
+        sleep(1500);
+    }
+
     public void navigateTo_LayoutTab(String tabName) {
         $x("//ul[@class='nav nav-tabs']//a[text()='" + tabName + "']").click();
     }
 
-    @Given("Выключаем LazyLoad в секции с блоком {string}")
     public void disableLazyLoadFromSection(String blockName) {
         SelenideElement layoutProperties = $("div[data-ca-block-name='" + blockName + "'] ~ div[class*='grid-control-menu'] div[class*='bm-action-properties']");
         executeJavaScript("arguments[0].scrollIntoView(true);", layoutProperties);
         executeJavaScript("arguments[0].click();", layoutProperties);
-        sleep(2000);
+        popupWindow.shouldBe(Condition.exist);
         setting_UseDelayedLoadingOfSection.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
         if (setting_UseDelayedLoadingOfSection.isSelected())
             setting_UseDelayedLoadingOfSection.click();
-        button_SaveLayoutSettings.click();
+        saveLayoutSettings();
     }
 
-    @Given("Получаем ID блока {string}")
     public void getBlockID(String blockName) {
-        sleep(2000);
         blockID = $("div[title='" + blockName + "'] small[data-ca-block-manager='block_id']").getText().trim().split("#")[1];
         System.out.println("ID блока '" + blockName + "': " + blockID);
     }
 
-    @And("Переходим в настройки блока {string}")
     public void navigateToBlockSettings(String blockName) {
         SelenideElement blockProperties = $("div[data-ca-block-name='" + blockName + "']").$(".bm-action-properties");
         executeJavaScript("arguments[0].scrollIntoView(true);", blockProperties);
@@ -76,21 +72,12 @@ public class LayoutPage {
         popupWindow.shouldBe(Condition.exist);
     }
 
-    @And("Выбираем шаблон блока {string} и нажимаем кнопку 'Настройки'")
     public void selectTemplateForBlock(String templateName) {
         blockTemplate.selectOptionContainingText(templateName);
         sleep(2000);
         button_SettingsOfTemplate.click();
     }
 
-    private void setCheckboxState(SelenideElement checkbox, String value) {
-        boolean isValueNo = value.equalsIgnoreCase("n");
-        boolean isCheckboxSelected = checkbox.isSelected();
-
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
-            checkbox.click();
-    }
-    @And("Устанавливаем настройки блока:")
     public void setBlockSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
 
@@ -100,19 +87,11 @@ public class LayoutPage {
 
             switch (setting) {
                 case "Показать номер элемента" -> setCheckboxState(checkbox_ShowItemNumber, value);
-
                 case "Количество колонок в списке" -> field_NumberOfColumnsInList.setValue(value);
-
                 case "Тип загрузки" -> setting_LoadingType.selectOptionContainingText(value);
-
                 case "Показывать цену" -> setCheckboxState(setting_ShowPrice, value);
-
-                case "Включить быстрый просмотр" -> setCheckboxState(setting_EnableQuickView, value);
-
                 case "Не прокручивать автоматически" -> setCheckboxState(setting_DoNotScrollAutomatically, value);
-
                 case "Количество элементов (мобильный)" -> setting_ItemQuantity_Mobile.setValue(value);
-
                 case "Внешняя навигация" -> {
                     setting_OutsideNavigation.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
                     setCheckboxState(setting_OutsideNavigation, value);
@@ -123,7 +102,6 @@ public class LayoutPage {
                     tabOfBlock_Content.click();
                     setting_Filling.selectOptionContainingText(value);
                 }
-
                 case "Макс. число элементов" -> field_Limit.setValue(value);
 
                 // Настройки вкладки "Настройки блока"
@@ -134,36 +112,33 @@ public class LayoutPage {
 
                 default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);
             }
-
         }
     }
 
-            @Then("Сохраняем настройки блока")
     public void saveBlockSettings() {
         button_SaveBlockProperties.click();
+        sleep(1500);
     }
 
-    @Given("Переходим на страницу {string}, что на странице 'Макеты'")
     public void navigateTo_BlocksPage(String pageName) {
         BasicPage.sideBar.click();
         $x("//a[text()='" + pageName + "']").click();
     }
 
-    @And("Создаём блок с шаблоном {string}")
     public void createNewBlock(String blockTemplate) {
         button_CreateNewBlock.click();
-        $("strong[title='" + blockTemplate +"']").click();
+        $("strong[title='" + blockTemplate + "']").click();
         $("input[name='block_data[description][name]']").setValue("111 Контакты (ручное наполнение)");
         button_SettingsOfTemplate.click();
         sleep(1000);
         SelenideElement setting_ShowContentInSidebar = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_open_right_panel]']");
-        if(setting_ShowContentInSidebar.isSelected())
+        if (setting_ShowContentInSidebar.isSelected())
             setting_ShowContentInSidebar.click();
         SelenideElement setting_DisplayRequestCallButton = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_show_call_request_button]']");
-        if(!setting_DisplayRequestCallButton.isSelected())
+        if (!setting_DisplayRequestCallButton.isSelected())
             setting_DisplayRequestCallButton.click();
         SelenideElement setting_DisplayButtonsOnSocialNetworks = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_show_social_buttons]']");
-        if(!setting_DisplayButtonsOnSocialNetworks.isSelected())
+        if (!setting_DisplayButtonsOnSocialNetworks.isSelected())
             setting_DisplayButtonsOnSocialNetworks.click();
         $("li[id*='block_contents_']").click();
         $("input[name='block_data[content][phone_1]']").setValue("+380938941111");
@@ -172,10 +147,9 @@ public class LayoutPage {
         $("input[name='block_data[content][email]']").setValue("myemail@ukr.net");
         $("textarea[name='block_data[content][working_hours]']").setValue("from 9 a.m. to 8 p.m. every day except Saturday");
         $("textarea[name='block_data[content][address]']").setValue("Юридична адреса. 03026, м. Київ, шосе Столичне 103 корп. 1, пов. 9");
-        button_SaveBlockProperties.click();
+        saveBlockSettings();
     }
 
-    @Given("Получаем ID блока {string} на странице 'Блоки'")
     public void getBlockIDFrom_BlocksPage(String blockName) {
         blockID = $x("//input[@value='" + blockName + "']/../span/small").getText().trim().split("#")[1];
         System.out.println("ID блока '" + blockName + "': " + blockID);

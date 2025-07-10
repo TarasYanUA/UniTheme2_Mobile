@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.openqa.selenium.By;
+import steps.adminPanel.UtilsAdmPanel;
 
 import java.util.List;
 
@@ -53,13 +54,6 @@ public class ColorSchemeSettings {
     SelenideElement setting_ProductLists_FontWeightForProductName = $(By.id("settings.abt__ut2.product_list.grid-list.product_name_font_weight"));
 
 
-    private void setCheckboxState(SelenideElement checkbox, String value) {
-        boolean isValueNo = value.equalsIgnoreCase("n");
-        boolean isCheckboxSelected = checkbox.isSelected();
-
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
-            checkbox.click();
-    }
     @And("Устанавливаем настройки цветосхемы:")
     public void setColorSchemeSettings(DataTable table) {
         List<List<String>> rows = table.asLists(String.class);
@@ -71,19 +65,19 @@ public class ColorSchemeSettings {
             switch (setting) {
                 //Вкладка "Общие"
                 case "Скруглить углы для элементов интерфейса" -> setting_General_RoundCornersForElements.selectOptionContainingText(value);
-                case "Скруглить углы блоков, окон, баннеров" -> setCheckboxState(setting_General_RoundCornersOfBlocks, value);
-                case "Отображать заголовки заглавными буквами" -> setCheckboxState(setting_General_DisplayHeadersInCapitalLetters, value);
+                case "Скруглить углы блоков, окон, баннеров" -> setting_General_RoundCornersOfBlocks.selectOptionContainingText(value);
+                case "Отображать заголовки заглавными буквами" -> UtilsAdmPanel.setCheckboxState(setting_General_DisplayHeadersInCapitalLetters, value);
                 case "Кнопки, Стиль" -> setting_General_ButtonsStyle.selectOptionContainingText(value);
-                case "Кнопки, Отображать текст заглавными буквами" -> setCheckboxState(setting_General_DisplayTextInCapitalLetters, value);
-                case "Кнопки, Отображать тень" -> setCheckboxState(setting_General_AddShadow, value);
-                case "Кнопки, Добавить объем" -> setCheckboxState(setting_General_AddBulk, value);
+                case "Кнопки, Отображать текст заглавными буквами" -> UtilsAdmPanel.setCheckboxState(setting_General_DisplayTextInCapitalLetters, value);
+                case "Кнопки, Отображать тень" -> UtilsAdmPanel.setCheckboxState(setting_General_AddShadow, value);
+                case "Кнопки, Добавить объем" -> UtilsAdmPanel.setCheckboxState(setting_General_AddBulk, value);
                 case "Кнопки, Иконка Корзины" -> setting_General_CartIcon.selectOptionContainingText(value);
 
                 //Вкладка "Списки товаров"
                 case "Тип обрамления товара в сетке" -> setting_FrameType.selectOptionContainingText(value);
-                case "Добавить фон/маску для изображений товара" -> setCheckboxState(setting_ProductLists_MaskForProductImages, value);
-                case "Использовать выравнивание элементов в товарной сетке" -> setCheckboxState(setting_ProductLists_ElementsAlignment, value);
-                case "Эффект увеличения ячейки при наведении" -> setCheckboxState(setting_ProductLists_ExpandGridItemOnHover, value);
+                case "Добавить фон/маску для изображений товара" -> UtilsAdmPanel.setCheckboxState(setting_ProductLists_MaskForProductImages, value);
+                case "Использовать выравнивание элементов в товарной сетке" -> UtilsAdmPanel.setCheckboxState(setting_ProductLists_ElementsAlignment, value);
+                case "Эффект увеличения ячейки при наведении" -> UtilsAdmPanel.setCheckboxState(setting_ProductLists_ExpandGridItemOnHover, value);
                 case "Насыщенность шрифта для названия товара" -> setting_ProductLists_FontWeightForProductName.selectOptionContainingText(value);
 
                 default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);

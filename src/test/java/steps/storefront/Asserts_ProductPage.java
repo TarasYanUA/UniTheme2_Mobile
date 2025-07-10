@@ -32,14 +32,13 @@ public class Asserts_ProductPage {
     SelenideElement productBrandInformation_Name = $(".ut2-pb__product-brand-name");
     SelenideElement productBrandInformation_Logo = $(".ut2-pb__product-brand");
     SelenideElement appearanceOfImageGallery_Counter = $(".abt__ut2_pig_counter");
-    SelenideElement appearanceOfImageGallery_Dots = $(".abt__ut2_pig_counter.lines");
+    SelenideElement appearanceOfImageGallery_Dots = $(".abt__ut2_pig_counter.dotes");
     SelenideElement shareButtons = $(".ut2-pb__share");
 
     //CS-Cart настройки
     SelenideElement pricesWithTaxes = $("span[id*='line_product_price_']");
     SelenideElement numberOfAvailableProducts = $x("//span[contains(@class, 'ty-qty-in-stock')][text()='Доступность:']");
     SelenideElement miniThumbnailImagesAsGallery_Enabled = $(".ty-product-thumbnails_gallery");
-    SelenideElement miniThumbnailImagesAsGallery_Disabled = $(".ty-product-thumbnails.ty-center");
     SelenideElement displayProductDetailsInTabs_Enabled = $(".ut2-pb__tabs .ty-accordion");
     SelenideElement displayProductDetailsInTabs_Disabled = $(".ut2-pb__tabs .tab-list-title");
 
@@ -50,6 +49,8 @@ public class Asserts_ProductPage {
 
     //Настройки из страницы редактирования товара
     SelenideElement listPrice = $("span[id*='old_price_update_'] .ty-list-price");
+    SelenideElement zeroPriceAction_AskCustomerToEnterPrice = $(".ty-price-curency__input");
+    SelenideElement outOfStockActions_SignUpForNotification = $("label[id*='label_sw_product_notify_']");
     SelenideElement pricePerUnit = $(".ty-price-per-unit");
     SelenideElement promoText = $(".ut2-pb__note");
     SelenideElement product_allowPaymentByPoints = $(".ty-reward-group");
@@ -173,8 +174,8 @@ public class Asserts_ProductPage {
                                 .isTrue();
                     } else if (value.equalsIgnoreCase("Отображать логотип бренда товара")) {
                         softAssert.assertThat(productBrandInformation_Logo.exists())
-                                .as("There is a Product Brand Name but shouldn't on the product page!")
-                                .isFalse();
+                                .as("There is no Product Brand Logo on the product page!")
+                                .isTrue();
                     } else if (value.equalsIgnoreCase("Не отображать")) {
                         softAssert.assertThat(productBrandInformation_Name.exists() || productBrandInformation_Logo.exists())
                                 .as("There is a Brand name or Brand logo but shouldn't on the product page!")
@@ -242,9 +243,9 @@ public class Asserts_ProductPage {
                                 .as("Mini-icons of a product are not as a Gallery on the product page!")
                                 .isTrue();
                     } else {
-                        softAssert.assertThat(miniThumbnailImagesAsGallery_Disabled.exists())
+                        softAssert.assertThat(miniThumbnailImagesAsGallery_Enabled.exists())
                                 .as("Mini-icons of a product are as a Gallery but shouldn't on the product page!")
-                                .isTrue();
+                                .isFalse();
                     }
                     break;
 
@@ -309,6 +310,22 @@ public class Asserts_ProductPage {
                         softAssert.assertThat(listPrice.exists())
                                 .as("There is a List price but shouldn't on the product page!")
                                 .isFalse();
+                    }
+                    break;
+
+                case "Действие при нулевой цене":
+                    if (value.equalsIgnoreCase("Попросить покупателя ввести цену")) {
+                        softAssert.assertThat(zeroPriceAction_AskCustomerToEnterPrice.exists())
+                                .as("Zero price action is not 'Ask customer to enter the price'!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Действие при отсутствии товара в наличии":
+                    if (value.equalsIgnoreCase("Подписаться на уведомления")) {
+                        softAssert.assertThat(outOfStockActions_SignUpForNotification.exists())
+                                .as("There is no field 'Sign up for notification'!")
+                                .isTrue();
                     }
                     break;
 

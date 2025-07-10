@@ -7,6 +7,7 @@ import io.cucumber.datatable.DataTable;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import steps.adminPanel.LayoutPage;
+import steps.adminPanel.UtilsAdmPanel;
 
 import java.util.List;
 
@@ -41,14 +42,6 @@ public class ThemeSettings_BottomStickyPanel {
     SelenideElement position_Contacts = $(By.id("settings.abt__ut2.general.sticky_panel.phones.position"));
 
 
-    private void setCheckboxState(SelenideElement checkbox, String value) {
-        boolean isValueNo = value.equalsIgnoreCase("n");
-        boolean isCheckboxSelected = checkbox.isSelected();
-
-        if ((isValueNo && isCheckboxSelected) || (!isValueNo && !isCheckboxSelected))
-            checkbox.click();
-    }
-
     @And("Устанавливаем настройки Нижней липкой панели:")
     public void setBottomStickyPanelSettings(DataTable table) {
         List<List<String>> rows = table.asLists((String.class));
@@ -67,41 +60,48 @@ public class ThemeSettings_BottomStickyPanel {
                         setting_BlockID_ContactUs.setValue(blockID);
                     }
                 }
-                case "Включить нижнюю липкую панель" -> setCheckboxState(setting_EnableBottomStickyPanel, value);
-                case "Отображать названия элементов панели" -> setCheckboxState(setting_DisplayTitlesForPanelItems, value);
-                case "Ссылка на главную страницу" -> setCheckboxState(setting_LinkToHomePage, value);
+                case "Включить нижнюю липкую панель" ->
+                        UtilsAdmPanel.setCheckboxState(setting_EnableBottomStickyPanel, value);
+                case "Отображать названия элементов панели" ->
+                        UtilsAdmPanel.setCheckboxState(setting_DisplayTitlesForPanelItems, value);
+                case "Ссылка на главную страницу" -> UtilsAdmPanel.setCheckboxState(setting_LinkToHomePage, value);
                 case "Ссылка на главную страницу, Позиция" -> position_LinkToHomePage.setValue(value);
-                case "Главное Меню" -> setCheckboxState(setting_CatalogMenu, value);
+                case "Главное Меню" -> UtilsAdmPanel.setCheckboxState(setting_CatalogMenu, value);
                 case "Главное Меню, Позиция" -> position_CatalogMenu.setValue(value);
-                case "Поиск товаров" -> setCheckboxState(setting_SearchProducts, value);
+                case "Поиск товаров" -> UtilsAdmPanel.setCheckboxState(setting_SearchProducts, value);
                 case "Поиск товаров, Позиция" -> position_SearchProducts.setValue(value);
-                case "Мини корзина" -> setCheckboxState(setting_MiniCart, value);
+                case "Мини корзина" -> UtilsAdmPanel.setCheckboxState(setting_MiniCart, value);
                 case "Мини корзина, Позиция" -> position_MiniCart.setValue(value);
-                case "Избранные товары" -> setCheckboxState(setting_Wishlist, value);
+                case "Избранные товары" -> UtilsAdmPanel.setCheckboxState(setting_Wishlist, value);
                 case "Избранные товары, Позиция" -> position_Wishlist.setValue(value);
-                case "Сравнение товаров" -> setCheckboxState(setting_ComparisonList, value);
+                case "Сравнение товаров" -> UtilsAdmPanel.setCheckboxState(setting_ComparisonList, value);
                 case "Сравнение товаров, Позиция" -> position_ComparisonList.setValue(value);
-                case "Аккаунт" -> setCheckboxState(setting_Account, value);
+                case "Аккаунт" -> UtilsAdmPanel.setCheckboxState(setting_Account, value);
                 case "Аккаунт, Позиция" -> position_Account.setValue(value);
-                case "Контакты" -> setCheckboxState(setting_Contacts, value);
+                case "Контакты" -> UtilsAdmPanel.setCheckboxState(setting_Contacts, value);
                 case "Контакты, Позиция" -> position_Contacts.setValue(value);
                 default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);
             }
-
         }
     }
 
     //Кнопки/Проверки на витрине
     String bottomStickyPanel = ".ut2-sticky-panel__wrap ";
     SelenideElement element_BottomStickyPanel = $(bottomStickyPanel);
-    SelenideElement linkToHomePage = $(".ut2-icon-home_page");
+    SelenideElement linkToHomePage = $(bottomStickyPanel + ".ut2-icon-home_page");
     SelenideElement catalogMenu = $(bottomStickyPanel + ".ut2-icon-outline-menu");
-    SelenideElement searchProducts = $(bottomStickyPanel + ".ut2-icon-search");
+    SelenideElement searchOfProducts = $(bottomStickyPanel + ".ut2-icon-search");
     SelenideElement miniCart = $(bottomStickyPanel + ".ut2-icon-use_icon_cart");
-    SelenideElement wishlist = $(".ut2-icon-baseline-favorite-border");
-    SelenideElement comparisonList = $(".ut2-icon-addchart");
+    SelenideElement wishlist = $(bottomStickyPanel + ".ut2-icon-baseline-favorite-border");
+    SelenideElement comparisonList = $(bottomStickyPanel + ".ut2-icon-addchart");
     SelenideElement account = $(bottomStickyPanel + ".ut2-icon-outline-account-circle");
-    SelenideElement contacts = $(".ut2-icon-local_phone");
+    SelenideElement contacts = $(bottomStickyPanel + ".ut2-icon-local_phone");
+    SelenideElement closeCatalogMenu = $(".ut2-sw .ut2-icon-baseline-close");
+    SelenideElement closeSearchOfProducts = $(bottomStickyPanel + "#off_dropdown_sticky_item_search .ut2-icon-baseline-close");
+    SelenideElement closeMiniCart = $(bottomStickyPanel + ".ty-dropdown-box__content--cart.container-opened .ut2-icon-baseline-close");
+    SelenideElement closeAccount = $(bottomStickyPanel + "#account_info_sticky_item_acc .ut2-icon-baseline-close");
+    SelenideElement closeContacts = $(bottomStickyPanel + "#dropdown_phones_info_acc .ut2-icon-baseline-close");
+
 
     @And("Выполняем проверки в Нижней липкой панели:")
     public void assertsOfBottomStickyPanel(DataTable table) {
@@ -130,7 +130,7 @@ public class ThemeSettings_BottomStickyPanel {
                                 : "There is a Catalog Menu but shouldn't!")
                         .isEqualTo(value.equalsIgnoreCase("y"));
 
-                case "Поиск товаров" -> softAssert.assertThat(searchProducts.exists())
+                case "Поиск товаров" -> softAssert.assertThat(searchOfProducts.exists())
                         .as(value.equalsIgnoreCase("y")
                                 ? "There is no Search Products button!"
                                 : "There is a Search Products button but shouldn't!")
@@ -171,19 +171,31 @@ public class ThemeSettings_BottomStickyPanel {
         }
     }
 
-    private SelenideElement getButtonByName(String buttonName) {
-        return switch (buttonName) {
-            case "Главное Меню" -> catalogMenu;
-            case "Поиск товаров" -> searchProducts;
-            case "Мини корзина" -> miniCart;
-            case "Аккаунт" -> account;
-            case "Контакты" -> contacts;
-            default -> throw new IllegalArgumentException("Неизвестная кнопка: " + buttonName);
+    private SelenideElement getButtonByActionAndName(String action, String buttonName) {
+        return switch (action) {
+            case "Открываем" -> switch (buttonName) {
+                case "Главное Меню" -> catalogMenu;
+                case "Поиск товаров" -> searchOfProducts;
+                case "Мини корзина" -> miniCart;
+                case "Аккаунт" -> account;
+                case "Контакты" -> contacts;
+                default -> throw new IllegalArgumentException("Неизвестная кнопка для открытия: " + buttonName);
+            };
+            case "Закрываем" -> switch (buttonName) {
+                case "Главное Меню" -> closeCatalogMenu;
+                case "Поиск товаров" -> closeSearchOfProducts;
+                case "Мини корзина" -> closeMiniCart;
+                case "Аккаунт" -> closeAccount;
+                case "Контакты" -> closeContacts;
+                default -> throw new IllegalArgumentException("Неизвестная кнопка для закрытия: " + buttonName);
+            };
+            default -> throw new IllegalArgumentException("Неизвестное действие: " + action);
         };
     }
-    @And("Нажимаем кнопку {string} в Нижней липкой панели")
-    public void clickButton(String buttonName) {
-        SelenideElement button = getButtonByName(buttonName);
+
+    @And("{string} окно {string} в Нижней липкой панели")
+    public void togglePanelWindow(String action, String buttonName) {
+        SelenideElement button = getButtonByActionAndName(action, buttonName);
         button.click();
     }
 }

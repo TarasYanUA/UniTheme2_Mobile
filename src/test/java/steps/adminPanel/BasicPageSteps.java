@@ -1,6 +1,5 @@
 package steps.adminPanel;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,26 +22,6 @@ public class BasicPageSteps {
     @And("Переходим в настройки характеристики {string}")
     public void navigateTo_FeaturePage(String featureName) {
         basicPage.navigateTo_FeaturePage(featureName);
-    }
-
-    @And("Устанавливаем настройки характеристики:")
-    public void setSettingsOfFeature_Brand(DataTable table) {
-        basicPage.setSettingsOfFeature_Brand(table);
-    }
-
-    @And("Задаём описание для характеристики")
-    public void addDescriptionToFeature() {
-        basicPage.addDescriptionToFeature();
-    }
-
-    @Then("Сохраняем выбранные настройки")
-    public void saveSettings_SaveButtonOnTop() {
-        basicPage.saveSettings_SaveButtonOnTop();
-    }
-
-    @Then("Сохраняем настройки характеристики")
-    public void saveSettings_Feature() {
-        basicPage.saveSettings_Feature();
     }
 
     @Given("Переходим на страницу 'Настройки', раздел {string}")

@@ -86,6 +86,9 @@ public class ThemeSettings_ProductLists {
     SelenideElement scroller_QuantityChanger = $(By.id("settings.abt__ut2.product_list.products_scroller.show_qty.mobile"));
     SelenideElement scroller_AddToCartButton = $(By.id("settings.abt__ut2.product_list.products_scroller.show_button_add_to_cart.mobile"));
 
+    //Модуль "Вариации товаров"
+    SelenideElement productVariations_MaximumQuantityOfProductsVariations = $(By.id("settings.abt__ut2.product_list.product_variations.limit"));
+    SelenideElement productVariations_TypeOfVariationsView = $(By.id("settings.abt__ut2.product_list.product_variations.display_color_separately"));
 
     @And("Устанавливаем настройки темы:")
     public void setThemeSettings_CategoryPage(DataTable table) {
@@ -151,6 +154,11 @@ public class ThemeSettings_ProductLists {
                 case "Скроллер, Отображать статус наличия" -> setCheckboxState(scroller_AvailabilityStatus, value);
                 case "Скроллер, Отображать модификатор количества" -> setCheckboxState(scroller_QuantityChanger, value);
                 case "Скроллер, Отображать кнопку \"Купить\"" -> scroller_AddToCartButton.selectOptionContainingText(value);
+
+                //Модуль "Вариации товаров"
+                case "Вариации товаров, Максимальное количество отображаемых вариаций товара" ->
+                        productVariations_MaximumQuantityOfProductsVariations.scrollIntoCenter().setValue(value);
+                case "Вариации товаров, Тип отображения вариаций" -> productVariations_TypeOfVariationsView.selectOptionContainingText(value);
 
                 default -> System.out.println("Неизвестная настройка: " + setting);
             }

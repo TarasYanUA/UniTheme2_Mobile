@@ -1,13 +1,17 @@
 package steps.adminPanel;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 
+import java.time.Duration;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -17,7 +21,7 @@ public class ProductPageSettings {
     SelenideElement button_SaveProduct = $(".cm-product-save-buttons");
     ElementsCollection closeNotification = $$(".cm-notification-close");
     SelenideElement searchFieldOfProduct = $("input[form='search_filters_form']");
-    SelenideElement anyProduct = $(".products-list__image a");
+    SelenideElement anyProduct = $(".product-name-column a[href*='dispatch=products.update']");
 
     // Вкладка товара "Общее"
     SelenideElement field_Name = $(By.id("product_description_product"));
@@ -42,6 +46,11 @@ public class ProductPageSettings {
     SelenideElement tab_QuantityDiscounts = $(By.id("qty_discounts"));
     SelenideElement field_Quantity = $("#box_add_qty_discount .cm-value-decimal");
     SelenideElement field_Value = $("#box_add_qty_discount .cm-numeric");
+
+    //Вкладка товара "Вариации"
+    SelenideElement tab_Variations = $("a[href*='dispatch=product_variations.manage']");
+    SelenideElement button_AddVariations = $(By.id("opener_update_product_group"));
+    SelenideElement saveTabFeature_onTop = $("#tools_variations_btn.cm-submit");
 
 
     void closeNotificationIfPresent() {
@@ -113,5 +122,47 @@ public class ProductPageSettings {
     @Then("Сохраняем настройки товара")
     public void saveProductPage() {
         button_SaveProduct.click();
+    }
+
+    @And("Выбираем все доступные вариации для товара")
+    public void selectAllVariations() {
+        navigateToTab_Variations();
+        selectAllVariationsForProduct();
+        saveTabFeature_onTop.click();
+    }
+
+    void navigateToTab_Variations() {
+        executeJavaScript("window.scrollTo(0, 0);");
+
+        Actions actions = new Actions(WebDriverRunner.getWebDriver());
+        actions
+                .moveToElement(tab_Variations)
+                .clickAndHold()
+                .moveByOffset(-100, 0)
+                .release()
+                .perform();
+
+        tab_Variations.click();
+    }
+
+    void selectAllVariationsForProduct() {
+        if ($("#content_variations_pagination .no-items").exists()) {
+            button_AddVariations.shouldBe(Condition.visible, Duration.ofSeconds(8)).click();
+            SelenideElement field_findFeaturesForVariations = $(".object-picker__select-group--features .select2-search--inline input");
+            Actions actions = new Actions(WebDriverRunner.getWebDriver());
+            actions.moveToElement(field_findFeaturesForVariations).click().perform();
+
+            $(".select2-results__options").shouldBe(Condition.exist, Duration.ofSeconds(8));
+            actions.moveToElement($x("//div[@class='object-picker__selection-product-feature']//span[text()='Цвет']"))
+                    .click().perform();
+            actions.moveToElement(field_findFeaturesForVariations).click().perform();
+            $(".cm-variations-generator_add-all-variants").shouldBe(Condition.exist, Duration.ofSeconds(8))
+                    .click();
+            $("div[id*='tools_tab_create_new'] a").shouldBe(Condition.exist, Duration.ofSeconds(8))
+                    .click();
+
+            SelenideElement button_SaveProductVariations = $("#tools_variations_btn.btn-primary.cm-submit");
+            button_SaveProductVariations.click();
+        }
     }
 }

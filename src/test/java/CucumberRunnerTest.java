@@ -17,7 +17,7 @@ import io.cucumber.junit.Cucumber;
         //tags = "@CategoryPage_ListWithoutOptions_Var1 or @CategoryPage_ListWithoutOptions_Var2",
         //tags = "@CategoryPage_CompactList_Var1 or @CategoryPage_CompactList_Var2",
 
-        tags = "@CategoryPage_Grid_Var2",
+        tags = "@CategoryPage_Grid_Var3",
 
         plugin = {"pretty", "html:target/cucumber_target.html", "json:target/cucumber.json"}
 )

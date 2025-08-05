@@ -19,6 +19,9 @@ public class Asserts_ProductBlock_CategoryPage {
 
     SoftAssertions softAssert = CollectAssertMessages.getSoftAssertions();
     String blockID = LayoutPage.blockID;
+    String gridList = ".ut2-gl__body";
+    String listWithoutOptions = ".ty-product-list";
+    String compactList = ".ty-compact-list__content";
 
 
     //Настройки темы -- вкладка "Списки товаров"
@@ -57,11 +60,11 @@ public class Asserts_ProductBlock_CategoryPage {
     //Настройка "Отображать "Вы экономите -- Сокращенный вид" (вариант "Полный вид" на мобильном отсутствует)
     String text_YouSave_Short = " .ut2-sld-short .ty-save-price";
 
-    SelenideElement youSave_Short_Grid = $(".ut2-gl__body" + text_YouSave_Short);
+    SelenideElement youSave_Short_Grid = $(gridList + text_YouSave_Short);
 
-    SelenideElement youSave_Short_ListWithoutOptions = $(".ty-product-list" + text_YouSave_Short);
+    SelenideElement youSave_Short_ListWithoutOptions = $(listWithoutOptions + text_YouSave_Short);
 
-    SelenideElement youSave_Short_CompactList = $(".ty-compact-list__content" + text_YouSave_Short);
+    SelenideElement youSave_Short_CompactList = $(compactList + text_YouSave_Short);
 
     SelenideElement getText_YouSave_Short() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + text_YouSave_Short);
@@ -77,11 +80,11 @@ public class Asserts_ProductBlock_CategoryPage {
     //Настройка "Отображать статус наличия"
     String availabilityStatus = " .ty-qty-in-stock.ty-control-group__item";
 
-    SelenideElement availabilityStatus_Grid = $(".ut2-gl__body" + availabilityStatus);
+    SelenideElement availabilityStatus_Grid = $(gridList + availabilityStatus);
 
-    SelenideElement availabilityStatus_ListWithoutOptions = $(".ty-product-list" + availabilityStatus);
+    SelenideElement availabilityStatus_ListWithoutOptions = $(listWithoutOptions + availabilityStatus);
 
-    SelenideElement availabilityStatus_CompactList = $(".ty-compact-list__content" + availabilityStatus);
+    SelenideElement availabilityStatus_CompactList = $(compactList + availabilityStatus);
 
     SelenideElement getAvailabilityStatus() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "']" + availabilityStatus);
@@ -195,6 +198,32 @@ public class Asserts_ProductBlock_CategoryPage {
 
     //Настройка "Показать номер элемента"
     SelenideElement numbersOfElements = $(".ut2-hit");
+
+
+    //Настройки страницы "Товары -- Характеристики"
+
+    //Новый вид вариаций товара
+    String prodVar_NewProductVariations = " div[class*='ut2-lv__features-item lv-hover-items']";
+
+    SelenideElement prodVar_NewProductVariations_Grid = $(gridList + prodVar_NewProductVariations);
+
+    SelenideElement prodVar_NewProductVariations_ListWithoutOptions = $(listWithoutOptions + prodVar_NewProductVariations);
+
+
+    //Настройка "Тип отображения вариаций -- Цвета"
+    String prodVar_TypeOfVariationsView_Colors = " [data-display='color']";
+
+    SelenideElement gridList_prodVar_TypeOfVariationsView_Colors = $(gridList + prodVar_TypeOfVariationsView_Colors);
+
+    SelenideElement listWithoutOptions_prodVar_TypeOfVariationsView_Colors = $(listWithoutOptions + prodVar_TypeOfVariationsView_Colors);
+
+
+    //Настройка "Тип отображения вариаций -- Миниатюры"
+    String prodVar_TypeOfVariationsView_Thumbnails = " [data-display='thumbnails']";
+
+    SelenideElement gridList_prodVar_TypeOfVariationsView_Thumbnails = $(gridList + prodVar_TypeOfVariationsView_Thumbnails);
+
+    SelenideElement listWithoutOptions_prodVar_TypeOfVariationsView_Thumbnails = $(listWithoutOptions + prodVar_TypeOfVariationsView_Thumbnails);
 
 
     @And("Выполняем проверки в блоке:")
@@ -601,6 +630,35 @@ public class Asserts_ProductBlock_CategoryPage {
                     }
                     break;
 
+                case "Новый вид Вариаций":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(prodVar_NewProductVariations_Grid.exists())
+                                .as("There is no new view of product variations on the category 'Phones', Grid list!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(prodVar_NewProductVariations_Grid.exists())
+                                .as("There is a new view of product variations but shouldn't on the category 'Phones', Grid list!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Тип отображения новых вариаций":
+                    if (value.equalsIgnoreCase("Цвета")) {
+                        softAssert.assertThat(gridList_prodVar_TypeOfVariationsView_Colors.exists())
+                                .as("Product variations are not with Colors on the category 'Phones', Grid list!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Миниатюры")) {
+                        softAssert.assertThat(gridList_prodVar_TypeOfVariationsView_Thumbnails.exists())
+                                .as("Product variations are not with Thumbnails on the category 'Phones', Grid list!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(gridList_prodVar_TypeOfVariationsView_Colors.exists() ||
+                                        gridList_prodVar_TypeOfVariationsView_Thumbnails.exists())
+                                .as("Product variations exist but shouldn't on the category 'Phones', Grid list!")
+                                .isFalse();
+                    }
+                    break;
+
                 case "Список без опций, Отображать \"Вы экономите\"":
                     if (value.equalsIgnoreCase("Сокращенный вид")) {
                         softAssert.assertThat(youSave_Short_ListWithoutOptions.exists())
@@ -665,6 +723,35 @@ public class Asserts_ProductBlock_CategoryPage {
                     } else {
                         softAssert.assertThat(showBrandLogo.exists() || showBrandName.exists())
                                 .as("There is a Brand logo but shouldn't on the category page!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Список без опций, Новый вид Вариаций":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(prodVar_NewProductVariations_ListWithoutOptions.exists())
+                                .as("There is no new view of product variations on the category 'Phones', ListWithoutOptions!")
+                                .isTrue();
+                    } else {
+                        softAssert.assertThat(prodVar_NewProductVariations_ListWithoutOptions.exists())
+                                .as("There is a new view of product variations but shouldn't on the category 'Phones', ListWithoutOptions!")
+                                .isFalse();
+                    }
+                    break;
+
+                case "Список без опций, Тип отображения новых вариаций":
+                    if (value.equalsIgnoreCase("Цвета")) {
+                        softAssert.assertThat(listWithoutOptions_prodVar_TypeOfVariationsView_Colors.exists())
+                                .as("Product variations are not with Colors on the category 'Phones', ListWithoutOptions!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Миниатюры")) {
+                        softAssert.assertThat(listWithoutOptions_prodVar_TypeOfVariationsView_Thumbnails.exists())
+                                .as("Product variations are not with Thumbnails on the category 'Phones', ListWithoutOptions!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(listWithoutOptions_prodVar_TypeOfVariationsView_Colors.exists() ||
+                                        listWithoutOptions_prodVar_TypeOfVariationsView_Thumbnails.exists())
+                                .as("Product variations exist but shouldn't on the category 'Phones', ListWithoutOptions!")
                                 .isFalse();
                     }
                     break;

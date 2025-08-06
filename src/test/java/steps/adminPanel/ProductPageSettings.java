@@ -128,7 +128,6 @@ public class ProductPageSettings {
     public void selectAllVariations() {
         navigateToTab_Variations();
         selectAllVariationsForProduct();
-        saveTabFeature_onTop.click();
     }
 
     void navigateToTab_Variations() {
@@ -146,6 +145,7 @@ public class ProductPageSettings {
     }
 
     void selectAllVariationsForProduct() {
+        sleep(2000);
         if ($("#content_variations_pagination .no-items").exists()) {
             button_AddVariations.shouldBe(Condition.visible, Duration.ofSeconds(8)).click();
             SelenideElement field_findFeaturesForVariations = $(".object-picker__select-group--features .select2-search--inline input");
@@ -163,6 +163,7 @@ public class ProductPageSettings {
 
             SelenideElement button_SaveProductVariations = $("#tools_variations_btn.btn-primary.cm-submit");
             button_SaveProductVariations.click();
+            saveTabFeature_onTop.shouldBe(Condition.clickable, Duration.ofSeconds(8)).click();
         }
     }
 }

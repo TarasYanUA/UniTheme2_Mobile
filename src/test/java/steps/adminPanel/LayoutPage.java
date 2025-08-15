@@ -54,9 +54,13 @@ public class LayoutPage {
         executeJavaScript("arguments[0].scrollIntoView(true);", layoutProperties);
         executeJavaScript("arguments[0].click();", layoutProperties);
         popupWindow.shouldBe(Condition.exist);
+        sleep(2000);
         setting_UseDelayedLoadingOfSection.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-        if (setting_UseDelayedLoadingOfSection.isSelected())
-            setting_UseDelayedLoadingOfSection.click();
+        //executeJavaScript("arguments[0].scrollIntoView();", setting_UseDelayedLoadingOfSection);
+        UtilsAdmPanel.setCheckboxState(setting_UseDelayedLoadingOfSection, "n");
+
+        if (!$("input[id*='show_on_phone'][checked='checked']").exists())
+            $("label[for*='show_on_phone']").click();
         saveLayoutSettings();
     }
 

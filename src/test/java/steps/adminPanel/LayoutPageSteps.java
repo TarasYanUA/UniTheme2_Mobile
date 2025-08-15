@@ -15,7 +15,7 @@ public class LayoutPageSteps {
         layoutPage.navigateTo_LayoutTab(tabName);
     }
 
-    @Given("Выключаем LazyLoad в секции с блоком {string}")
+    @Given("Выключаем LazyLoad в секции с блоком {string} и Включаем отображение для мобильного устройства")
     public void disableLazyLoadFromSection(String blockName) {
         layoutPage.disableLazyLoadFromSection(blockName);
     }

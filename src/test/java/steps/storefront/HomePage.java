@@ -102,9 +102,21 @@ public class HomePage {
 
     public void navigateTo_CategoryTemplate(String templateName) {
         switch (templateName) {
-            case "Сетка" -> categoryTemplate_Grid.click();
-            case "Список без опций" -> categoryTemplate_ListWithoutOptions.click();
-            case "Компактный список" -> categoryTemplate_CompactList.click();
+            case "Сетка" -> {
+                categoryTemplate_Grid.click();
+                UtilsStorefront.waitForSpinnerDisappear();
+                sleep(1000);
+            }
+            case "Список без опций" -> {
+                categoryTemplate_ListWithoutOptions.click();
+                UtilsStorefront.waitForSpinnerDisappear();
+                sleep(1000);
+            }
+            case "Компактный список" -> {
+                categoryTemplate_CompactList.click();
+                UtilsStorefront.waitForSpinnerDisappear();
+                sleep(1000);
+            }
 
             default -> throw new IllegalArgumentException("Неизвестный шаблон: " + templateName);
         }

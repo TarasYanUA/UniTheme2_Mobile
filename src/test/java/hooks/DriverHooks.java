@@ -14,7 +14,7 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.*;
 
 public class DriverHooks {
-    public static final String BASIC_URL = "https://trs.test.abt.team/4184ultru_unitheme2/admin.php?dispatch=addons.manage";
+    public static final String BASIC_URL = "https://abd-20ce298770.demos.abt.team/admin.php?dispatch=addons.manage";
 
     public DriverHooks() {super();}
 

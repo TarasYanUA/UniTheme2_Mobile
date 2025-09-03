@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class ProductPageSettings {
+public class ProductPage {
 
     SelenideElement button_SaveProduct = $(".cm-product-save-buttons");
     ElementsCollection closeNotification = $$(".cm-notification-close");

@@ -126,13 +126,13 @@ Feature: Страница категории, шаблон "Список без 
       | Текст налога "[цена налога] + Вкл налог"         | y                      |
       | Список без опций, Новый вид Вариаций             | y                      |
       | Список без опций, Тип отображения новых вариаций | Миниатюры              |
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Телефоны 01"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Телефоны 01"
     And Скроллимся вниз по странице на 550 px
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Телефоны 02"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Телефоны 02"
     And Переключаемся на "ar" язык интерфейса витрины
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Телефоны (RTL) 01"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Телефоны (RTL) 01"
     And Скроллимся вниз по странице на 550 px
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Телефоны (RTL) 02"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Телефоны (RTL) 02"
     And Переключаемся на "ru" язык интерфейса витрины
     And Переходим на страницу категории "apparel" "Мужская одежда"
     And Переходим на шаблон "Список без опций" страницы категории
@@ -150,10 +150,10 @@ Feature: Страница категории, шаблон "Список без 
       | Список без опций, Отображать бренд              | Название                        |
       | Отображать стандартную галерею изображений      | Навигация точками               |
       | Текст налога "[цена налога] + Вкл налог"        | y                               |
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда 01"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда 01"
     And Скроллимся вниз по странице на 550 px
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда 02"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда 02"
     And Переключаемся на "ar" язык интерфейса витрины
     And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда (RTL) 01"
     And Скроллимся вниз по странице на 550 px
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда (RTL) 02"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда (RTL) 02"

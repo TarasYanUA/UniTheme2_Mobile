@@ -127,13 +127,13 @@ Feature: Страница категории, шаблон "Список без 
       | Текст налога "[цена налога] + Вкл налог"         | y                     |
       | Список без опций, Новый вид Вариаций             | y                     |
       | Список без опций, Тип отображения новых вариаций | Цвета                 |
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var1 - категория Телефоны 01"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var1 - категория Телефоны 01"
     And Скроллимся вниз по странице на 400 px
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var1 - категория Телефоны 02"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var1 - категория Телефоны 02"
     And Переключаемся на "ar" язык интерфейса витрины
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var1 - категория Телефоны (RTL) 01"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var1 - категория Телефоны (RTL) 01"
     And Скроллимся вниз по странице на 400 px
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var1 - категория Телефоны (RTL) 02"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var1 - категория Телефоны (RTL) 02"
     And Переключаемся на "ru" язык интерфейса витрины
     And Переходим на страницу категории "apparel" "Мужская одежда"
     And Переходим на шаблон "Список без опций" страницы категории
@@ -150,6 +150,6 @@ Feature: Страница категории, шаблон "Список без 
       | Список без опций, Отображать бренд              | Логотип               |
       | Отображать стандартную галерею изображений      | Навигация стрелками   |
       | Текст налога "[цена налога] + Вкл налог"        | y                     |
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var1 - категория Мужская одежда"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var1 - категория Мужская одежда"
     And Переключаемся на "ar" язык интерфейса витрины
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var1 - категория Мужская одежда (RTL)"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var1 - категория Мужская одежда (RTL)"

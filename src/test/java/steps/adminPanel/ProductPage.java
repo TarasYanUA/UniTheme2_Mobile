@@ -142,6 +142,7 @@ public class ProductPage {
                 .perform();
 
         tab_Variations.click();
+        button_AddVariations.shouldBe(Condition.exist, Duration.ofSeconds(15));
     }
 
     void selectAllVariationsForProduct() {

@@ -5,7 +5,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import steps.adminPanel.LayoutPage;
 
 import java.time.Duration;
@@ -33,7 +32,7 @@ public class HomePage {
     SelenideElement categoryTemplate_CompactList = $(".ut2-icon-short-list");
     SelenideElement mobileSearchIcon = $(".ut2-icon-search");
     SelenideElement field_Search = $(By.id("search_input"));
-    SelenideElement chooseFirstProduct = $(".ut2-gl__image");
+    SelenideElement chooseFirstProduct = $(".ut2-gl__body .product-title");
 
 
     public void navigateToStorefront_HomePage() {
@@ -58,7 +57,7 @@ public class HomePage {
     }
 
     public void scrollTo_Block() {
-        blockWithProducts.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+        blockWithProducts.scrollIntoCenter();
     }
 
     public void openBlockTab(String tabName) {
@@ -75,7 +74,7 @@ public class HomePage {
             ElementsCollection buttons = $$("span[id*='ut2_load_more_block_" + blockID + "']");
             if (!buttons.isEmpty() && buttons.first().isDisplayed()) {
                 SelenideElement button_ShowMore = buttons.first(); // Берем первый элемент из списка
-                button_ShowMore.scrollIntoView(true);
+                button_ShowMore.scrollIntoCenter();
                 button_ShowMore.click();
                 executeJavaScript("window.scrollBy(0, -500);");
                 sleep(5000);
@@ -131,7 +130,7 @@ public class HomePage {
     public void navigateTo_ProductPage(String productName) {
         mobileSearchIcon.click();
         field_Search.setValue(productName);
-        field_Search.sendKeys(Keys.ENTER);
-        chooseFirstProduct.shouldBe(Condition.enabled, Duration.ofSeconds(5)).click();
+        field_Search.pressEnter();
+        chooseFirstProduct.shouldBe(Condition.enabled, Duration.ofSeconds(8)).click();
     }
 }

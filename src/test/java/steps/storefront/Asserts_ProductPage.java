@@ -22,7 +22,7 @@ public class Asserts_ProductPage {
     SelenideElement customBlockID = $(".ut2-pb__custom-block");
     SelenideElement quantityChanger = $("div.ty-qty[id*='qty_']");
     SelenideElement productCode = $(".ut2-pb__sku");
-    SelenideElement productFeatures = $(".ty-features-list");
+    SelenideElement productFeatures = $(".ut2-features-list");
     SelenideElement featuresInTwoColumns_Enabled = $(".fg-two-col");
     SelenideElement featuresInTwoColumns_Disabled = $("div.cm-ab-similar-filter-container");
     SelenideElement shortDescription = $(".ut2-pb__short-descr");
@@ -44,10 +44,10 @@ public class Asserts_ProductPage {
 
     //Характеристики
     SelenideElement showOnFeaturesTab_Brand = $x("//div[@class='ty-product-feature']//span[text()='Бренд']");
-    SelenideElement showInHeaderOnProductPage_Brand = $x("//div[@class='ty-features-list']//em[text()='Бренд']");
-    SelenideElement showInHeaderOnProductPage_HardDrive = $x("//div[@class='ty-features-list']//em[text()='Жесткий диск']");
+    SelenideElement showInHeaderOnProductPage_Brand = $x("//div[@class='ut2-features-list']//em[text()='Бренд']");
+    SelenideElement showInHeaderOnProductPage_HardDrive = $x("//div[@class='ut2-features-list']//em[text()='Жесткий диск']");
 
-    //Настройки из страницы редактирования товара
+    //Настройки страницы редактирования товара
     SelenideElement listPrice = $("span[id*='old_price_update_'] .ty-list-price");
     SelenideElement zeroPriceAction_AskCustomerToEnterPrice = $(".ty-price-curency__input");
     SelenideElement outOfStockActions_SignUpForNotification = $("label[id*='label_sw_product_notify_']");
@@ -106,7 +106,7 @@ public class Asserts_ProductPage {
                 case "Отображать характеристики товара":
                     if (value.equalsIgnoreCase("y")) {
                         softAssert.assertThat(productFeatures.exists())
-                                .as("There is no Product features on the product page!")
+                                .as("There are no Product features on the product page!")
                                 .isTrue();
                     } else {
                         softAssert.assertThat(productFeatures.exists())

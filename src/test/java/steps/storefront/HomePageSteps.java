@@ -30,6 +30,16 @@ public class HomePageSteps {
         homePage.scrollTo_Block();
     }
 
+    @And("Скроллимся к элементу по css селектору {string}")
+    public void scrollTo_CssSelector(String selector) {
+        homePage.scrollTo_CssSelector(selector);
+    }
+
+    @And("Скроллимся вниз по странице на {int} px")
+    public void scrollBelowOfPage(int value) {
+        homePage.scrollBelowOfPage(value);
+    }
+
     @And("Раскрываем вкладку {string} у блока")
     public void openBlockTab(String tabName) {
         homePage.openBlockTab(tabName);
@@ -55,13 +65,18 @@ public class HomePageSteps {
         homePage.navigateTo_CategoryTemplate(templateName);
     }
 
-    @And("Скроллимся вниз по странице на {int} px")
-    public void scrollBelowOfPage(int value) {
-        homePage.scrollBelowOfPage(value);
-    }
-
     @And("Переходим на страницу товара {string}")
     public void navigateTo_ProductPage(String productName) {
         homePage.navigateTo_ProductPage(productName);
+    }
+
+    @And("Открываем Вертикальное меню кнопкой")
+    public void openVerticalMenuWithButton() {
+        homePage.openVerticalMenuWithButton();
+    }
+
+    @Then("Закрываем Вертикальное меню")
+    public void closeVerticalMenu() {
+        homePage.closeVerticalMenu();
     }
 }

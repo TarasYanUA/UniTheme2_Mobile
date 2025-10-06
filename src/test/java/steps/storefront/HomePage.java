@@ -60,6 +60,10 @@ public class HomePage {
         blockWithProducts.scrollIntoCenter();
     }
 
+    public void scrollTo_CssSelector(String selector) {
+        $(selector).scrollIntoCenter();
+    }
+
     public void openBlockTab(String tabName) {
         if (!$$x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").isEmpty())
             $x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").click();
@@ -132,5 +136,13 @@ public class HomePage {
         field_Search.setValue(productName);
         field_Search.pressEnter();
         chooseFirstProduct.shouldBe(Condition.enabled, Duration.ofSeconds(8)).click();
+    }
+
+    public void openVerticalMenuWithButton() {
+        $(".ut2-icon-view_cozy").scrollIntoCenter().click();
+    }
+
+    public void closeVerticalMenu() {
+        $(".top-menu-grid-vertical .ut2-icon-baseline-close").click();
     }
 }

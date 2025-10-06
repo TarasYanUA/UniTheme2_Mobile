@@ -3,7 +3,6 @@ package steps.adminPanel;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.datatable.DataTable;
-
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -15,17 +14,19 @@ public class LayoutPage {
     }
 
     public static String blockID;
+    public static String sectionID;
 
-    SelenideElement button_SettingsOfTemplate = $("a[id^='sw_case_settings_']");
     SelenideElement button_SaveBlockProperties = $("input[name='dispatch[block_manager.update_block]']");
     SelenideElement popupWindow = $(".ui-dialog-title");
     SelenideElement button_SaveLayoutSettings = $("input[name='dispatch[block_manager.grid.update]']");
     SelenideElement setting_UseDelayedLoadingOfSection = $("input[id^='elm_grid_abt__ut2_use_lazy_load']");
     SelenideElement button_CreateNewBlock = $("#opener_block_type_list");
-
+    SelenideElement blockTab_CreateNewBlock = $("li[id*='create_new_blocks_']");
+    SelenideElement field_blockName = $("input[name='block_data[description][name]']");
+    SelenideElement blockTemplate = $("select[name='block_data[properties][template]']");
 
     //Настройки блока товаров
-    SelenideElement blockTemplate = $("select[id$='_products_template']");
+    SelenideElement button_SettingsOfTemplate = $("a[id^='sw_case_settings_']");
     SelenideElement checkbox_ShowItemNumber = $("input[id$='_products_properties_item_number']");
     SelenideElement field_NumberOfColumnsInList = $("input[id$='_products_properties_number_of_columns']");
     SelenideElement setting_LoadingType = $("select[id$='_products_properties_abt__ut2_loading_type']");
@@ -38,6 +39,7 @@ public class LayoutPage {
     SelenideElement field_Limit = $("input[id$='_content_items_properties_items_limit']");
     SelenideElement tabOfBlock_BlockSettings = $("li[id^='block_settings_']");
     SelenideElement checkbox_HideAddToCartButton = $("input[id$='_products_properties_hide_add_to_cart_button']");
+    SelenideElement checkbox_OpenMenuWithButton = $("input[id*='menu_properties_open_on_sticky_panel_button']");
 
 
     public void saveLayoutSettings() {
@@ -55,8 +57,7 @@ public class LayoutPage {
         executeJavaScript("arguments[0].click();", layoutProperties);
         popupWindow.shouldBe(Condition.exist);
         sleep(2000);
-        setting_UseDelayedLoadingOfSection.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
-        //executeJavaScript("arguments[0].scrollIntoView();", setting_UseDelayedLoadingOfSection);
+        setting_UseDelayedLoadingOfSection.scrollIntoCenter();
         UtilsAdmPanel.setCheckboxState(setting_UseDelayedLoadingOfSection, "n");
 
         if (!$("input[id*='show_on_phone'][checked='checked']").exists())
@@ -67,6 +68,11 @@ public class LayoutPage {
     public void getBlockID(String blockName) {
         blockID = $("div[title='" + blockName + "'] small[data-ca-block-manager='block_id']").getText().trim().split("#")[1];
         System.out.println("ID блока '" + blockName + "': " + blockID);
+    }
+
+    public void getSectionID(String blockName) {
+        sectionID = $x("//div[contains(@title, '" + blockName + "')]/../..").getAttribute("id");
+        System.out.println("ID секции '" + sectionID);
     }
 
     public void navigateToBlockSettings(String blockName) {
@@ -97,7 +103,7 @@ public class LayoutPage {
                 case "Не прокручивать автоматически" -> setCheckboxState(setting_DoNotScrollAutomatically, value);
                 case "Количество элементов (мобильный)" -> setting_ItemQuantity_Mobile.setValue(value);
                 case "Внешняя навигация" -> {
-                    setting_OutsideNavigation.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+                    setting_OutsideNavigation.scrollIntoCenter();
                     setCheckboxState(setting_OutsideNavigation, value);
                 }
 
@@ -112,6 +118,10 @@ public class LayoutPage {
                 case "Спрятать кнопку добавления" -> {
                     tabOfBlock_BlockSettings.click();
                     setCheckboxState(checkbox_HideAddToCartButton, value);
+                }
+                case "Открывать это меню кнопкой" -> {
+                    tabOfBlock_BlockSettings.click();
+                    setCheckboxState(checkbox_OpenMenuWithButton, value);
                 }
 
                 default -> throw new IllegalArgumentException("Неизвестная настройка: " + setting);
@@ -129,21 +139,18 @@ public class LayoutPage {
         $x("//a[text()='" + pageName + "']").click();
     }
 
-    public void createNewBlock(String blockTemplate) {
+    public void createBlock_ContactsManualFilling(String blockTemplate) {
         button_CreateNewBlock.click();
         $("strong[title='" + blockTemplate + "']").click();
-        $("input[name='block_data[description][name]']").setValue("111 Контакты (ручное наполнение)");
+        field_blockName.setValue("111 Контакты (ручное наполнение)");
         button_SettingsOfTemplate.click();
         sleep(1000);
         SelenideElement setting_ShowContentInSidebar = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_open_right_panel]']");
-        if (setting_ShowContentInSidebar.isSelected())
-            setting_ShowContentInSidebar.click();
+        UtilsAdmPanel.setCheckboxState(setting_ShowContentInSidebar, "n");
         SelenideElement setting_DisplayRequestCallButton = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_show_call_request_button]']");
-        if (!setting_DisplayRequestCallButton.isSelected())
-            setting_DisplayRequestCallButton.click();
+        UtilsAdmPanel.setCheckboxState(setting_DisplayRequestCallButton, "y");
         SelenideElement setting_DisplayButtonsOnSocialNetworks = $("input[type='checkbox'][name='block_data[properties][abt__ut2__block_contacts_show_social_buttons]']");
-        if (!setting_DisplayButtonsOnSocialNetworks.isSelected())
-            setting_DisplayButtonsOnSocialNetworks.click();
+        UtilsAdmPanel.setCheckboxState(setting_DisplayButtonsOnSocialNetworks, "y");
         $("li[id*='block_contents_']").click();
         $("input[name='block_data[content][phone_1]']").setValue("+380938941111");
         $("input[name='block_data[content][phone_2]']").setValue("+380938942222");
@@ -157,5 +164,28 @@ public class LayoutPage {
     public void getBlockIDFrom_BlocksPage(String blockName) {
         blockID = $x("//input[@value='" + blockName + "']/../span/small").getText().trim().split("#")[1];
         System.out.println("ID блока '" + blockName + "': " + blockID);
+    }
+
+    public void createNewBlock(String blockTitle) {
+        String fullBlockName = "Auto: " + blockTitle;
+        if (!$("div[title='" + fullBlockName + "']").exists()) {
+            String layout = "div[id='" + sectionID + "'] ";
+            SelenideElement buttonPlus = $(layout + ".cs-icon--type-plus");
+            executeJavaScript("var evt = new MouseEvent('mouseover', { bubbles: true, cancelable: true, view: window });" +
+                    " arguments[0].dispatchEvent(evt);", buttonPlus);
+            executeJavaScript("arguments[0].click();", buttonPlus);
+            $(layout + ".bm-action-add-block").shouldBe(Condition.clickable).click();
+            $(".ui-dialog-titlebar").shouldBe(Condition.visible);
+            blockTab_CreateNewBlock.click();
+            $("strong[title='" + blockTitle + "']").scrollIntoCenter().click();
+            field_blockName.setValue(fullBlockName);
+            button_SaveBlockProperties.click();
+        }
+    }
+
+    public void setBlock_OpenOnclickDropdownList() {
+        tabOfBlock_Content.click();
+        $("select[name='block_data[content][abt__ut2_block_id]']").selectOptionContainingText("#" + blockID);
+        button_SaveBlockProperties.click();
     }
 }

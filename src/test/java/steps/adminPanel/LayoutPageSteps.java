@@ -25,6 +25,11 @@ public class LayoutPageSteps {
         layoutPage.getBlockID(blockName);
     }
 
+    @And("Получаем ID секции с блоком {string}")
+    public void getSectionID(String blockName) {
+        layoutPage.getSectionID(blockName);
+    }
+
     @And("Переходим в настройки блока {string}")
     public void navigateToBlockSettings(String blockName) {
         layoutPage.navigateToBlockSettings(blockName);
@@ -51,12 +56,22 @@ public class LayoutPageSteps {
     }
 
     @And("Создаём блок с шаблоном {string}")
-    public void createNewBlock(String blockTemplate) {
-        layoutPage.createNewBlock(blockTemplate);
+    public void createNewBlock_ContactsManualFilling(String blockTemplate) {
+        layoutPage.createBlock_ContactsManualFilling(blockTemplate);
     }
 
     @Given("Получаем ID блока {string} на странице 'Блоки'")
     public void getBlockIDFrom_BlocksPage(String blockName) {
         layoutPage.getBlockIDFrom_BlocksPage(blockName);
+    }
+
+    @And("Создаём новый блок {string} в секцию")
+    public void createNewBlock(String blockName) {
+        layoutPage.createNewBlock(blockName);
+    }
+
+    @And("Заполняем блок 'AB: Открытие выпадающего по клику списка'")
+    public void setBlock_OpenOnclickDropdownList() {
+        layoutPage.setBlock_OpenOnclickDropdownList();
     }
 }

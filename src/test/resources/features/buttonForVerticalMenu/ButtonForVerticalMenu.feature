@@ -29,4 +29,4 @@ Feature: Проверка открытия Вертикального меню �
     And Скроллимся к элементу по css селектору ".ut2-icon-view_cozy"
     And Делаем скриншот "ButtonForVerticalMenu - Кнопка (RTL)"
     And Открываем Вертикальное меню кнопкой
-    And Делаем скриншот "ButtonForVerticalMenu (RTL)"
+    And Делаем скриншот "ButtonForVerticalMenu (RTL) - Vertical menu"

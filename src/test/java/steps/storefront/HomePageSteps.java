@@ -20,7 +20,7 @@ public class HomePageSteps {
         homePage.logoutOnStorefront();
     }
 
-    @And("Переключаемся на {string} язык интерфейса витрины")
+    @Given("Переключаемся на {string} язык интерфейса витрины")
     public void selectLanguage(String lang_RuEnAr) {
         homePage.selectLanguage(lang_RuEnAr);
     }

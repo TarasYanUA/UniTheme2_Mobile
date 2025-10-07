@@ -30,6 +30,11 @@ public class LayoutPageSteps {
         layoutPage.getSectionID(blockName);
     }
 
+    @Given("Получаем статус блока {string} и статус доступности для мобильного устройства")
+    public void getBlockStatusAndBlockAvailability(String blockName) {
+        layoutPage.getBlockStatusAndBlockAvailability(blockName);
+    }
+
     @And("Переходим в настройки блока {string}")
     public void navigateToBlockSettings(String blockName) {
         layoutPage.navigateToBlockSettings(blockName);
@@ -73,5 +78,15 @@ public class LayoutPageSteps {
     @And("Заполняем блок 'AB: Открытие выпадающего по клику списка'")
     public void setBlock_OpenOnclickDropdownList() {
         layoutPage.setBlock_OpenOnclickDropdownList();
+    }
+
+    @And("Активируем блок {string}")
+    public void activateBlock(String blockName) {
+        layoutPage.activateBlock(blockName);
+    }
+
+    @And("Активируем доступность блока для мобильного устройства")
+    public void setAvailabilityForMobile() {
+        layoutPage.setAvailabilityForMobile();
     }
 }

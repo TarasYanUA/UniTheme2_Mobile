@@ -75,7 +75,7 @@ public class HomePageSteps {
         homePage.openVerticalMenuWithButton();
     }
 
-    @Then("Закрываем Вертикальное меню")
+    @And("Закрываем Вертикальное меню")
     public void closeVerticalMenu() {
         homePage.closeVerticalMenu();
     }

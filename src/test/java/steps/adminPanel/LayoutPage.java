@@ -15,6 +15,8 @@ public class LayoutPage {
 
     public static String blockID;
     public static String sectionID;
+    public static String blockStatus;
+    public static String blockAvailability;
 
     SelenideElement button_SaveBlockProperties = $("input[name='dispatch[block_manager.update_block]']");
     SelenideElement popupWindow = $(".ui-dialog-title");
@@ -73,6 +75,11 @@ public class LayoutPage {
     public void getSectionID(String blockName) {
         sectionID = $x("//div[contains(@title, '" + blockName + "')]/../..").getAttribute("id");
         System.out.println("ID секции '" + sectionID);
+    }
+
+    public void getBlockStatusAndBlockAvailability(String blockName) {
+        blockStatus = $("div[data-ca-block-name='" + blockName + "']").getAttribute("data-ca-status");  //active
+        blockAvailability = $("div[data-ca-block-name='" + blockName + "']").getAttribute("data-ca-device-availability-phone"); //true
     }
 
     public void navigateToBlockSettings(String blockName) {
@@ -187,5 +194,21 @@ public class LayoutPage {
         tabOfBlock_Content.click();
         $("select[name='block_data[content][abt__ut2_block_id]']").selectOptionContainingText("#" + blockID);
         button_SaveBlockProperties.click();
+    }
+
+    public void activateBlock(String blockName) {
+        if(!blockStatus.equalsIgnoreCase("active")) {
+            SelenideElement buttonActive = $("div[data-ca-block-name='" + blockName + "']").$(".bm-action-switch");
+            executeJavaScript("arguments[0].scrollIntoView(true);", buttonActive);
+            executeJavaScript("arguments[0].click();", buttonActive);
+            sleep(2000);
+        }
+    }
+
+    public void setAvailabilityForMobile() {
+        if(!blockAvailability.equalsIgnoreCase("true")) {
+            $(".btn-group-checkbox__label .cs-icon--type-mobile-phone").scrollIntoCenter().click();
+            executeJavaScript("window.scrollTo(0, 0);");
+        }
     }
 }

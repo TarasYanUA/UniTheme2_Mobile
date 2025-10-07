@@ -78,8 +78,8 @@ public class LayoutPage {
     }
 
     public void getBlockStatusAndBlockAvailability(String blockName) {
-        blockStatus = $("div[data-ca-block-name='" + blockName + "']").getAttribute("data-ca-status");  //active
-        blockAvailability = $("div[data-ca-block-name='" + blockName + "']").getAttribute("data-ca-device-availability-phone"); //true
+        blockStatus = $("div[data-ca-block-name='" + blockName + "']").getAttribute("data-ca-status");
+        blockAvailability = $("div[data-ca-block-name='" + blockName + "']").getAttribute("data-ca-device-availability-phone");
     }
 
     public void navigateToBlockSettings(String blockName) {

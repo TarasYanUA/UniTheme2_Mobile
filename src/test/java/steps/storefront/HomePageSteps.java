@@ -60,16 +60,6 @@ public class HomePageSteps {
         homePage.navigateTo_CategoryPage(mainCategory, subCategory);
     }
 
-    @And("Переходим на шаблон {string} страницы категории")
-    public void navigateTo_CategoryTemplate(String templateName) {
-        homePage.navigateTo_CategoryTemplate(templateName);
-    }
-
-    @And("Переходим на страницу товара {string}")
-    public void navigateTo_ProductPage(String productName) {
-        homePage.navigateTo_ProductPage(productName);
-    }
-
     @And("Открываем Вертикальное меню кнопкой")
     public void openVerticalMenuWithButton() {
         homePage.openVerticalMenuWithButton();

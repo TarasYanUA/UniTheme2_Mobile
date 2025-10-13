@@ -70,9 +70,9 @@ public class LayoutPageSteps {
         layoutPage.getBlockIDFrom_BlocksPage(blockName);
     }
 
-    @And("Создаём новый блок {string} в секцию")
-    public void createNewBlock(String blockName) {
-        layoutPage.createNewBlock(blockName);
+    @And("Добавляем в секцию {string} блок типа {string} и переименовываем его на {string}")
+    public void createNewBlock(String status, String blockType, String blockName) {
+        layoutPage.createNewBlock(status, blockType, blockName);
     }
 
     @And("Заполняем блок 'AB: Открытие выпадающего по клику списка'")

@@ -1,14 +1,9 @@
 package steps.storefront;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
 import steps.adminPanel.LayoutPage;
-
-import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class HomePage {
@@ -27,12 +22,6 @@ public class HomePage {
     SelenideElement cookie = $(".cm-btn-success");
     SelenideElement notification_close = $(".cm-notification-close");
     SelenideElement blockWithProducts = $("div.ty-mainbox-container.clearfix");
-    SelenideElement categoryTemplate_Grid = $(".ut2-icon-products-multicolumns");
-    SelenideElement categoryTemplate_ListWithoutOptions = $(".ut2-icon-products-without-options");
-    SelenideElement categoryTemplate_CompactList = $(".ut2-icon-short-list");
-    SelenideElement mobileSearchIcon = $(".ut2-icon-search");
-    SelenideElement field_Search = $(By.id("search_input"));
-    SelenideElement chooseFirstProduct = $(".ut2-gl__body .product-title");
 
 
     public void navigateToStorefront_HomePage() {
@@ -103,39 +92,8 @@ public class HomePage {
             flyMenu_button_ViewDetails_SecondLevel.click();
     }
 
-    public void navigateTo_CategoryTemplate(String templateName) {
-        switch (templateName) {
-            case "Сетка" -> {
-                categoryTemplate_Grid.click();
-                UtilsStorefront.waitForSpinnerDisappear();
-                sleep(1000);
-            }
-            case "Список без опций" -> {
-                categoryTemplate_ListWithoutOptions.click();
-                UtilsStorefront.waitForSpinnerDisappear();
-                sleep(1000);
-            }
-            case "Компактный список" -> {
-                categoryTemplate_CompactList.click();
-                UtilsStorefront.waitForSpinnerDisappear();
-                sleep(1000);
-            }
-
-            default -> throw new IllegalArgumentException("Неизвестный шаблон: " + templateName);
-        }
-        $("div[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(8));
-        sleep(3000);
-    }
-
     public void scrollBelowOfPage(int value) {
         Selenide.executeJavaScript("window.scrollBy(0, " + value + ");");
-    }
-
-    public void navigateTo_ProductPage(String productName) {
-        mobileSearchIcon.click();
-        field_Search.setValue(productName);
-        field_Search.pressEnter();
-        chooseFirstProduct.shouldBe(Condition.enabled, Duration.ofSeconds(8)).click();
     }
 
     public void openVerticalMenuWithButton() {

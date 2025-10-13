@@ -91,8 +91,9 @@ public class LayoutPage {
 
     public void selectTemplateForBlock(String templateName) {
         blockTemplate.selectOptionContainingText(templateName);
-        sleep(2000);
-        button_SettingsOfTemplate.click();
+        sleep(3000);
+        if (button_SettingsOfTemplate.exists())
+            button_SettingsOfTemplate.click();
     }
 
     public void setBlockSettings(DataTable table) {
@@ -173,9 +174,11 @@ public class LayoutPage {
         System.out.println("ID блока '" + blockName + "': " + blockID);
     }
 
-    public void createNewBlock(String blockTitle) {
-        String fullBlockName = "Auto: " + blockTitle;
-        if (!$("div[title='" + fullBlockName + "']").exists()) {
+    public void createNewBlock(String status, String blockType, String blockName) {
+        String blockTypeAsName = "Auto: " + blockType;
+        String fullBlockName = "Auto: " + blockName;
+        if (!$("div[title='" + blockTypeAsName + "']").exists() &&
+                !$("div[title='" + fullBlockName + "']").exists()) {
             String layout = "div[id='" + sectionID + "'] ";
             SelenideElement buttonPlus = $(layout + ".cs-icon--type-plus");
             executeJavaScript("var evt = new MouseEvent('mouseover', { bubbles: true, cancelable: true, view: window });" +
@@ -183,9 +186,14 @@ public class LayoutPage {
             executeJavaScript("arguments[0].click();", buttonPlus);
             $(layout + ".bm-action-add-block").shouldBe(Condition.clickable).click();
             $(".ui-dialog-titlebar").shouldBe(Condition.visible);
-            blockTab_CreateNewBlock.click();
-            $("strong[title='" + blockTitle + "']").scrollIntoCenter().click();
-            field_blockName.setValue(fullBlockName);
+            if (status.equalsIgnoreCase("новый"))
+                blockTab_CreateNewBlock.click();
+            $("strong[title='" + blockType + "']").scrollIntoCenter().click();
+            if (blockName.equals("")) {
+                field_blockName.setValue(blockTypeAsName);
+            } else {
+                field_blockName.setValue(fullBlockName);
+            }
             button_SaveBlockProperties.click();
         }
     }
@@ -197,7 +205,7 @@ public class LayoutPage {
     }
 
     public void activateBlock(String blockName) {
-        if(!blockStatus.equalsIgnoreCase("active")) {
+        if (!blockStatus.equalsIgnoreCase("active")) {
             SelenideElement buttonActive = $("div[data-ca-block-name='" + blockName + "']").$(".bm-action-switch");
             executeJavaScript("arguments[0].scrollIntoView(true);", buttonActive);
             executeJavaScript("arguments[0].click();", buttonActive);
@@ -206,7 +214,7 @@ public class LayoutPage {
     }
 
     public void setAvailabilityForMobile() {
-        if(!blockAvailability.equalsIgnoreCase("true")) {
+        if (!blockAvailability.equalsIgnoreCase("true")) {
             $(".btn-group-checkbox__label .cs-icon--type-mobile-phone").scrollIntoCenter().click();
             executeJavaScript("window.scrollTo(0, 0);");
         }

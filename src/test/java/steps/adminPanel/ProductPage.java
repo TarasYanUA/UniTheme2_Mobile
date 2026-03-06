@@ -149,7 +149,7 @@ public class ProductPage {
         sleep(2000);
         if ($("#content_variations_pagination .no-items").exists()) {
             button_AddVariations.shouldBe(Condition.visible, Duration.ofSeconds(8)).click();
-            SelenideElement field_findFeaturesForVariations = $(".object-picker__select-group--features .select2-search--inline input");
+            SelenideElement field_findFeaturesForVariations = $(".object-picker__select-group--features .select2-search--inline .select2-search__field");
             Actions actions = new Actions(WebDriverRunner.getWebDriver());
             actions.moveToElement(field_findFeaturesForVariations).click().perform();
 

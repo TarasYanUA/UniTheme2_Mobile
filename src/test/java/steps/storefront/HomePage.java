@@ -26,6 +26,7 @@ public class HomePage {
 
     public void navigateToStorefront_HomePage() {
         button_ShowAdminPanel.click();
+        sleep(500);
         goTo_Storefront.click();
         if (button_CloseAdminBottomPanel.isDisplayed()) {
             button_CloseAdminBottomPanel.click();

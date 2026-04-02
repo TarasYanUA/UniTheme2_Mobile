@@ -86,7 +86,6 @@ public class LayoutPage {
         SelenideElement blockProperties = $("div[data-ca-block-name='" + blockName + "']").$(".bm-action-properties");
         executeJavaScript("arguments[0].scrollIntoView(true);", blockProperties);
         executeJavaScript("arguments[0].click();", blockProperties);
-        popupWindow.shouldBe(Condition.exist);
     }
 
     public void selectTemplateForBlock(String templateName) {

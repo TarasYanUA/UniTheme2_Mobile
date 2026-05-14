@@ -154,6 +154,6 @@ Feature: Страница категории, шаблон "Список без 
     And Скроллимся вниз по странице на 550 px
     And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда 02"
     Given Переключаемся на "ar" язык интерфейса витрины
-    And Делаем скриншот "@CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда (RTL) 01"
+    And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда (RTL) 01"
     And Скроллимся вниз по странице на 550 px
     And Делаем скриншот "CategoryPage_ListWithoutOptions_Var2 - категория Мужская одежда (RTL) 02"

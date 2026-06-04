@@ -18,6 +18,7 @@ public class BasicPage implements CheckMenuToBeActive {
 
 
     public void navigateTo_PageName_FromThemes(String pageName) {
+        UtilsAdmPanel.closeAllNotifications();
         menuOf_WebsiteThemes.click();
         $x("//ul[@id='tools_list_actions_menu']//span[text()='" + pageName + "']").click();
     }

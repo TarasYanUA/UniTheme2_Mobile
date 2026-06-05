@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.openqa.selenium.By;
+import steps.adminPanel.UtilsAdmPanel;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ThemeSettings_ProductLists {
 
     @Given("Переходим на страницу \"UniTheme2 -- Настройки темы\", вкладка {string}")
     public void navigateTo_ThemeSettings(String tabName) {
+        UtilsAdmPanel.closeAllNotifications();
         themeSectionsOnPage_DownloadedAddons.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}").click();
         sleep(1000);
         themeSettings.click();

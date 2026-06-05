@@ -32,10 +32,12 @@ public class BasicPage implements CheckMenuToBeActive {
     }
 
     public void navigateTo_FeaturePage(String featureName) {
+        UtilsAdmPanel.closeAllNotifications();
         $x("//a[text()='" + featureName + "']").click();
     }
 
     public void navigateTo_CsCartSettings(String section) {
+        UtilsAdmPanel.closeAllNotifications();
         mobile_MainMenu.click();
         executeJavaScript("arguments[0].scrollIntoView(true);", menuOf_Settings);
         executeJavaScript("arguments[0].click();", menuOf_Settings);

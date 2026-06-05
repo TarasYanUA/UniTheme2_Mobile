@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import steps.adminPanel.UtilsAdmPanel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,9 +36,7 @@ public class DriverHooks {
 
         $(".btn.btn-primary").click();
         $("#bp_off_bottom_panel").click();
-        if ($(".cm-notification-close").isDisplayed())
-            $(".cm-notification-close").click();
-        Selenide.sleep(1000);
+        UtilsAdmPanel.closeAllNotifications();
     }
 
     @After

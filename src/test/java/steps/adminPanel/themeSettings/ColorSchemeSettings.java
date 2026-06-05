@@ -28,6 +28,7 @@ public class ColorSchemeSettings {
         sleep(1000);
         themeSectionsOnPage_DownloadedAddons.click();
         colorSchemeSettings.click();
+        UtilsAdmPanel.closeAllNotifications();
         fieldOfActiveColorScheme.click();
         activeColorScheme.click();
         sleep(2000);

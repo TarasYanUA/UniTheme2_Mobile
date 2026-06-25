@@ -74,7 +74,7 @@ public class LayoutPage {
 
     public void getSectionID(String blockName) {
         sectionID = $x("//div[contains(@title, '" + blockName + "')]/../..").getAttribute("id");
-        System.out.println("ID секции '" + sectionID);
+        System.out.println("ID секции: " + sectionID);
     }
 
     public void getBlockStatusAndBlockAvailability(String blockName) {

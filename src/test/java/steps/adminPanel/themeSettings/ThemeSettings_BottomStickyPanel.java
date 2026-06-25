@@ -100,7 +100,7 @@ public class ThemeSettings_BottomStickyPanel {
     SelenideElement closeSearchOfProducts = $(bottomStickyPanel + "#off_dropdown_sticky_item_search .ut2-icon-baseline-close");
     SelenideElement closeMiniCart = $(bottomStickyPanel + ".ty-dropdown-box__content--cart.js_open .ut2-icon-baseline-close");
     SelenideElement closeAccount = $(bottomStickyPanel + "#account_info_sticky_item_acc .ut2-icon-baseline-close");
-    SelenideElement closeContacts = $(bottomStickyPanel + "#dropdown_phones_info_acc .ut2-icon-baseline-close");
+    SelenideElement closeContacts = $(bottomStickyPanel + "#dropdown_phones_info_sticky_item_acc .ut2-icon-baseline-close");
 
 
     @And("Выполняем проверки в Нижней липкой панели:")

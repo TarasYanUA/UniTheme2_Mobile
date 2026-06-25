@@ -26,7 +26,7 @@ public class CsCartSettings {
     SelenideElement setting_TaxCalculationMethodBasedOn = $(By.id("field___tax_calculation_179"));
 
     //Страница "Настройки -- Налоги"
-    SelenideElement setting_priceIncludesTax = $x("//input[@type='checkbox'][@name='tax_data[7][price_includes_tax]']");
+    SelenideElement setting_priceIncludesTax = $x("//input[@type='checkbox'][@name='tax_data[8][price_includes_tax]']");
 
 
     @And("Устанавливаем настройки CS-Cart:")

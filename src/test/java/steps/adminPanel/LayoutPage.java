@@ -188,7 +188,7 @@ public class LayoutPage {
             if (status.equalsIgnoreCase("новый"))
                 blockTab_CreateNewBlock.click();
             $("strong[title='" + blockType + "']").scrollIntoCenter().click();
-            if (blockName.equals("")) {
+            if (blockName.isEmpty()) {
                 field_blockName.setValue(blockTypeAsName);
             } else {
                 field_blockName.setValue(fullBlockName);

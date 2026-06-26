@@ -122,6 +122,7 @@ public class ProductPage {
     @Then("Сохраняем настройки товара")
     public void saveProductPage() {
         button_SaveProduct.click();
+        sleep(2000);
     }
 
     @And("Выбираем все доступные вариации для товара")

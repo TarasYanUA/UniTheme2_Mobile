@@ -171,9 +171,6 @@ public class Asserts_ProductBlock_CategoryPage {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] span[id*='line_product_price_']");
     }
 
-    //Настройка "Показывать мини-иконки в виде галереи"
-    SelenideElement miniThumbnailImagesAsGallery = $(".ty-icon-right-open-thin");
-
 
     //Настройки блока товаров
 

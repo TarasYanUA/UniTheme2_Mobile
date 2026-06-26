@@ -11,6 +11,6 @@ public class UtilsStorefront {
 
     public static void waitForSpinnerDisappear() {
         $("div#ajax_loading_box[style='display: block;']").shouldBe(Condition.disappear, Duration.ofSeconds(10));
-        sleep(1000);
+        sleep(2000);
     }
 }

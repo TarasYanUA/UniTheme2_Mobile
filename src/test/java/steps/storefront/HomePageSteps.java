@@ -40,6 +40,11 @@ public class HomePageSteps {
         homePage.scrollBelowOfPage(value);
     }
 
+    @And("Скроллимся к блоку с баннером")
+    public void scrollToBlockWithBanner() {
+        homePage.scrollTo_BlockWithBanner();
+    }
+
     @And("Раскрываем вкладку {string} у блока")
     public void openBlockTab(String tabName) {
         homePage.openBlockTab(tabName);

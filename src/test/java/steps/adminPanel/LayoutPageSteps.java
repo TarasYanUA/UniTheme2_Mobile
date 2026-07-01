@@ -90,8 +90,12 @@ public class LayoutPageSteps {
         layoutPage.setAvailabilityForMobile();
     }
 
-    @And("Отключаем все блоки в секции кроме блока {string}")
+    @And("Отключаем все блоки в секции, если в секции отсутствует блок {string}")
     public void switchOffAllBlocksAtLayout(String blockName) {
         layoutPage.switchOffAllBlocksAtLayout(blockName);
+    }
+
+    @And("Добавляем в блок баннер {string}")
+    public void addBannerToBlock(String bannerName) {layoutPage.addBannerToBlock(bannerName);
     }
 }

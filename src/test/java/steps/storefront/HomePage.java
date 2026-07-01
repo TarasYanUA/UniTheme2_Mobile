@@ -28,9 +28,8 @@ public class HomePage {
         button_ShowAdminPanel.click();
         sleep(500);
         goTo_Storefront.click();
-        if (button_CloseAdminBottomPanel.isDisplayed()) {
+        if (button_CloseAdminBottomPanel.isDisplayed())
             button_CloseAdminBottomPanel.click();
-        }
         cookie.click();
         if (notification_close.exists())
             notification_close.click();
@@ -52,6 +51,15 @@ public class HomePage {
 
     public void scrollTo_CssSelector(String selector) {
         $(selector).scrollIntoCenter();
+    }
+
+    public void scrollTo_BlockWithBanner() {
+/*        By bannerLocator = By.cssSelector(
+                ".ut2-a__products-banner div[id*='" + blockID + "']"
+        );
+        $(bannerLocator).scrollIntoCenter();*/
+
+        $(".ut2-a__products-banner div[id*='" + blockID + "']").scrollIntoCenter();
     }
 
     public void openBlockTab(String tabName) {

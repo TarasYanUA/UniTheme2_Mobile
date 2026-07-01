@@ -28,6 +28,9 @@ public class LayoutPage {
     SelenideElement blockTab_CreateNewBlock = $("li[id*='create_new_blocks_']");
     SelenideElement field_blockName = $("input[name='block_data[description][name]']");
     SelenideElement blockTemplate = $("select[name='block_data[properties][template]']");
+    SelenideElement blockButton_AddBanners = $("a[href*='dispatch=banners.picker']");
+    SelenideElement searchBannerByName = $(By.id("elm_name"));
+    SelenideElement blockButton_Search = $("input[name='dispatch[banners.picker]']");
 
     //Настройки блока товаров
     SelenideElement button_SettingsOfTemplate = $("a[id^='sw_case_settings_']");
@@ -93,7 +96,7 @@ public class LayoutPage {
 
     public void selectTemplateForBlock(String templateName) {
         blockTemplate.selectOptionContainingText(templateName);
-        sleep(3000);
+        sleep(2000);
         if (button_SettingsOfTemplate.exists())
             button_SettingsOfTemplate.click();
     }
@@ -224,5 +227,15 @@ public class LayoutPage {
             for (SelenideElement button_SwitchOff : buttons_SwitchOff)
                 button_SwitchOff.scrollIntoCenter().click();
         }
+    }
+
+    public void addBannerToBlock(String bannerName) {
+        tabOfBlock_Content.click();
+        blockButton_AddBanners.click();
+        searchBannerByName.setValue(bannerName);
+        blockButton_Search.click();
+        $("div[id*='pagination_objects'] input[name='block_items[]']").click();
+        $("input[value='Добавить баннеры и закрыть']").click();
+        sleep(2000);
     }
 }

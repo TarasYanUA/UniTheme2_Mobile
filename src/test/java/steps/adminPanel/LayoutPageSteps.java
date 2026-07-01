@@ -89,4 +89,9 @@ public class LayoutPageSteps {
     public void setAvailabilityForMobile() {
         layoutPage.setAvailabilityForMobile();
     }
+
+    @And("Отключаем все блоки в секции кроме блока {string}")
+    public void switchOffAllBlocksAtLayout(String blockName) {
+        layoutPage.switchOffAllBlocksAtLayout(blockName);
+    }
 }

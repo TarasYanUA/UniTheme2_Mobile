@@ -1,4 +1,4 @@
-package steps.storefront;
+package steps.asserts;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;

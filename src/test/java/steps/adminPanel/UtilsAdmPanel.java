@@ -1,9 +1,9 @@
 package steps.adminPanel;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 public class UtilsAdmPanel {
 
@@ -16,9 +16,17 @@ public class UtilsAdmPanel {
     }
 
     public static void closeAllNotifications() {
-        while (!$$(".cm-notification-close").isEmpty()) {
-            $$(".cm-notification-close").first().click();
+        while ($(".cm-notification-close").exists()) {
+            $(".cm-notification-close").click();
             sleep(200);
         }
+    }
+
+    public static void waitForVisibilityOfPopupWindow() {
+        $(".ui-dialog-title").shouldBe(Condition.visible);
+    }
+
+    public static void waitForPopupWindowDisappear() {
+        $(".ui-dialog-title").shouldBe(Condition.disappear);
     }
 }

@@ -1,8 +1,11 @@
 package steps.adminPanel;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.cucumber.datatable.DataTable;
+import org.openqa.selenium.By;
+
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -19,7 +22,6 @@ public class LayoutPage {
     public static String blockAvailability;
 
     SelenideElement button_SaveBlockProperties = $("input[name='dispatch[block_manager.update_block]']");
-    SelenideElement popupWindow = $(".ui-dialog-title");
     SelenideElement button_SaveLayoutSettings = $("input[name='dispatch[block_manager.grid.update]']");
     SelenideElement setting_UseDelayedLoadingOfSection = $("input[id^='elm_grid_abt__ut2_use_lazy_load']");
     SelenideElement button_CreateNewBlock = $("#opener_block_type_list");
@@ -57,7 +59,7 @@ public class LayoutPage {
         SelenideElement layoutProperties = $("div[data-ca-block-name='" + blockName + "'] ~ div[class*='grid-control-menu'] div[class*='bm-action-properties']");
         executeJavaScript("arguments[0].scrollIntoView(true);", layoutProperties);
         executeJavaScript("arguments[0].click();", layoutProperties);
-        popupWindow.shouldBe(Condition.exist);
+        UtilsAdmPanel.waitForVisibilityOfPopupWindow();
         sleep(2000);
         setting_UseDelayedLoadingOfSection.scrollIntoCenter();
         UtilsAdmPanel.setCheckboxState(setting_UseDelayedLoadingOfSection, "n");
@@ -65,6 +67,7 @@ public class LayoutPage {
         if (!$("input[id*='show_on_phone'][checked='checked']").exists())
             $("label[for*='show_on_phone']").click();
         saveLayoutSettings();
+        UtilsAdmPanel.waitForPopupWindowDisappear();
     }
 
     public void getBlockID(String blockName) {
@@ -174,10 +177,8 @@ public class LayoutPage {
     }
 
     public void createNewBlock(String status, String blockType, String blockName) {
-        String blockTypeAsName = "Auto: " + blockType;
-        String fullBlockName = "Auto: " + blockName;
-        if (!$("div[title='" + blockTypeAsName + "']").exists() &&
-                !$("div[title='" + fullBlockName + "']").exists()) {
+        if (!$("div[title='" + blockType + "']").exists() &&
+                !$("div[title='" + blockName + "']").exists()) {
             String layout = "div[id='" + sectionID + "'] ";
             SelenideElement buttonPlus = $(layout + ".cs-icon--type-plus");
             executeJavaScript("var evt = new MouseEvent('mouseover', { bubbles: true, cancelable: true, view: window });" +
@@ -188,11 +189,7 @@ public class LayoutPage {
             if (status.equalsIgnoreCase("новый"))
                 blockTab_CreateNewBlock.click();
             $("strong[title='" + blockType + "']").scrollIntoCenter().click();
-            if (blockName.isEmpty()) {
-                field_blockName.setValue(blockTypeAsName);
-            } else {
-                field_blockName.setValue(fullBlockName);
-            }
+            field_blockName.setValue(blockName);
             button_SaveBlockProperties.click();
         }
     }
@@ -216,6 +213,16 @@ public class LayoutPage {
         if (!blockAvailability.equalsIgnoreCase("true")) {
             $(".btn-group-checkbox__label .cs-icon--type-mobile-phone").scrollIntoCenter().click();
             executeJavaScript("window.scrollTo(0, 0);");
+        }
+    }
+
+    public void switchOffAllBlocksAtLayout(String blockName) {
+        if ($$("div[title='" + blockName + "']").isEmpty()) {
+            SelenideElement mySection = $(By.id(sectionID));
+            ElementsCollection buttons_SwitchOff = $$(mySection.findElements(By
+                    .cssSelector("div[data-ca-block-name] div.cm-tooltip.cm-action.bm-action-switch.action:not(.switch-off)")));
+            for (SelenideElement button_SwitchOff : buttons_SwitchOff)
+                button_SwitchOff.scrollIntoCenter().click();
         }
     }
 }

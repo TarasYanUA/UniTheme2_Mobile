@@ -179,18 +179,19 @@ public class LayoutPage {
         System.out.println("ID блока '" + blockName + "': " + blockID);
     }
 
-    public void createNewBlock(String status, String blockType, String blockName) {
-        if (!$("div[title='" + blockType + "']").exists() &&
+    public void createNewBlock(String blockType, String blockName) {
+        String layout = "div[id='" + sectionID + "'] ";
+
+        if (!$(layout + "div[title='" + blockType + "']").exists() &&
                 !$("div[title='" + blockName + "']").exists()) {
-            String layout = "div[id='" + sectionID + "'] ";
             SelenideElement buttonPlus = $(layout + ".cs-icon--type-plus");
+            buttonPlus.scrollIntoCenter();
             executeJavaScript("var evt = new MouseEvent('mouseover', { bubbles: true, cancelable: true, view: window });" +
                     " arguments[0].dispatchEvent(evt);", buttonPlus);
             executeJavaScript("arguments[0].click();", buttonPlus);
             $(layout + ".bm-action-add-block").shouldBe(Condition.clickable).click();
             $(".ui-dialog-titlebar").shouldBe(Condition.visible);
-            if (status.equalsIgnoreCase("новый"))
-                blockTab_CreateNewBlock.click();
+            blockTab_CreateNewBlock.click();
             $("strong[title='" + blockType + "']").scrollIntoCenter().click();
             field_blockName.setValue(blockName);
             button_SaveBlockProperties.click();

@@ -10,8 +10,7 @@ import steps.adminPanel.LayoutPage;
 
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Asserts_Banners {
     public Asserts_Banners() {
@@ -23,17 +22,30 @@ public class Asserts_Banners {
 
     private final String productBlockSelector = "//div[contains(@id, 'products') and contains(@id, '" + blockID + "')]/..";
 
-    SelenideElement templateOfProducts_Grid = $(productBlockSelector + "/div[contains(@class, 'grid-list')]");
-    SelenideElement templateOfProducts_SmallElements = $(productBlockSelector + "//ul[contains(@class, 'ut2-template-small')]");
-    SelenideElement templateOfProducts_Thumbnails = $(productBlockSelector + "//div[contains(@class, 'ut2-thumbnail-list')]");
-    SelenideElement columnsOfProducts_Grid = $(productBlockSelector + "//div[contains(@class, 'ty-column')]");
-    SelenideElement columnsOfProducts_SmallElements = $(productBlockSelector + "//ul[contains(@style, '--si-columns: ')]");
-    SelenideElement columnsOfProducts_Thumbnails = $(productBlockSelector + "//div[contains(@style, '--tls-pr-count: ')]");
-    SelenideElement bannerTitle = $(productBlockSelector + "/..//div[contains(@class, 'ut2-a__title')]");
-    SelenideElement productScroller = $(productBlockSelector + "//button[contains(@class, 'ut2-scroll-right') and not(contains(@style, 'display: none'))]");
-    ElementsCollection quantityOfProducts_Grid = $$(productBlockSelector + "//div[contains(@class, 'ty-column')]");
-    ElementsCollection quantityOfProducts_SmallElements = $$(productBlockSelector + "//li[contains(@class, 'ut2-template-small__item')]");
-    ElementsCollection quantityOfProducts_Thumbnails = $$(productBlockSelector + "//div[contains(@class, 'ut2-thumbnail-list__item')]");
+    SelenideElement templateOfProducts_Grid = $x(productBlockSelector + "/div[contains(@class, 'grid-list')]");
+    SelenideElement templateOfProducts_SmallElements = $x(productBlockSelector + "//ul[contains(@class, 'ut2-template-small')]");
+    SelenideElement templateOfProducts_Thumbnails = $x(productBlockSelector + "//div[contains(@class, 'ut2-thumbnail-list')]");
+    SelenideElement bannerTitle = $x(productBlockSelector + "/..//div[contains(@class, 'ut2-a__title')]");
+    SelenideElement productScroller = $x(productBlockSelector
+            + "//button[contains(@class, 'ut2-scroll-right') and not(contains(@style, 'display: none'))]");
+    SelenideElement columnsOfProducts_Grid(String columns) {
+        return $x(String.format(
+                productBlockSelector + "//div[contains(@class, 'ty-column%s')]",
+                columns));
+    }
+    SelenideElement columnsOfProducts_SmallElements(String columns) {
+        return $x(String.format(
+                productBlockSelector + "//ul[contains(@style, '--si-columns: %s')]",
+                columns));
+    }
+    SelenideElement columnsOfProducts_Thumbnails(String columns) {
+        return $x(String.format(
+                productBlockSelector + "//div[contains(@style, '--tls-pr-count: %s')]",
+                columns));
+    }
+    ElementsCollection quantityOfProducts_Grid = $$x(productBlockSelector + "//div[contains(@class, 'ty-column')]");
+    ElementsCollection quantityOfProducts_SmallElements = $$x(productBlockSelector + "//li[contains(@class, 'ut2-template-small__item')]");
+    ElementsCollection quantityOfProducts_Thumbnails = $$x(productBlockSelector + "//div[contains(@class, 'ut2-thumbnail-list__item')]");
     
 
     @And("Выполняем проверки в блоке с баннером:")
@@ -67,6 +79,40 @@ public class Asserts_Banners {
                                 .as("Template of products is not 'Thumbnails'!")
                                 .isTrue();
                     }
+                    break;
+
+                case "Проверяем у баннера наличие названия":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(bannerTitle.exists())
+                                .as("There is no Title of banner!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Проверяем у баннера наличие скроллера":
+                    if (value.equalsIgnoreCase("y")) {
+                        softAssert.assertThat(productScroller.exists())
+                                .as("There is no product Scroller!")
+                                .isTrue();
+                    }
+                    break;
+
+                case "Проверяем количество колонок у товаров баннера с шаблоном \"Сетка\"":
+                    softAssert.assertThat(columnsOfProducts_Grid(value).exists())
+                            .as("Number of product columns in 'Grid' template is not " + value)
+                            .isTrue();
+                    break;
+
+                case "Проверяем количество колонок у товаров баннера с шаблоном \"Мелкие элементы\"":
+                    softAssert.assertThat(columnsOfProducts_SmallElements(value).exists())
+                            .as("Number of product columns in 'Small elements' template is not " + value)
+                            .isTrue();
+                    break;
+
+                case "Проверяем количество колонок у товаров баннера с шаблоном \"Миниатюры\"":
+                    softAssert.assertThat(columnsOfProducts_Thumbnails(value).exists())
+                            .as("Number of product columns in 'Thumbnails' template is not " + value)
+                            .isTrue();
                     break;
 
                 case "Проверяем у баннера с шаблоном \"Сетка\" количество товаров":

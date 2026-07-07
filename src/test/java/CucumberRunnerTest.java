@@ -23,8 +23,9 @@ import io.cucumber.junit.Cucumber;
         //tags = "@ButtonForVerticalMenu",
 
         //tags = "@ProductsAtBanners_Grid_1Column or @ProductsAtBanners_Grid_2Columns",
-        tags = "@ProductsAtBanners_SmallElements_1Column_InOneRow or @ProductsAtBanners_SmallElements_1Column_UnlimitedRow" +
-                "or ProductsAtBanners_SmallElements_2Columns_InOneRow or ProductsAtBanners_SmallElements_2Columns_UnlimitedRow",
+//        tags = "@ProductsAtBanners_SmallElements_1Column_InOneRow or @ProductsAtBanners_SmallElements_1Column_UnlimitedRow" +
+//                "or @ProductsAtBanners_SmallElements_2Columns_InOneRow or @ProductsAtBanners_SmallElements_2Columns_UnlimitedRow",
+        tags = "@ProductsAtBanners_Thumbnails_2Columns_InOneRow or @ProductsAtBanners_Thumbnails_3Columns_UnlimitedRow",
 
         plugin = {"pretty", "html:target/cucumber_target.html", "json:target/cucumber.json"}
 )

@@ -220,7 +220,7 @@ public class LayoutPage {
         }
     }
 
-    public void switchOffAllBlocksAtLayout(String blockName) {
+    public void switchOffAllBlocksAtSection(String blockName) {
         if ($$("div[title='" + blockName + "']").isEmpty()) {
             SelenideElement mySection = $(By.id(sectionID));
             ElementsCollection buttons_SwitchOff = $$(mySection.findElements(By

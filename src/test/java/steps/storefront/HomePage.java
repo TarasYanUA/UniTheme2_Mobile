@@ -21,7 +21,7 @@ public class HomePage {
     SelenideElement button_CloseAdminBottomPanel = $("#bp_off_bottom_panel.bp-close");
     SelenideElement cookie = $(".cm-btn-success");
     SelenideElement notification_close = $(".cm-notification-close");
-    SelenideElement blockWithProducts = $("div.ty-mainbox-container.clearfix");
+    SelenideElement verticalMenuWithButton = $(".ut2-icon-view_cozy");
 
 
     public void navigateToStorefront_HomePage() {
@@ -45,28 +45,31 @@ public class HomePage {
         $(".ty-select-block__list-item a[data-ca-name='" + lang_RuEnAr + "']").click();
     }
 
-    public void scrollTo_Block() {
-        blockWithProducts.scrollIntoCenter();
-    }
+    public void scrollToBlockByIdOrSelector(String nameOrSelector) {
+        switch(nameOrSelector) {
+            case "товаров":
+                $("div[id^='content_abt__ut2_grid_tab'][id$='" + blockID + "']").scrollIntoCenter();
+                break;
+            case "баннера":
+                $(".ut2-a__products-banner div[id*='" + blockID + "']").scrollIntoCenter();
+                break;
+            case "Вертикального меню":
+                verticalMenuWithButton.scrollIntoCenter();
+                break;
 
-    public void scrollTo_CssSelector(String selector) {
-        $(selector).scrollIntoCenter();
-    }
-
-    public void scrollTo_BlockWithBanner() {
-/*        By bannerLocator = By.cssSelector(
-                ".ut2-a__products-banner div[id*='" + blockID + "']"
-        );
-        $(bannerLocator).scrollIntoCenter();*/
-
-        $(".ut2-a__products-banner div[id*='" + blockID + "']").scrollIntoCenter();
+            default: $(nameOrSelector).scrollIntoCenter();
+                break;
+        }
     }
 
     public void openBlockTab(String tabName) {
-        if (!$$x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").isEmpty())
-            $x("//span[@class='ty-tabs__span'][text()='" + tabName + "']").click();
+        String tabSelector = "//span[@class='ty-tabs__span'][text()='%s']";
+
+        if ($x(String.format(tabSelector, tabName)).exists())
+            $x(String.format(tabSelector, tabName)).click();
         else
-            $x("//span[@class='ty-tabs__span'][text()='On Sale']").click();
+            $x(String.format(tabSelector, "On Sale")).click();
+
         sleep(2000);
     }
 
@@ -106,7 +109,7 @@ public class HomePage {
     }
 
     public void openVerticalMenuWithButton() {
-        $(".ut2-icon-view_cozy").scrollIntoCenter().click();
+        verticalMenuWithButton.scrollIntoCenter().click();
     }
 
     public void closeVerticalMenu() {

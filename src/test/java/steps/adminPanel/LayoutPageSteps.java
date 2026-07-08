@@ -92,7 +92,7 @@ public class LayoutPageSteps {
 
     @And("Отключаем все блоки в секции, если в секции отсутствует блок {string}")
     public void switchOffAllBlocksAtLayout(String blockName) {
-        layoutPage.switchOffAllBlocksAtLayout(blockName);
+        layoutPage.switchOffAllBlocksAtSection(blockName);
     }
 
     @And("Добавляем в блок баннер {string}")

@@ -25,24 +25,14 @@ public class HomePageSteps {
         homePage.selectLanguage(lang_RuEnAr);
     }
 
-    @And("Скроллимся к блоку товаров")
-    public void scrollTo_Block() {
-        homePage.scrollTo_Block();
-    }
-
-    @And("Скроллимся к элементу по css селектору {string}")
-    public void scrollTo_CssSelector(String selector) {
-        homePage.scrollTo_CssSelector(selector);
+    @And("Скроллимся к блоку {string}")
+    public void scrollTo_Block(String nameOrSelector) {
+        homePage.scrollToBlockByIdOrSelector(nameOrSelector);
     }
 
     @And("Скроллимся вниз по странице на {int} px")
     public void scrollBelowOfPage(int value) {
         homePage.scrollBelowOfPage(value);
-    }
-
-    @And("Скроллимся к блоку с баннером")
-    public void scrollToBlockWithBanner() {
-        homePage.scrollTo_BlockWithBanner();
     }
 
     @And("Раскрываем вкладку {string} у блока")

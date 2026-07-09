@@ -6,7 +6,7 @@ import io.cucumber.junit.Cucumber;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"hooks", "steps"},
-        //tags = "@ProductsAtBanners_SmallElements_1Column_UnlimitedRow",
+        tags = "@ProductBlock_GridMore_Var2",
         //tags = "@ProductBlock_GridMore_Var1 or @ProductBlock_GridMore_Var2 or @ProductBlock_GridMore_Var3",
         //tags = "@ProductBlock_Scroller_Var1 or @ProductBlock_Scroller_Var2 or @ProductBlock_Scroller_Var3",
         //tags = "@ProductBlock_SmallItems_Var1 or @ProductBlock_SmallItems_Var2 or @ProductBlock_SmallItems_Var3",
@@ -25,7 +25,7 @@ import io.cucumber.junit.Cucumber;
         //tags = "@ProductsAtBanners_Grid_1Column or @ProductsAtBanners_Grid_2Columns",
 //        tags = "@ProductsAtBanners_SmallElements_1Column_InOneRow or @ProductsAtBanners_SmallElements_1Column_UnlimitedRow" +
 //                "or @ProductsAtBanners_SmallElements_2Columns_InOneRow or @ProductsAtBanners_SmallElements_2Columns_UnlimitedRow",
-        tags = "@ProductsAtBanners_Thumbnails_2Columns_InOneRow or @ProductsAtBanners_Thumbnails_3Columns_UnlimitedRow",
+        //tags = "@ProductsAtBanners_Thumbnails_2Columns_InOneRow or @ProductsAtBanners_Thumbnails_3Columns_UnlimitedRow",
 
         plugin = {"pretty", "html:target/cucumber_target.html", "json:target/cucumber.json"}
 )

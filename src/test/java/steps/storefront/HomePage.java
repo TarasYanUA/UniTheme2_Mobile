@@ -48,7 +48,7 @@ public class HomePage {
     public void scrollToBlockByIdOrSelector(String nameOrSelector) {
         switch(nameOrSelector) {
             case "товаров":
-                $("div[id^='content_abt__ut2_grid_tab'][id$='" + blockID + "']").scrollIntoCenter();
+                $("div[id^='content_abt__ut2_grid_tab'][id$='" + blockID + "']").scrollTo();
                 break;
             case "баннера":
                 $(".ut2-a__products-banner div[id*='" + blockID + "']").scrollIntoCenter();
@@ -66,9 +66,9 @@ public class HomePage {
         String tabSelector = "//span[@class='ty-tabs__span'][text()='%s']";
 
         if ($x(String.format(tabSelector, tabName)).exists())
-            $x(String.format(tabSelector, tabName)).click();
+            $x(String.format(tabSelector, tabName)).scrollIntoCenter().click();
         else
-            $x(String.format(tabSelector, "On Sale")).click();
+            $x(String.format(tabSelector, "On Sale")).scrollIntoCenter().click();
 
         sleep(2000);
     }

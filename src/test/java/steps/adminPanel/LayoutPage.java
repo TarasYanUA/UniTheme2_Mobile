@@ -41,6 +41,9 @@ public class LayoutPage {
     SelenideElement setting_DoNotScrollAutomatically = $("input[id$='_products_properties_not_scroll_automatically']");
     SelenideElement setting_ItemQuantity_Mobile = $("input[id*='_products_properties_item_quantity_mobile']");
     SelenideElement setting_OutsideNavigation = $("input[id$='_products_properties_outside_navigation']");
+    SelenideElement setting_AbThumbnailWidth = $("input[id*='products_properties_thumbnail_width']");
+    SelenideElement setting_AbThumbnailHeight = $("input[id*='products_properties_thumbnail_height']");
+
     SelenideElement tabOfBlock_Content = $("li[id^='block_contents_'] a");
     SelenideElement setting_Filling = $("select[id$='_content_items_filling']");
     SelenideElement field_Limit = $("input[id$='_content_items_properties_items_limit']");
@@ -119,6 +122,8 @@ public class LayoutPage {
                     setting_OutsideNavigation.scrollIntoCenter();
                     setCheckboxState(setting_OutsideNavigation, value);
                 }
+                case "АВ: Ширина иконки" -> setting_AbThumbnailWidth.setValue(value);
+                case "АВ: Высота иконки" -> setting_AbThumbnailHeight.setValue(value);
 
                 // Настройки вкладки "Контент"
                 case "Заполнение" -> {

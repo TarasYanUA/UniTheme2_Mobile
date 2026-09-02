@@ -60,6 +60,8 @@ public class ProductPage {
 
     @Given("Переходим на страницу редактирования товара {string}")
     public void navigateTo_ProductPage(String productName) {
+        UtilsAdmPanel.closeAllNotifications();
+
         searchFieldOfProduct.setValue(productName);
         sleep(3000);
         anyProduct.click();

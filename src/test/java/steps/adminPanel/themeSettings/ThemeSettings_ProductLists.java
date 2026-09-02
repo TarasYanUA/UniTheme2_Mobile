@@ -36,7 +36,7 @@ public class ThemeSettings_ProductLists {
     SelenideElement setting_DecolorizeOutOfStockProducts = $("input[id='settings.abt__ut2.product_list.decolorate_out_of_stock_products']");
     SelenideElement setting_PriceDisplayFormat = $(By.id("settings.abt__ut2.product_list.price_display_format"));
     SelenideElement setting_PriceAtTheTop = $("input[id='settings.abt__ut2.product_list.price_position_top']");
-    SelenideElement setting_EmptyStarsOfProductRating = $("input[id='settings.abt__ut2.product_list.show_rating']");
+    SelenideElement setting_EmptyStarsOfProductRating = $(By.id("settings.abt__ut2.product_list.show_rating"));
     SelenideElement setting_CommonValueOfProductRating = $("input[id='settings.abt__ut2.product_list.show_rating_num']");
     SelenideElement setting_DisplayCartStatus = $(By.id("settings.abt__ut2.product_list.show_cart_status"));
     SelenideElement setting_DisplayStatusesForButtons = $(By.id("settings.abt__ut2.product_list.show_favorite_compare_status"));
@@ -104,7 +104,7 @@ public class ThemeSettings_ProductLists {
                 case "Обесцвечивать товары, которых нет в наличии" -> setCheckboxState(setting_DecolorizeOutOfStockProducts, value);
                 case "Формат отображения цен" -> setting_PriceDisplayFormat.selectOptionContainingText(value);
                 case "Отображать цену вверху" -> setCheckboxState(setting_PriceAtTheTop, value);
-                case "Отображать пустые звёзды рейтинга товара" -> setCheckboxState(setting_EmptyStarsOfProductRating, value);
+                case "Отображать пустые звёзды рейтинга товара" -> setting_EmptyStarsOfProductRating.selectOptionContainingText(value);
                 case "Отображать общее значение рейтинга товара" -> setCheckboxState(setting_CommonValueOfProductRating, value);
                 case "Отображать статусы для кнопок \"Купить\"" -> setting_DisplayCartStatus.selectOptionContainingText(value);
                 case "Отображать статусы для кнопок \"Добавить в избранное\", \"Добавить в список сравнения\"" ->

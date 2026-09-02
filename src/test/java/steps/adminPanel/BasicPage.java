@@ -55,7 +55,9 @@ public class BasicPage implements CheckMenuToBeActive {
     }
 
     public void disableAddon(String addonID) {
-        if (!$(By.id(addonID)).find(By.xpath(".//a[contains(text(), 'Включить')]")).exists()) {
+        UtilsAdmPanel.closeAllNotifications();
+
+        if ($(By.id(addonID)).find(By.xpath(".//a[contains(text(), 'Выкл.')]")).exists()) {
             $(By.id(addonID)).find(By.xpath(".//span[contains(@class, 'cs-icon--type-cog')]")).scrollIntoCenter().click(); // шестерёнка модуля
             $(By.id(addonID)).find(By.xpath(".//a[@data-ca-event='ce.update_object_status_callback']")).click(); // кнопка "Выкл."
             sleep(11000);

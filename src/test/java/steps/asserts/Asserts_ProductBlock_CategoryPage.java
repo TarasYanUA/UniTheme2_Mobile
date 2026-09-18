@@ -30,10 +30,15 @@ public class Asserts_ProductBlock_CategoryPage {
     SelenideElement decolorizeOutOfStockProducts = $(".decolorize");
 
     //Настройка "Отображать пустые звёзды рейтинга товара"
-    SelenideElement emptyStarsOfProductRating = $("div[class*='ty-product-review-reviews-stars'][data-ca-product-review-reviews-stars-full='0']");
+    SelenideElement emptyStarsOfProductRating_EmptyStars = $("div[class*='ty-product-review-reviews-stars'][data-ca-product-review-reviews-stars-full='0']");
+    SelenideElement emptyStarsOfProductRating_WriteReview = $(".ty-product-review-reviews-stars__link .ut2-icon-chat");
 
-    SelenideElement getEmptyStarsOfProductRating() {
+    SelenideElement getEmptyStarsOfProductRating_EmptyStars() {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] div[class*='ty-product-review-reviews-stars'][data-ca-product-review-reviews-stars-full='0']");
+    }
+
+    SelenideElement getEmptyStarsOfProductRating_WriteReview() {
+        return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID + "'] .ty-product-review-reviews-stars__link .ut2-icon-chat");
     }
 
     //Настройка "Отображать общее значение рейтинга товара"
@@ -104,7 +109,7 @@ public class Asserts_ProductBlock_CategoryPage {
     SelenideElement getNumberOfLinesInProductName(int number) {
         return $("div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID
                 + "'] div[style*='lines-in-name-product: " + number
-                + ";'], " + "div[id^='content_abt__ut2_grid_tab_'][id$='"  + blockID
+                + ";'], " + "div[id^='content_abt__ut2_grid_tab_'][id$='" + blockID
                 + "'] ul[style*='lines-in-name-product: " + number + ";']");
     }
 
@@ -284,14 +289,18 @@ public class Asserts_ProductBlock_CategoryPage {
 
                 //Проверяем пустые звёздочки рейтинга
                 case "Отображать пустые звёзды рейтинга товара":
-                    if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(getEmptyStarsOfProductRating().exists())
+                    if (value.equalsIgnoreCase("Пустые звёзды")) {
+                        softAssert.assertThat(getEmptyStarsOfProductRating_EmptyStars().exists())
                                 .as("There are no empty stars in the product block!")
                                 .isTrue();
-
-                    } else {
-                        softAssert.assertThat(getEmptyStarsOfProductRating().exists())
-                                .as("There are empty stars but shouldn't in the product block!")
+                    } else if (value.equalsIgnoreCase("Написать отзыв")) {
+                        softAssert.assertThat(getEmptyStarsOfProductRating_WriteReview().exists())
+                                .as("There are no buttons 'Write review' in the product block!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(getEmptyStarsOfProductRating_EmptyStars().exists() ||
+                                        getEmptyStarsOfProductRating_WriteReview().exists())
+                                .as("There are empty stars or button 'Write review' but shouldn't in the product block!")
                                 .isFalse();
                     }
                     break;
@@ -472,13 +481,18 @@ public class Asserts_ProductBlock_CategoryPage {
                     break;
 
                 case "Отображать пустые звёзды рейтинга товара":
-                    if (value.equalsIgnoreCase("y")) {
-                        softAssert.assertThat(emptyStarsOfProductRating.exists())
+                    if (value.equalsIgnoreCase("Пустые звёзды")) {
+                        softAssert.assertThat(emptyStarsOfProductRating_EmptyStars.exists())
                                 .as("There are no empty stars on the category page!")
                                 .isTrue();
-                    } else {
-                        softAssert.assertThat(emptyStarsOfProductRating.exists())
-                                .as("There are empty stars but shouldn't on the category page!")
+                    } else if (value.equalsIgnoreCase("Написать отзыв")) {
+                        softAssert.assertThat(emptyStarsOfProductRating_WriteReview.exists())
+                                .as("There are no buttons 'Write review' on the category page!")
+                                .isTrue();
+                    } else if (value.equalsIgnoreCase("Не отображать")) {
+                        softAssert.assertThat(emptyStarsOfProductRating_EmptyStars.exists() ||
+                                        emptyStarsOfProductRating_WriteReview.exists())
+                                .as("There are empty stars or button 'Write review' but shouldn't on the category page!")
                                 .isFalse();
                     }
                     break;

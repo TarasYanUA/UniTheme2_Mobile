@@ -22,7 +22,7 @@ public class DriverHooks {
     @Before()
     public void prepareBrowser() {
         Map<String, String> mobileEmulation = new HashMap<>();
-        mobileEmulation.put("deviceName", "iPhone 12 Pro");
+        mobileEmulation.put("deviceName", "iPhone 16");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         WebDriver driver = new ChromeDriver(chromeOptions);

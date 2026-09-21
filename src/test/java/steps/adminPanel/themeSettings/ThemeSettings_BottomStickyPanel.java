@@ -21,6 +21,8 @@ public class ThemeSettings_BottomStickyPanel {
     SoftAssertions softAssert = CollectAssertMessages.getSoftAssertions();
     String blockID = LayoutPage.blockID;
 
+    SelenideElement setting_PositioningStyle = $(By.id("settings.abt__ut2.general.sticky_panel.positioning_style"));
+    SelenideElement setting_BackgroundAppearance = $(By.id("settings.abt__ut2.general.sticky_panel.background_style"));
     SelenideElement setting_BlockID_ContactUs = $(By.id("settings.abt__ut2.general.sticky_panel.sticky_panel_contacts_block_id"));
     SelenideElement setting_EnableBottomStickyPanel = $(By.id("settings.abt__ut2.general.sticky_panel.enable_sticky_panel.mobile"));
     SelenideElement setting_DisplayTitlesForPanelItems = $(By.id("settings.abt__ut2.general.sticky_panel.enable_sticky_panel_labels.mobile"));
@@ -51,6 +53,8 @@ public class ThemeSettings_BottomStickyPanel {
             String value = row.get(1);       //Значение настройки
 
             switch (setting) {
+                case "Стиль положения" -> setting_PositioningStyle.selectOptionContainingText(value);
+                case "Оформление фона" -> setting_BackgroundAppearance.selectOptionContainingText(value);
                 case "Отображать блок с контактами для элемента \"Контакты\". Укажите ID блока" -> {
                     if (!value.equals("0")) {
                         setting_BlockID_ContactUs.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");

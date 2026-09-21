@@ -148,7 +148,8 @@ public class LayoutPage {
     }
 
     public void saveBlockSettings() {
-        button_SaveBlockProperties.click();
+        button_SaveBlockProperties.scrollIntoCenter();
+        executeJavaScript("arguments[0].click();", button_SaveBlockProperties);
         sleep(1500);
     }
 

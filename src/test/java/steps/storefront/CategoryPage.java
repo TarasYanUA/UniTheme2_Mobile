@@ -14,7 +14,7 @@ public class CategoryPage {
     SelenideElement categoryTemplate_Grid = $(".ut2-icon-products-multicolumns");
     SelenideElement categoryTemplate_ListWithoutOptions = $(".ut2-icon-products-without-options");
     SelenideElement categoryTemplate_CompactList = $(".ut2-icon-short-list");
-    SelenideElement mobileSearchIcon = $(".ut2-icon-search");
+    SelenideElement mobileSearchIcon = $(".top-search .ut2-icon-search");
     SelenideElement field_Search = $(By.id("search_input"));
     SelenideElement chooseFirstProduct = $(".ut2-gl__body .product-title");
     ElementsCollection closeHorizontalFilters = $$("div.cm-horizontal-filters-content.container-opened .ut2-icon-baseline-close");

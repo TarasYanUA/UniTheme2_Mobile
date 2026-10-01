@@ -162,7 +162,7 @@ public class Asserts_ProductBlock_CategoryPage {
 
 
     //Настройки темы -- вкладка "Списки товаров -- "Вид списка "Список без опций"
-    SelenideElement contentUnderDescription_Features = $(".ty-product-feature__label");
+    SelenideElement contentUnderDescription_Features = $(".ut2-features-list");
     SelenideElement contentUnderDescription_Variations = $(".ut2-lv__item-features");
     SelenideElement showProductOptions = $(".cm-picker-product-options.ty-product-options");
     SelenideElement showBrandLogo = $(".ut2-cat-container .brand-img");

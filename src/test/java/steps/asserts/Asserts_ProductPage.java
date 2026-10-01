@@ -44,8 +44,8 @@ public class Asserts_ProductPage {
 
     //Характеристики
     SelenideElement showOnFeaturesTab_Brand = $x("//div[@class='ty-product-feature']//span[text()='Бренд']");
-    SelenideElement showInHeaderOnProductPage_Brand = $x("//div[@class='ut2-features-list']//em[text()='Бренд']");
-    SelenideElement showInHeaderOnProductPage_HardDrive = $x("//div[@class='ut2-features-list']//em[text()='Жесткий диск']");
+    SelenideElement showInHeaderOnProductPage_Brand = $x("//div[@class='ut2-features-list']//span[text()='Бренд']");
+    SelenideElement showInHeaderOnProductPage_HardDrive = $x("//div[@class='ut2-features-list']//span[text()='Жесткий диск']");
 
     //Настройки страницы редактирования товара
     SelenideElement listPrice = $("span[id*='old_price_update_'] .ty-list-price");

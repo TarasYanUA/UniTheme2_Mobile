@@ -196,6 +196,7 @@ public class LayoutPage {
                     " arguments[0].dispatchEvent(evt);", buttonPlus);
             executeJavaScript("arguments[0].click();", buttonPlus);
             $(layout + ".bm-action-add-block").shouldBe(Condition.clickable).click();
+            sleep(3000);    //Вынужденная пауза
             $(".ui-dialog-titlebar").shouldBe(Condition.visible);
             blockTab_CreateNewBlock.click();
             $("strong[title='" + blockType + "']").scrollIntoCenter().click();

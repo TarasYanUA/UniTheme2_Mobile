@@ -137,7 +137,7 @@ public class Asserts_ProductBlock_CategoryPage {
 
 
     //Настройка "Дополнительная информация о товаре -- Краткое описание"
-    SelenideElement additionalInformationOfProduct_ShortDescription = $(".product-description");
+    SelenideElement additionalInformationOfProduct_ShortDescription = $(".ut2-product-description");
 
     //Настройка "Дополнительная информация о товаре -- Характеристики"
     SelenideElement additionalInformationOfProduct_Features = $(".ut2-features-list");
